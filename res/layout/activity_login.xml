@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+     >
+     <!-- title -->
+	<include layout="@layout/topbar" android:id="@+id/Login_topbar"/>
+    <!-- body -->
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+   		android:orientation="vertical"
+   		android:padding="20dp"
+		        
+        >
+		    <!-- 账号 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	   		android:orientation="horizontal"
+            android:gravity="center_vertical"
+             >
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/login_username"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:layout_margin="5dp"
+                />
+            <EditText 
+                android:id="@+id/input_username"
+                android:hint="@string/login_username_hint"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:ems="10"
+                android:background="@null"
+                android:inputType="textPersonName"
+                android:layout_marginLeft="20dp"
+                />
+            
+        </LinearLayout>
+        <!--账号分格线-->
+        <View 
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+             android:background="#444444"
+            ></View>
+
+            <!-- 密码 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	   		android:orientation="horizontal"
+            android:gravity="center_vertical"
+             >
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/login_password"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:layout_margin="5dp"
+               
+                />
+            <EditText 
+                android:id="@+id/input_password"
+                android:hint="@string/login_password_hint"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:background="@null"
+                
+                 android:layout_marginLeft="20dp"
+                />
+            
+        </LinearLayout>
+        <!--密码分格线-->
+        <View 
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+             android:background="#444444"
+            ></View>
+        
+             <!-- 登录按钮 -->
+        <LinearLayout
+            
+             android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	   		android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="30dp"
+             >
+            <Button 
+                style="@style/SingleButton"
+                android:id="@+id/login_btn"
+                android:text="@string/login"
+                android:background="@drawable/login_btn_state"
+                />
+            
+        </LinearLayout>
+	<TextView 
+	    android:id="@+id/more"
+	    android:gravity="center"
+	    android:layout_marginTop="20dp"
+	    android:text="@string/more"
+	    android:textSize="15sp"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:textColor="#222222"
+			android:clickable="true"	    
+	    />
+        
+
+    </LinearLayout>
+    
+
+</LinearLayout>

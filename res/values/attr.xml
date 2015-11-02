@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- bootomtag -->
+    <attr  name="tagsize" format="dimension"/>
+    <attr  name="tagcolor" format="color"/>
+    <attr  name="tagicon" format="reference"/>
+    <attr  name="tagtext" format="string"/>
+    
+    <!-- title -->
+        <attr  name="titleText" format="string"/>
+        <attr  name="titleSize" format="dimension"/>
+        <attr  name="titleColor" format="color"/>
+		    <attr  name="rightButtonImage" format="reference"/>
+		    <attr  name="leftButtonImage" format="reference"/>
+		    <attr  name="rightButtonVisible" format="integer"/>
+		    <attr  name="leftButtonVisible" format="integer"/>
+		    
+    <declare-styleable name="BottomTagView">
+        <attr  name="tagsize" />
+	    <attr  name="tagcolor"/>
+	    <attr  name="tagicon" />
+	    <attr  name="tagtext"/>     
+    </declare-styleable>
+    
+    <declare-styleable name="topbar">
+        <attr  name="titleText" />
+        <attr  name="titleSize" />
+        <attr  name="titleColor" />
+		    <attr  name="rightButtonImage" />
+		    <attr  name="leftButtonImage"/>
+		    <attr  name="rightButtonVisible"/>
+		    <attr  name="leftButtonVisible" />
+    </declare-styleable>
+</resources>

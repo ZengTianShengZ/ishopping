@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <!-- title -->
+    <include layout="@layout/topbar"/>
+    <!-- body -->
+    <LinearLayout 
+       android:layout_width="match_parent"
+  	  android:layout_height="match_parent"
+  	  android:orientation="vertical"
+  	  android:layout_weight="1"
+  	  	android:padding="20dp"
+        >
+         <!-- 账号 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	   		android:orientation="horizontal"
+            android:gravity="center_vertical"
+             >
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/regiest_username"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:layout_margin="5dp"
+                />
+            <EditText 
+                android:id="@+id/input_username"
+                android:hint="@string/regiest_username_hint"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:ems="10"
+                android:background="@null"
+                android:inputType="textPersonName"
+                android:layout_marginLeft="20dp"
+                />
+            
+        </LinearLayout>
+        <!--账号分格线-->
+        <View 
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+             android:background="#444444"
+            ></View>
+
+            <!-- 密码 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	   		android:orientation="horizontal"
+            android:gravity="center_vertical"
+             >
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/regiest_password"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:layout_margin="5dp"
+               
+                />
+            <EditText 
+                android:id="@+id/input_password"
+                android:hint="@string/regiest_password_hint"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:background="@null"
+                
+                 android:layout_marginLeft="20dp"
+                />
+            
+        </LinearLayout>
+        <!--密码分格线-->
+        <View 
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+             android:background="#444444"
+            ></View>
+             <!-- 确认密码 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	   		android:orientation="horizontal"
+            android:gravity="center_vertical"
+             >
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/regiest_repassword"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:layout_margin="5dp"
+               
+                />
+            <EditText 
+                android:id="@+id/input_repassword"
+                android:hint="@string/regiest_repassword_hint"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:background="@null"
+                
+                 android:layout_marginLeft="20dp"
+                />
+            
+        </LinearLayout>
+        <!--确认密码分格线-->
+        <View 
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+             android:background="#444444"
+            ></View>
+         	<!-- 邮箱 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	   		android:orientation="horizontal"
+            android:gravity="center_vertical"
+             >
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/regiest_email"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:layout_margin="5dp"
+               
+                />
+            <EditText 
+                android:id="@+id/input_email"
+                android:hint="@string/regiest_email_hint"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:ems="10"
+                android:inputType="textWebEmailAddress"
+                android:background="@null"
+                
+                 android:layout_marginLeft="20dp"
+                />
+            
+        </LinearLayout>
+        <!--邮箱分格线-->
+        <View 
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+             android:background="#444444"
+            ></View>
+             <!-- 注册按钮 -->
+        <LinearLayout
+            
+             android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	   		android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="30dp"
+             >
+            <Button 
+                android:id="@+id/regiest_btn"
+                style="@style/SingleButton"
+                android:text="@string/regiest"
+                android:background="@drawable/regiest_btn_state"
+                />
+            
+        </LinearLayout>
+        
+    </LinearLayout>
+
+</LinearLayout>

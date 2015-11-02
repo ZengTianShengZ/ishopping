@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">iShopping</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_me">我</string>
+    <string name="title_chat">购物车</string>
+    <string name="title_qiang_all">首页</string>
+    <string name="title_qiang_focus">我的关注</string>
+    <string name="title_qiang_fav">我的收藏</string>
+    
+    <string name="login_username">账 号：</string>
+    <string name="login_password">密 码：</string>
+    <string name="login_username_hint">  请输入账号    </string>
+    <string name="login_password_hint">  请输入密码    </string>
+    <string name="login_success">  登录成功    </string>
+    <string name="login_faile">  登录失败   </string>
+    
+    <string name="regiest_username">账 号：</string>
+    <string name="regiest_password">密 码：</string>
+    <string name="regiest_repassword">重 复：</string>
+    <string name="regiest_email">邮 箱：</string>
+    <string name="regiest_username_hint">  请输入账号    </string>
+    <string name="regiest_password_hint">  请输入密码    </string>
+    <string name="regiest_repassword_hint">  请再次输入密码    </string>
+    <string name="regiest_email_hint">  xx.@xx.com    </string>
+    <string name="regiest_success"> 注册成功   </string>
+    <string name="regiest_faile"> 注册失败   </string>
+    
+    <string name="login">登录</string>
+    <string name="userinfo">用户信息</string>
+    <string name="logout">注销</string>
+    <string name="findpsw">找回密码</string>
+    <string name="regiest">注册</string>
+    <string name="more">更多</string>
+
+</resources>
