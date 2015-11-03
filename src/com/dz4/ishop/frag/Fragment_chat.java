@@ -14,6 +14,7 @@ import com.dz4.support.widget.BaseFragment;
  * ¹ºÎï³µµÄfragment
  * @author MZone
  *
+*
  */
 public class Fragment_chat extends  BaseFragment{
 	private View rootview;
