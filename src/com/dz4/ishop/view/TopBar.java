@@ -52,6 +52,7 @@ public class TopBar extends RelativeLayout {
 	}
 	
 	protected void getResource(AttributeSet attrs){
+		
 		TypedArray ta =this.getContext().obtainStyledAttributes(attrs,R.styleable.topbar);
 		
 		titleText = ta.getString(R.styleable.topbar_titleText); 

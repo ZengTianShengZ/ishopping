@@ -31,6 +31,7 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
  *
  */
 public class MainActivity extends FragmentBaseActivity implements TitlechangeListener,TopBar.onTopBarbtnclickListener{
+	
 	private BottomTagView BottomTag_home;
 	private BottomTagView BottomTag_chat;
 	private BottomTagView BottomTag_me;
@@ -78,7 +79,7 @@ public class MainActivity extends FragmentBaseActivity implements TitlechangeLis
 		mTopBar.setRightButtonImage(getResources().getDrawable(R.drawable.ic_action_edit));
 		mTopBar.setLeftButtonImage(getResources().getDrawable(R.drawable.avatar_default_circle));
 		mTopBar.setLeftButtonVisible(View.VISIBLE);
-		mTopBar.setRightButtonVisible(View.GONE);
+		mTopBar.setRightButtonVisible(View.VISIBLE);
 		
 	}
 	public void initData() {
@@ -103,11 +104,9 @@ public class MainActivity extends FragmentBaseActivity implements TitlechangeLis
 					};
 				} );
 			}
-			mTopBar.setRightButtonVisible(View.VISIBLE);
 			
 		}else{
 			mTopBar.setLeftButtonImage(getResources().getDrawable(R.drawable.avatar_default_circle));
-			mTopBar.setRightButtonVisible(View.GONE);
 		}
 	}
 
@@ -185,7 +184,7 @@ public class MainActivity extends FragmentBaseActivity implements TitlechangeLis
 
 	private void hideFragment(FragmentTransaction mTransaction) {
 		// TODO 自动生成的方法存根
-		changePage(4);
+		changePage(100);
 		if(mFragment_home!=null){
 			mTransaction.hide(mFragment_home);
 		}

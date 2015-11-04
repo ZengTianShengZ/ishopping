@@ -4,9 +4,9 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:orientation="vertical" >
-
+		<!--标题  -->
     <include layout="@layout/topbar" />
-
+		<!-- 主体 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
