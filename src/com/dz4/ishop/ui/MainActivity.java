@@ -48,6 +48,8 @@ public class MainActivity extends FragmentBaseActivity implements TitlechangeLis
 	private View page2;
 	
 	private User user;
+	
+	private boolean me_flag=false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
@@ -156,6 +158,10 @@ public class MainActivity extends FragmentBaseActivity implements TitlechangeLis
 					break;
 			
 			}
+			mTopBar.setLeftButtonVisible(View.VISIBLE);
+			mTopBar.setRightButtonVisible(View.VISIBLE);
+			mTopBar.setRightButtonImage(getResources().getDrawable(R.drawable.ic_action_edit));
+			me_flag=false;
 			break;
 		case 1:
 			if(mFragment_chat==null){
@@ -165,6 +171,10 @@ public class MainActivity extends FragmentBaseActivity implements TitlechangeLis
 				mTransaction.show(mFragment_chat);
 			}
 			changeTitle(R.string.title_chat);
+			mTopBar.setLeftButtonVisible(View.VISIBLE);
+			mTopBar.setRightButtonVisible(View.VISIBLE);
+			mTopBar.setRightButtonImage(getResources().getDrawable(R.drawable.ic_action_edit));
+			me_flag=false;
 			break;
 		case 2:
 			if(mFragment_me==null){
@@ -174,6 +184,10 @@ public class MainActivity extends FragmentBaseActivity implements TitlechangeLis
 				mTransaction.show(mFragment_me);
 			}
 			changeTitle(R.string.title_me);
+			mTopBar.setLeftButtonVisible(View.GONE);
+			mTopBar.setRightButtonVisible(View.VISIBLE);
+			mTopBar.setRightButtonImage(getResources().getDrawable(R.drawable.ic_action_setting));
+			me_flag=true;
 			break;
 			
 		default:
@@ -235,13 +249,17 @@ public class MainActivity extends FragmentBaseActivity implements TitlechangeLis
 	@Override
 	public void rightbtnclick(View v) {
 		// TODO 自动生成的方法存根
-		if(user!=null){
-			Intent intent = new Intent(this,EditQiangActivity.class);
-			startActivity(intent);
-		}
-		else{
-			Intent intent = new Intent(this,LoginActivity.class);
-			startActivity(intent);
+		if(me_flag!=true){
+			if(user!=null){
+				Intent intent = new Intent(this,EditQiangActivity.class);
+				startActivity(intent);
+			}
+			else{
+				Intent intent = new Intent(this,LoginActivity.class);
+				startActivity(intent);
+			}
+		}else{
+			showToast("setting");
 		}
 	}
 

@@ -12,17 +12,18 @@
         android:orientation="vertical" >
 
         <LinearLayout
-            
+            android:id="@+id/me_userinfo"
              android:background="@drawable/item_btn_state"
         		android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3"
             android:orientation="horizontal"
-            android:padding="10dp" >
+            android:padding="10dp" 
+            >
 
             <ImageView
-                android:id="@+id/user_icon_image"
+                android:id="@+id/me_usericon"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center_vertical"
@@ -37,20 +38,22 @@
                 android:padding="10dp" >
 
                 <TextView
+                    android:id="@+id/me_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="bottom"
-                    android:text="czmz"
+                    android:text="未登录"
                     android:textSize="20sp"
                     android:theme="@style/TextTheme" />
 
                 <TextView
+                    android:id="@+id/me_signature"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="top"
-                    android:text="签名" />
+                    android:text="他很懒，什么都没有留下!" />
             </LinearLayout>
         </LinearLayout>
         <!-- 分割线 -->
@@ -76,11 +79,12 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical" >
-
+								<!-- 发表数量 -->
                 <TextView
+                    android:id="@+id/publish_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1" />
+                    android:text="0" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -95,11 +99,12 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical" >
-
+							<!-- 关注数量 -->
                 <TextView
+                    android:id="@+id/focus_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2" />
+                    android:text="0" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -116,9 +121,10 @@
                 android:orientation="vertical" >
 
                 <TextView
+                    android:id="@+id/comment_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3" />
+                    android:text="0" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -145,8 +151,9 @@
             android:orientation="vertical" >
 
             <!-- 第一条 -->
-
+						<!-- 发表过的 -->
             <LinearLayout
+                android:id="@+id/publish_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/item_btn_state"
@@ -180,8 +187,9 @@
                 android:background="#dddddd" >
             </View>
             <!-- 第二条 -->
-
+						<!-- 评论过的 -->
             <LinearLayout
+                android:id="@+id/comment_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/item_btn_state"

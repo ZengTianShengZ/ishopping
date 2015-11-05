@@ -23,8 +23,9 @@ public interface Constant {
 	int BIAN_BAI = 3;
 
 	int CONTENT_TYPE = 4;
-
-	String PRE_NAME = "my_pre";
+	//MSG
+	public static final int MSG_LOGIN_CHANGE =0x121212;
+	public static final int MSG_USERINFO_CHANGE =0x111;
 
 	public static final int PUBLISH_COMMENT = 1;
 	public static final int NUMBERS_PER_PAGE = 15;// 每次请求返回评论条数
@@ -34,4 +35,14 @@ public interface Constant {
 
 	public static final String SEX_MALE = "male";
 	public static final String SEX_FEMALE = "female";
+	
+	public static final String BUNDLE_KEY_SIGNATURE = "pass_signature";
+	public static final String BUNDLE_KEY_USER = "pass_user";
+	public static final String BUNDLE_KEY_HANDLER = "pass_Hanlder";
+	
+	/**
+	 * sharepreference
+	 */
+	public static final String PRE_NAME = "my_pre";
+	public static final String SHARE_KEY_LOGINFLAG ="islogin";
 }

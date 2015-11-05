@@ -69,6 +69,11 @@
             android:theme="@style/AppTheme"
             >
         </activity>
+         <activity
+            android:name="com.dz4.ishop.ui.EditSigntureActivity"
+            android:theme="@style/mydialogTheme1"
+            >
+        </activity>
         <activity
             android:name="com.dz4.ishop.ui.UserInfoActivity"
             android:theme="@style/AppTheme"

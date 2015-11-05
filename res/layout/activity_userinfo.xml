@@ -19,6 +19,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/selector_settings_item_down"
             android:paddingBottom="8dp"
+            android:clickable="true"
             android:paddingTop="8dp" >
 
             <TextView
@@ -31,6 +32,7 @@
 
             <ImageView
                 android:id="@+id/user_icon_image"
+                android:padding="10dp"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_alignParentRight="true"
@@ -50,6 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/selector_settings_item_down"
+            android:clickable="true"
             android:paddingBottom="8dp"
             android:paddingTop="8dp" >
 
@@ -118,6 +121,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/selector_settings_item_down"
+            android:clickable="true"
             android:paddingBottom="8dp"
             android:paddingTop="8dp" >
 
@@ -191,6 +195,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/selector_settings_item_down"
+            android:clickable="true"
             android:paddingBottom="8dp"
             android:paddingTop="8dp" >
 
@@ -215,6 +220,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/selector_settings_item_down"
+            android:clickable="true"
             android:paddingBottom="8dp"
             android:paddingTop="8dp" >
 

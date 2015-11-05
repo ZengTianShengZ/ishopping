@@ -4,9 +4,12 @@ package com.dz4.ishop.app;
 import java.io.File;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Handler;
 import cn.bmob.v3.BmobUser;
 
 import com.dz4.ishop.domain.User;
+import com.dz4.ishop.utils.Constant;
 import com.dz4.support.app.IApplication;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
@@ -23,10 +26,12 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
 
 public class IshopApplication extends IApplication {
 	private boolean mIsFirstLaunch=true;
+	private SharedPreferences pre;
 	@Override
 	public void onCreate() {
 		// TODO 自动生成的方法存根
 		initImageLoader(getApplicationContext());
+		pre=getSharedPreferences(Constant.PRE_NAME, Context.MODE_WORLD_WRITEABLE);
 		super.onCreate();
 		
 	}
@@ -37,9 +42,36 @@ public class IshopApplication extends IApplication {
 		}
 		return null;
 	}
+	private Handler mhandler;
+	public Handler getHandler(){
+		return mhandler;
+	}
+	public void setHandler(Handler mhandler){
+		this.mhandler = mhandler;
+	}
+	/**
+	 * 登录标记
+	 */
+	public void setLogin(){
+		pre.edit().putBoolean(Constant.SHARE_KEY_LOGINFLAG, true).commit();
+	}
 	
 	/**
+	 * 注销标记
+	 */
+	public void removeLogin(){
+		pre.edit().putBoolean(Constant.SHARE_KEY_LOGINFLAG, false).commit();
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean getloginState(){
+		return pre.getBoolean(Constant.SHARE_KEY_LOGINFLAG, false);
+	}
+	/**
 	 * 初始化imageLoader
+	 * 确定内存缓存大小，二级缓存位置   
 	 */
 	public void initImageLoader(Context context){
 		File cacheDir = StorageUtils.getCacheDirectory(context);
@@ -63,4 +95,5 @@ public class IshopApplication extends IApplication {
 	public void setFirstLaunch(boolean isFirstLaunch) {
 		mIsFirstLaunch = isFirstLaunch;
 	}
+	
 }

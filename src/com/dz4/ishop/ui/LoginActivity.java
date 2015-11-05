@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import cn.bmob.v3.Bmob;
 
+import com.dz4.ishop.app.IshopApplication;
 import com.dz4.ishop.proxy.UserProxy;
 import com.dz4.ishop.utils.Constant;
 import com.dz4.ishop.view.TopBar;
@@ -116,6 +117,9 @@ public class LoginActivity extends BaseUIActivity implements TopBar.onTopBarbtnc
 		
 		cancelProgressDialog();
 		showToast(R.string.login_success);
+		IshopApplication appdata=((IshopApplication)getApplication());
+		appdata.setLogin();//±ê¼ÇµÇÂ¼
+		appdata.getHandler().sendEmptyMessage(Constant.MSG_LOGIN_CHANGE);
 		finish();
 	}
 

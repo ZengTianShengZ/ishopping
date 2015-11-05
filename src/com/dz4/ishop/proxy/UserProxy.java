@@ -23,7 +23,7 @@ public class UserProxy {
 	}
 	/**
 	 * 
-	 * 签名
+	 * 注册
 	 * 
 	 * @param userName
 	 * @param password
@@ -232,6 +232,7 @@ public class UserProxy {
 		void onResetSuccess();
 		void onResetFailure(String msg);
 	}
+	
 	private onResetPasswordListener resetPasswordListener;
 	public void setOnResetPasswordListener(onResetPasswordListener resetPasswordListener){
 		this.resetPasswordListener = resetPasswordListener;

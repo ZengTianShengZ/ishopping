@@ -7,5 +7,5 @@ import com.dz4.support.service.LocalService;
  *
  */
 public class IshopService extends LocalService {
-
+	
 }

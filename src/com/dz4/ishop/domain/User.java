@@ -1,5 +1,7 @@
 package com.dz4.ishop.domain;
 
+import java.io.Serializable;
+
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.datatype.BmobRelation;
@@ -10,7 +12,7 @@ import cn.bmob.v3.datatype.BmobRelation;
  * @author MZone
  *
  */
-public class User extends BmobUser {
+public class User extends BmobUser implements Serializable{
 	
 	private String signature;
 	private BmobFile avatar;
