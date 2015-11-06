@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Date;
 
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -27,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.UpdateListener;
+import cn.bmob.v3.listener.UploadFileListener;
 
 import com.dz4.ishop.app.IshopApplication;
 import com.dz4.ishop.domain.User;
@@ -42,7 +44,8 @@ import com.dz4.support.utils.UtilsTools;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
-public class UserInfoActivity extends BaseUIActivity implements TopBar.onTopBarbtnclickListener,OnClickListener {
+public class UserInfoActivity extends BaseUIActivity implements
+TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener {
 	private final String TAG ="UserInfoActivity";
 	
 	private Context mContext;
@@ -50,9 +53,11 @@ public class UserInfoActivity extends BaseUIActivity implements TopBar.onTopBarb
 	private ImageView usericon;
 	private TextView usernickname_Text;
 	private CheckBox sex_checkbox;
+	private CheckBox push_checkbox;
 	private TextView usersign_Text;
 	private View usersign;
 	private View iconitem;
+	private View cl_cache;
 	
 	private String iconurl;
 	private String username;
@@ -84,8 +89,10 @@ public class UserInfoActivity extends BaseUIActivity implements TopBar.onTopBarb
 		iconitem =(View) findViewById(R.id.user_icon);
 		usernickname_Text =(TextView)findViewById(R.id.user_nick_text);
 		sex_checkbox =(CheckBox) findViewById(R.id.sex_choice_switch);
+		push_checkbox =(CheckBox) findViewById(R.id.settings_push_switch);
 		usersign_Text = (TextView) findViewById(R.id.user_sign_text);
 		usersign=(View)findViewById(R.id.user_sign);
+		cl_cache = (View)findViewById(R.id.settings_cache);
 		
 	}
 	public void logout(View v){
@@ -151,6 +158,17 @@ public class UserInfoActivity extends BaseUIActivity implements TopBar.onTopBarb
 		} );
 	}
 	@Override
+	public void initEvent() {
+		// TODO 自动生成的方法存根
+		iconitem.setOnClickListener(this);
+		usersign.setOnClickListener(this);
+		
+		sex_checkbox.setOnCheckedChangeListener(this);
+		push_checkbox.setOnCheckedChangeListener(this);
+		cl_cache.setOnClickListener(this);
+		
+	}
+	@Override
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
@@ -163,7 +181,12 @@ public class UserInfoActivity extends BaseUIActivity implements TopBar.onTopBarb
 			break;
 		case R.id.user_icon:
 			LogUtils.i(TAG, "user_icon click");
-			//showAlbumDialog();
+			showAlbumDialog();
+			break;
+		case R.id.settings_cache:
+			ImageLoader.getInstance().clearMemoryCache();
+			ImageLoader.getInstance().clearDiscCache();
+			showToast("清除图片缓存");
 			break;
 		default:
 			break;
@@ -171,39 +194,42 @@ public class UserInfoActivity extends BaseUIActivity implements TopBar.onTopBarb
 	}
 
 	@Override
-	public void initEvent() {
+	public void onCheckedChanged(CompoundButton buttonView,
+			boolean isChecked) {
 		// TODO 自动生成的方法存根
-		iconitem.setOnClickListener(this);
-		usersign.setOnClickListener(this);
-		
-		sex_checkbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView,
-					boolean isChecked) {
-				// TODO 自动生成的方法存根
-				if(isChecked){
-					user.setSex(Constant.SEX_FEMALE);
-				}else{
-					user.setSex(Constant.SEX_MALE);
-				}
-				user.update(getApplicationContext(), new UpdateListener() {
-					
-					@Override
-					public void onSuccess() {
-						// TODO 自动生成的方法存根
-						showToast("数据更新成功");
-					}
-					
-					@Override
-					public void onFailure(int arg0, String arg1) {
-						// TODO 自动生成的方法存根
-						showToast("数据更新失败");
-					}
-				});
-				
+		switch(buttonView.getId()){
+		case R.id.sex_choice_switch:
+			if(isChecked){
+				user.setSex(Constant.SEX_FEMALE);
+			}else{
+				user.setSex(Constant.SEX_MALE);
 			}
-		});
+			user.update(getApplicationContext(), new UpdateListener() {
+				
+				@Override
+				public void onSuccess() {
+					// TODO 自动生成的方法存根
+					showToast("数据更新成功");
+				}
+				
+				@Override
+				public void onFailure(int arg0, String arg1) {
+					// TODO 自动生成的方法存根
+					showToast("数据更新失败");
+				}
+			});
+			break;
+		case R.id.settings_push_switch:
+			if(isChecked){
+				//user.
+				showToast("接受推送消息");
+				LogUtils.i(TAG, "push is allow!");
+			}else{
+				showToast("不接受推送消息");
+				LogUtils.i(TAG, "push is not allow!");
+			}
+			break;
+		}
 	}
 	@Override
 	public void rightbtnclick(View v) {
@@ -216,15 +242,12 @@ public class UserInfoActivity extends BaseUIActivity implements TopBar.onTopBarb
 		finish();
 	}
 	public void showAlbumDialog() {
-		albumDialog = new AlertDialog.Builder(mContext).create();
-		albumDialog.setCanceledOnTouchOutside(false);
 		View v = LayoutInflater.from(mContext).inflate(
 				R.layout.dialog_usericon, null);
-		albumDialog.setContentView(v);
-		albumDialog.getWindow().setGravity(Gravity.CENTER);
+		AlertDialog.Builder builder =new Builder(UserInfoActivity.this);
+		builder.setView(v);
+		albumDialog=builder.create();
 		albumDialog.show();
-		
-
 		TextView albumPic = (TextView) v.findViewById(R.id.album_pic);
 		TextView cameraPic = (TextView) v.findViewById(R.id.camera_pic);
 		albumPic.setOnClickListener(new OnClickListener() {
@@ -237,7 +260,7 @@ public class UserInfoActivity extends BaseUIActivity implements TopBar.onTopBarb
 				albumDialog.dismiss();
 				Date date1 = new Date(System.currentTimeMillis());
 				dateTime = date1.getTime() + "";
-				//getAvataFromAlbum();
+				getAvataFromAlbum();
 			}
 		});
 		cameraPic.setOnClickListener(new OnClickListener() {
@@ -248,15 +271,23 @@ public class UserInfoActivity extends BaseUIActivity implements TopBar.onTopBarb
 				albumDialog.dismiss();
 				Date date = new Date(System.currentTimeMillis());
 				dateTime = date.getTime() + "";
-				//getAvataFromCamera();
+				getAvataFromCamera();
 			}
 		});
 	}
+	/**
+	 * 相簿取得图片，
+	 * 结果通过onActivityReslut返回
+	 */
 	private void getAvataFromAlbum() {
 		Intent intent2 = new Intent(Intent.ACTION_GET_CONTENT);
 		intent2.setType("image/*");
 		startActivityForResult(intent2, 2);
 	}
+	/**
+	 * 相机取得图片
+	 * 结果通过onActivityReslut返回
+	 */
 	private void getAvataFromCamera() {
 		File f = new File(CacheUtils.getCacheDirectory(mContext, true, "icon")
 				+ dateTime);
@@ -275,27 +306,30 @@ public class UserInfoActivity extends BaseUIActivity implements TopBar.onTopBarb
 		camera.putExtra(MediaStore.EXTRA_OUTPUT, uri);
 		startActivityForResult(camera, 1);
 	}
+	/**
+	 * 裁剪头像图片
+	 * 结果通过onActivityReslut返回
+	 * @param uri
+	 * 
+	 */
 	public void startPhotoZoom(Uri uri) {
 		Intent intent = new Intent("com.android.camera.action.CROP");
 		intent.setDataAndType(uri, "image/*");
-		// 锟斤拷锟斤拷锟斤拷锟絚rop=true锟斤拷锟斤拷锟斤拷锟节匡拷锟斤拷锟斤拷Intent锟斤拷锟斤拷锟斤拷锟斤拷示锟斤拷VIEW锟缴裁硷拷
-		// aspectX aspectY 锟角匡拷叩谋锟斤拷锟�
-		intent.putExtra("aspectX", 1);
-		intent.putExtra("aspectY", 1);
-		// outputX outputY 锟角裁硷拷图片锟斤拷锟�
-		intent.putExtra("outputX", 120);
-		intent.putExtra("outputY", 120);
-		intent.putExtra("crop", "true");
-		intent.putExtra("scale", true);// 去锟斤拷锟节憋拷
-		intent.putExtra("scaleUpIfNeeded", true);// 去锟斤拷锟节憋拷
-		// intent.putExtra("noFaceDetection", true);//锟斤拷锟斤拷识锟斤拷
-		intent.putExtra("return-data", true);
+		intent.putExtra("aspectX", 1);//X方向上的比例
+		intent.putExtra("aspectY", 1);//Y方向上的比例
+		intent.putExtra("outputX", 120);//裁剪区的宽
+		intent.putExtra("outputY", 120);//裁剪区的高
+		intent.putExtra("crop", "true");//发送裁剪信号
+		intent.putExtra("scale", true);//是否保留比例
+		intent.putExtra("scaleUpIfNeeded", true);
+		// intent.putExtra("noFaceDetection", true);
+		intent.putExtra("return-data", true);//是否返回数据
 		startActivityForResult(intent, 3);
 
 	}
 	public String saveToSdCard(Bitmap bitmap) {
 		String files = CacheUtils.getCacheDirectory(mContext, true, "icon")
-				+ dateTime + "_12";
+				+ dateTime + "_12.jpg";
 		File file = new File(files);
 		try {
 			FileOutputStream out = new FileOutputStream(file);
@@ -313,6 +347,45 @@ public class UserInfoActivity extends BaseUIActivity implements TopBar.onTopBarb
 		LogUtils.i(TAG, file.getAbsolutePath());
 		return file.getAbsolutePath();
 	}
+	private void setAvata(String avataPath) {
+		if (avataPath != null) {
+			final BmobFile f = new BmobFile(new File(avataPath));
+			f.upload(mContext, new UploadFileListener() {
+				@Override
+				public void onSuccess() {
+					user.setAvatar(f);
+					user.update(mContext, new UpdateListener() {
+						
+						@Override
+						public void onSuccess() {
+							// TODO 自动生成的方法存根
+							LogUtils.i(TAG, "上传头像成功");
+							showToast("上传头像成功");
+							initData();
+						}
+						@Override
+						public void onFailure(int arg0, String arg1) {
+							// TODO 自动生成的方法存根
+							LogUtils.i(TAG, "上传头像失败");
+							showToast("上传头像失败");
+						}
+					});
+					LogUtils.i(TAG, "加载头像到Bmob成功");
+				}
+				@Override
+				public void onProgress(Integer value) {
+					// TODO 自动生成的方法存根
+					super.onProgress(value);
+				}
+				@Override
+				public void onFailure(int arg0, String arg1) {
+					// TODO 自动生成的方法存根
+					LogUtils.i(TAG, arg1);
+					showToast(arg1);
+				}
+				});
+			}
+		}
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent data) {
@@ -344,6 +417,7 @@ public class UserInfoActivity extends BaseUIActivity implements TopBar.onTopBarb
 						Bitmap bitmap = extras.getParcelable("data");
 						// 锟斤拷锟斤拷图片
 						iconUrl = saveToSdCard(bitmap);
+						setAvata(iconUrl);
 						usericon.setImageBitmap(bitmap);
 					}
 				}
@@ -351,6 +425,8 @@ public class UserInfoActivity extends BaseUIActivity implements TopBar.onTopBarb
 			default:
 				break;
 			}
+			
 		}
 	}
+	
 }
