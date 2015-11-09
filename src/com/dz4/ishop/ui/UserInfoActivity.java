@@ -103,7 +103,9 @@ TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener {
 				// TODO 自动生成的方法存根
 				new UserProxy(getApplicationContext()).logout();
 				((IshopApplication)getApplication()).removeLogin();//清楚登录标记
-				mHandler.sendEmptyMessage(Constant.MSG_LOGIN_CHANGE);
+				if(mHandler!=null){
+					mHandler.sendEmptyMessage(Constant.MSG_LOGIN_CHANGE);
+				}
 				finish();
 			}
 		}, new OnClickListener() {

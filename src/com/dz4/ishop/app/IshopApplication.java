@@ -6,6 +6,8 @@ import java.io.File;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobACL;
 import cn.bmob.v3.BmobUser;
 
 import com.dz4.ishop.domain.User;
@@ -31,6 +33,7 @@ public class IshopApplication extends IApplication {
 	public void onCreate() {
 		// TODO 自动生成的方法存根
 		initImageLoader(getApplicationContext());
+		Bmob.initialize(getApplicationContext(), Constant.BMOB_APP_ID);
 		pre=getSharedPreferences(Constant.PRE_NAME, Context.MODE_WORLD_WRITEABLE);
 		super.onCreate();
 		

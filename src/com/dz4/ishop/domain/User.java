@@ -17,6 +17,7 @@ public class User extends BmobUser implements Serializable{
 	private String signature;
 	private BmobFile avatar;
 	private BmobRelation favorite;
+	private BmobRelation focus;
 	private String sex;
 
 	public String getSex() {
@@ -33,6 +34,14 @@ public class User extends BmobUser implements Serializable{
 
 	public void setFavorite(BmobRelation favorite) {
 		this.favorite = favorite;
+	}
+
+	public BmobRelation getFocus() {
+		return this.focus;
+	}
+
+	public void setFocus(BmobRelation focus) {
+		this.focus = focus;
 	}
 
 	public BmobFile getAvatar() {

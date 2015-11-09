@@ -34,7 +34,7 @@ public class RegisterActivity extends BaseUIActivity implements onTopBarbtnclick
 	private UserProxy mUserProxy;
 	@Override
 	public void initView() {
-		// TODO ×Ô¶¯Éú³ÉµÄ·½·¨´æ¸ù
+		// TODO ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ÉµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_regiest);
 		mTopBar = (TopBar) this.findViewById(R.id.topbar);
@@ -51,14 +51,13 @@ public class RegisterActivity extends BaseUIActivity implements onTopBarbtnclick
 
 	@Override
 	public void initData() {
-		// TODO ×Ô¶¯Éú³ÉµÄ·½·¨´æ¸ù
-		Bmob.initialize(getApplicationContext(), Constant.BMOB_APP_ID);
+		// TODO ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ÉµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		mUserProxy=new UserProxy(this);
 	}
 
 	@Override
 	public void initEvent() {
-		// TODO ×Ô¶¯Éú³ÉµÄ·½·¨´æ¸ù
+		// TODO ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ÉµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		mTopBar.setTopBarbtnclickListener(this);
 		regiest_btn.setOnClickListener(this);
 		mUserProxy.setOnSignUpListener(this);
@@ -66,19 +65,19 @@ public class RegisterActivity extends BaseUIActivity implements onTopBarbtnclick
 
 	@Override
 	public void rightbtnclick(View v) {
-		// TODO ×Ô¶¯Éú³ÉµÄ·½·¨´æ¸ù
+		// TODO ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ÉµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		
 	}
 
 	@Override
 	public void leftbtnclick(View v) {
-		// TODO ×Ô¶¯Éú³ÉµÄ·½·¨´æ¸ù
+		// TODO ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ÉµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		finish();
 	}
 
 	@Override
 	public void onClick(View v) {
-		// TODO ×Ô¶¯Éú³ÉµÄ·½·¨´æ¸ù
+		// TODO ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ÉµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		username = input_username.getEditableText().toString();
 		password = input_password.getEditableText().toString();
 		email = input_email.getEditableText().toString();
@@ -93,7 +92,7 @@ public class RegisterActivity extends BaseUIActivity implements onTopBarbtnclick
 	}
 
 	private boolean isValid(String username, String password, String email,String repassword) {
-		// TODO ×Ô¶¯Éú³ÉµÄ·½·¨´æ¸ù
+		// TODO ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ÉµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		if(UtilsTools.isStringInvalid(username)){
 			showToast("username Invalid");
 			return false;
@@ -120,7 +119,7 @@ public class RegisterActivity extends BaseUIActivity implements onTopBarbtnclick
 
 	@Override
 	public void onSignUpSuccess() {
-		// TODO ×Ô¶¯Éú³ÉµÄ·½·¨´æ¸ù
+		// TODO ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ÉµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		
 		cancelProgressDialog();
 		showToast(R.string.regiest_success);
@@ -129,7 +128,7 @@ public class RegisterActivity extends BaseUIActivity implements onTopBarbtnclick
 
 	@Override
 	public void onSignUpFailure(String msg) {
-		// TODO ×Ô¶¯Éú³ÉµÄ·½·¨´æ¸ù
+		// TODO ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ÉµÄ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		
 		cancelProgressDialog();
 		showToast(msg);

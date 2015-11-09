@@ -1,10 +1,19 @@
 package com.dz4.ishop.adapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobRelation;
+import cn.bmob.v3.listener.DeleteListener;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.UpdateListener;
+
+import com.dz4.ishop.app.IshopApplication;
 import com.dz4.ishop.domain.QiangItem;
+import com.dz4.ishop.domain.User;
 import com.dz4.ishop.utils.ImageUtils;
-import com.dz4.ishop.utils.LogUtils;
 import com.dz4.ishopping.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
@@ -26,11 +35,15 @@ import android.widget.Toast;
  *
  */
 public class QiangListAdapter extends BaseAdapter{
+	private final String TAG = "QiangListAdapter";
 	private ArrayList<QiangItem> Datalist;
 	private Context mContext;
-	public QiangListAdapter(Context mContext,ArrayList Datalist){
+	private IshopApplication app;
+	private BmobRelation focusRelation;
+	public QiangListAdapter(Context mContext,ArrayList Datalist, IshopApplication app){
 		this.Datalist=Datalist;
 		this.mContext=mContext;
+		this.app=app;
 	}
 	@Override
 	public int getCount() {
@@ -112,21 +125,54 @@ public class QiangListAdapter extends BaseAdapter{
 						
 					};
 				} );
-		if (mQiangItem.isFocus()) {
+		if(mQiangItem.isFocus()){
 			viewHolder.focus.setChecked(true);
-		} else {
+		}else{
 			viewHolder.focus.setChecked(false);
 		}
 		viewHolder.focus.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				mQiangItem.setFocus(!mQiangItem.isFocus());
-				viewHolder.focus.setChecked(mQiangItem.isFocus());
+				User user =app.getCurrentUser();
+				if(user==null){
+					return ;
+				}
+				User targetUser = mQiangItem.getAuthor();
+				BmobRelation relation =null;
+				if(!mQiangItem.isFocus()){
+					if(user.getFocus()==null){
+						user.setFocus(new BmobRelation());
+					}
+					user.getFocus().add(targetUser);
+					//user.setFocus(relation);
+					user.update(mContext, new UpdateListener() {
+						@Override
+						public void onSuccess() {
+							mQiangItem.setFocus(true);
+							Toast.makeText(mContext, "已关注", Toast.LENGTH_SHORT).show();
+						}
+						@Override
+						public void onFailure(int arg0, String arg1) {
+							Toast.makeText(mContext, "关注失败"+arg1, Toast.LENGTH_SHORT).show();
+						}
+					});
+				}
+				else{
+					user.getFocus().remove(targetUser);
+					user.update(mContext,new UpdateListener(){
+						@Override
+						public void onSuccess() {
+							Toast.makeText(mContext, "取消关注", Toast.LENGTH_SHORT).show();
+						}
+						
+						@Override
+						public void onFailure(int arg0, String arg1) {
+							Toast.makeText(mContext, "取消关注失败", Toast.LENGTH_SHORT).show();
+						}
+					});
+				}
 			}
 		});
-		
 		return convertView;
 	}
 	public  class ViewHolder {

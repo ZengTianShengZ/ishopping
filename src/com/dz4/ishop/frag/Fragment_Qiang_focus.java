@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobDate;
@@ -21,6 +22,7 @@ import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.listener.FindListener;
 
 import com.dz4.ishop.adapter.QiangListAdapter;
+import com.dz4.ishop.app.IshopApplication;
 import com.dz4.ishop.domain.QiangItem;
 import com.dz4.ishop.domain.User;
 import com.dz4.ishop.listener.TitlechangeListener;
@@ -97,7 +99,7 @@ public class Fragment_Qiang_focus extends BaseFragment {
 		// TODO 自动生成的方法存根
 		mPullRefreshListView.setMode(Mode.BOTH);
 		mListItems =new ArrayList<QiangItem>();
-		mQiangListAdapter = new QiangListAdapter(getContext(),mListItems);
+		mQiangListAdapter = new QiangListAdapter(getContext(),mListItems,((IshopApplication)getActivity().getApplication()));
 		actualListView.setAdapter(mQiangListAdapter);
 		if(mListItems.size() == 0){
 			mRefreshType=RefreshType.Refresh;

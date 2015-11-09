@@ -56,7 +56,6 @@ public class MainActivity extends FragmentBaseActivity implements TitlechangeLis
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		Bmob.initialize(getApplicationContext(),Constant.BMOB_APP_ID);
 		initView();
 		setSelected(0);
 		BottomTag_home.setIconAlpha(1);

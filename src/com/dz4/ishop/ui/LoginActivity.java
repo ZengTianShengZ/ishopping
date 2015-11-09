@@ -107,6 +107,9 @@ public class LoginActivity extends BaseUIActivity implements TopBar.onTopBarbtnc
 		username=input_username.getEditableText().toString();
 		password=input_password.getEditableText().toString();
 		mUserProxy.login(username, password);
+		if(((IshopApplication)getApplication()).getHandler()!=null){
+			((IshopApplication)getApplication()).getHandler().sendEmptyMessage(Constant.MSG_LOGIN_CHANGE);
+		}
 		showProgressDialog();
 				
 	}
@@ -119,7 +122,6 @@ public class LoginActivity extends BaseUIActivity implements TopBar.onTopBarbtnc
 		showToast(R.string.login_success);
 		IshopApplication appdata=((IshopApplication)getApplication());
 		appdata.setLogin();//±ê¼ÇµÇÂ¼
-		appdata.getHandler().sendEmptyMessage(Constant.MSG_LOGIN_CHANGE);
 		finish();
 	}
 

@@ -19,6 +19,7 @@ import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.listener.FindListener;
 
 import com.dz4.ishop.adapter.QiangListAdapter;
+import com.dz4.ishop.app.IshopApplication;
 import com.dz4.ishop.domain.QiangItem;
 import com.dz4.ishop.domain.User;
 import com.dz4.ishop.listener.TitlechangeListener;
@@ -52,6 +53,7 @@ public class Fragment_Qiang extends BaseFragment {
 	private RefreshType mRefreshType=RefreshType.Loadmore;
 	private int pageNum;
 	
+	private User user;
 	public static BaseFragment newInstance(int position) {
 		// TODO 自动生成的方法存根
 		BaseFragment fragment = new Fragment_Qiang();
@@ -97,9 +99,10 @@ public class Fragment_Qiang extends BaseFragment {
 	@Override
 	public void initData() {
 		// TODO 自动生成的方法存根
+		user =((IshopApplication)getActivity().getApplication()).getCurrentUser();
 		mPullRefreshListView.setMode(Mode.BOTH);
 		mListItems =new ArrayList<QiangItem>();
-		mQiangListAdapter = new QiangListAdapter(getContext(),mListItems);
+		mQiangListAdapter = new QiangListAdapter(getContext(),mListItems,((IshopApplication)getActivity().getApplication()));
 		actualListView.setAdapter(mQiangListAdapter);
 		if(mListItems.size() == 0){
 			mRefreshType=RefreshType.Refresh;
@@ -162,9 +165,13 @@ public class Fragment_Qiang extends BaseFragment {
 					if(mRefreshType==RefreshType.Refresh){
 						mListItems.clear();
 					}
+					
 					if(list.size()<Constant.NUMBERS_PER_PAGE){
+						
 					}
+					
 					List<QiangItem> Targetlist = list;
+					Targetlist = setfocus(Targetlist);
 					mListItems.addAll(Targetlist);
 					mQiangListAdapter.notifyDataSetChanged();
 					
@@ -175,6 +182,36 @@ public class Fragment_Qiang extends BaseFragment {
 					setLoadingState(LOADING_COMPLETED);
 					mPullRefreshListView.onRefreshComplete();
 				}
+			}
+
+			private List<QiangItem> setfocus(List<QiangItem> list) {
+				// TODO 自动生成的方法存根
+				if(list!=null && user!=null){
+					for(final QiangItem qi:list){
+						BmobQuery<User> query = new BmobQuery<User>();
+						query.addWhereContains("focus", qi.getAuthor().getObjectId());
+						query.findObjects(getContext(), new FindListener<User>() {
+							@Override
+							public void onSuccess(List<User> focuslist) {
+								// TODO 自动生成的方法存根
+								if(!focuslist.isEmpty()){
+									qi.setFocus(true);
+								}
+								else{
+									qi.setFocus(false);
+								}
+								mQiangListAdapter.notifyDataSetChanged();
+							}
+							
+							@Override
+							public void onError(int arg0, String arg1) {
+								// TODO 自动生成的方法存根
+								
+							}
+						});
+					}
+				}
+				return list;
 			}
 		});
 		
