@@ -4,23 +4,26 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import android.annotation.SuppressLint;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,14 +32,20 @@ import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
+import com.bmob.BmobProFile;
+import com.bmob.btp.callback.UploadBatchListener;
+import com.dz4.ImageUpload_9_zss.utils.ZssMyAdapter;
 import com.dz4.ishop.domain.QiangItem;
 import com.dz4.ishop.domain.User;
 import com.dz4.ishop.utils.CacheUtils;
+import com.dz4.ishop.utils.LogUtils;
 import com.dz4.ishop.view.TopBar;
 import com.dz4.ishopping.R;
 import com.dz4.support.activity.BaseUIActivity;
+import com.dz4.support.app.IApplication;
 
 public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBarbtnclickListener,OnClickListener{
+	
 	private TopBar mTopBar;
 	private TextView qiang_content;
 	private LinearLayout openLayout;
@@ -45,6 +54,13 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 	private ImageView albumPic;
 	private ImageView takePic;
 	private Context mContext;
+	
+	private ZssMyAdapter zssMyAadapter; 
+	private GridView gridView;
+	public static ArrayList<String>  imgItem = new ArrayList<String>();
+	public static ArrayList<String>  imgDirPath = new ArrayList<String>();
+	public static ArrayList<BmobFile>  BmobFileList = new ArrayList<BmobFile>();
+	
 	
 	private static final int REQUEST_CODE_ALBUM = 1;
 	private static final int REQUEST_CODE_CAMERA = 2;
@@ -67,6 +83,7 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 		takePic = (ImageView) findViewById(R.id.take_pic);
 		
 		mContext = getApplicationContext();
+		gridView = (GridView)findViewById(R.id.edit_activity_gridView);
 	}
 
 	@Override
@@ -92,7 +109,7 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 			showToast("内容不能为空");
 			return;
 		}
-		if (targeturl == null) {
+		if (imgItem == null) {
 			publishWithoutFigure(commitContent, null);
 		} else {
 			publish(commitContent);
@@ -123,11 +140,12 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
 		case R.id.open_layout:
-			Date date = new Date(System.currentTimeMillis());
-			dateTime = date.getTime() + "";
-			Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-			intent.setDataAndType(MediaStore.Images.Media.INTERNAL_CONTENT_URI,
-					"image/*");
+//			Date date = new Date(System.currentTimeMillis());
+//			dateTime = date.getTime() + "";
+//			Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//			intent.setDataAndType(MediaStore.Images.Media.INTERNAL_CONTENT_URI,
+//					"image/*");
+			Intent intent  = new Intent(getApplicationContext(),ShowImageActivity.class);
 			startActivityForResult(intent, REQUEST_CODE_ALBUM);
 			break;
 		case R.id.take_layout:
@@ -157,49 +175,74 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 	 * 发表带图片
 	 */
 	private void publish(final String commitContent) {
+			
+			showProgressDialog("正在上传");
+			targeturls = new String[sourcepathlist.size()];
+				int i =0;
+				//压缩
+				for(String path :sourcepathlist){
+					Bitmap bitmap = compressImageFromFile(path);
+		 			targeturls[i] =saveToSdCard(bitmap);
+		 			i++;
+				}
 
-		// final BmobFile figureFile = new BmobFile(QiangYu.class, new
-		// File(targeturl));
+	 		BmobProFile.getInstance(mContext).uploadBatch(targeturls, new UploadBatchListener() {
 
-		final BmobFile figureFile = new BmobFile(new File(targeturl));
+	          
+	            public void onSuccess(boolean isFinish,String[] fileNames,String[] urls,BmobFile[] files) {
+	                // isFinish ：批量上传是否完成
+	                // fileNames：文件名数组
+	                // urls        : url：文件地址数组
+	                // files     : BmobFile文件数组，`V3.4.1版本`开始提供，用于兼容新旧文件服务。
+	                //注：若上传的是图片，url(s)并不能直接在浏览器查看（会出现404错误），需要经过`URL签名`得到真正的可访问的URL地址,当然，`V3.4.1`版本可直接从BmobFile中获得可访问的文件地址。
+	        	    
+	        	    if(isFinish) {
+	            		publishWithoutFigure(commitContent, files);
+	            	}
+	            	cancelProgressDialog();
+	            }
 
-		figureFile.upload(mContext, new UploadFileListener() {
+	            
+	            public void onProgress(int curIndex, int curPercent, int total,int totalPercent) {
+	                // curIndex    :表示当前第几个文件正在上传
+	                // curPercent  :表示当前上传文件的进度值（百分比）
+	                // total       :表示总的上传文件数
+	                // totalPercent:表示总的上传进度（百分比）
+	        	    showProgressDialog("图片上传中");
+	            	 
+	            }
 
-			@Override
-			public void onSuccess() {
-				// TODO Auto-generated method stub
-				publishWithoutFigure(commitContent, figureFile);
-
-			}
-
-			@Override
-			public void onProgress(Integer arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onFailure(int arg0, String arg1) {
-				// TODO Auto-generated method stub
-			}
-		});
-
-	}
+	          
+	            public void onError(int statuscode, String errormsg) {
+	                // TODO Auto-generated method stub
+	        	    cancelProgressDialog();
+	        	    showToast("图片上传失败");
+	            }
+	        });
+	 		}
 	private void publishWithoutFigure(final String commitContent,
-			final BmobFile figureFile) {
+			final BmobFile[] BmobFileList) {
 		User user = BmobUser.getCurrentUser(mContext, User.class);
 
+		// JavaBean  对数据set 到 JavaBean 里面
 		final QiangItem qiangitem = new QiangItem();
 		qiangitem.setAuthor(user);
 		qiangitem.setContent(commitContent);
-		if (figureFile != null) {
-			qiangitem.setContentfigureurl(figureFile);
+		 
+		if (BmobFileList != null) {
+			int flag=0;
+			for(BmobFile bf:BmobFileList){
+				qiangitem.setBmobFileList(bf,flag);
+				flag++;
+				Log.i("BmobFileList", bf.getFileUrl(mContext)+".....");
+			}
 		}
 		qiangitem.setLove(0);
 		qiangitem.setHate(0);
 		qiangitem.setShare(0);
 		qiangitem.setComment(0);
 		qiangitem.setPass(true);
+		// Bmob 添加  JavaBean 的  方法  ！！！
 		qiangitem.save(mContext, new SaveListener() {
 
 			@Override
@@ -209,7 +252,6 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 				setResult(RESULT_OK);
 				finish();
 			}
-
 			@Override
 			public void onFailure(int arg0, String arg1) {
 				// TODO Auto-generated method stub
@@ -219,8 +261,9 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 	}
 
 	String targeturl = null;
+	private String[] targeturls=null;
+	private ArrayList<String> sourcepathlist;
 
-	@SuppressLint("NewApi")
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
@@ -228,30 +271,26 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
 			case REQUEST_CODE_ALBUM:
-				String fileName = null;
-				if (data != null) {
-					Uri originalUri = data.getData();
-					ContentResolver cr = getContentResolver();
-					Cursor cursor = cr.query(originalUri, null, null, null,
-							null);
-					if (cursor.moveToFirst()) {
-						do {
-							fileName = cursor.getString(cursor
-									.getColumnIndex("_data"));
-						} while (cursor.moveToNext());
-					}
-					Bitmap bitmap = compressImageFromFile(fileName);
-					targeturl = saveToSdCard(bitmap);
-					albumPic.setBackgroundDrawable(new BitmapDrawable(bitmap));
-					takeLayout.setVisibility(View.GONE);
+				imgItem = data.getStringArrayListExtra("imgItem");
+				imgDirPath = data.getStringArrayListExtra("imgDirPath");
+				//图片太大，先显示原图片，发送时压缩发送
+				sourcepathlist =new ArrayList<String>();
+		 		for(int i=0;i<imgItem.size();i++){
+		 			sourcepathlist.add(imgDirPath.get(i)+"/"+imgItem.get(i));
+		 		}
+				if(sourcepathlist != null){ 
+					
+					zssMyAadapter = new ZssMyAdapter(getApplicationContext(),sourcepathlist,
+							R.layout.zss_show_image);
+					gridView.setAdapter(zssMyAadapter); 
 				}
 				break;
 			case REQUEST_CODE_CAMERA:
-				String files = CacheUtils.getCacheDirectory(mContext, true,
+				String filename = CacheUtils.getCacheDirectory(mContext, true,
 						"pic") + dateTime;
-				File file = new File(files);
+				File file = new File(filename);
 				if (file.exists()) {
-					Bitmap bitmap = compressImageFromFile(files);
+					Bitmap bitmap = compressImageFromFile(filename);
 					targeturl = saveToSdCard(bitmap);
 					takePic.setBackgroundDrawable(new BitmapDrawable(bitmap));
 					openLayout.setVisibility(View.GONE);
@@ -296,6 +335,8 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 	}
 
 	public String saveToSdCard(Bitmap bitmap) {
+		Date date = new Date(System.currentTimeMillis());
+		dateTime = date.getTime() + "";
 		String files = CacheUtils.getCacheDirectory(mContext, true, "pic")
 				+ dateTime + "_11.jpg";
 		File file = new File(files);

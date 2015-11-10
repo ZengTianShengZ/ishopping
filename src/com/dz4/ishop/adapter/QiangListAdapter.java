@@ -14,6 +14,7 @@ import com.dz4.ishop.app.IshopApplication;
 import com.dz4.ishop.domain.QiangItem;
 import com.dz4.ishop.domain.User;
 import com.dz4.ishop.utils.ImageUtils;
+import com.dz4.ishop.view.innerGridView;
 import com.dz4.ishopping.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
@@ -40,10 +41,12 @@ public class QiangListAdapter extends BaseAdapter{
 	private Context mContext;
 	private IshopApplication app;
 	private BmobRelation focusRelation;
+	private GridViewAdapter mGridViewAdapter;
 	public QiangListAdapter(Context mContext,ArrayList Datalist, IshopApplication app){
 		this.Datalist=Datalist;
 		this.mContext=mContext;
 		this.app=app;
+		
 	}
 	@Override
 	public int getCount() {
@@ -80,8 +83,8 @@ public class QiangListAdapter extends BaseAdapter{
 					.findViewById(R.id.item_action_focus);
 			viewHolder.contentText = (TextView) convertView
 					.findViewById(R.id.content_text);
-			viewHolder.contentImage = (ImageView) convertView
-					.findViewById(R.id.content_image);
+			viewHolder.contentImage = (innerGridView) convertView
+					.findViewById(R.id.content_image_gridView);
 			viewHolder.love = (TextView) convertView
 					.findViewById(R.id.item_action_love);
 			viewHolder.hate = (TextView) convertView
@@ -106,13 +109,36 @@ public class QiangListAdapter extends BaseAdapter{
 			viewHolder.contentImage.setVisibility(View.GONE);
 		} else {
 			viewHolder.contentImage.setVisibility(View.VISIBLE);
-		ImageLoader.getInstance().displayImage(
-				mQiangItem.getContentfigureurl().getFileUrl(mContext)==null ?"":mQiangItem.getContentfigureurl().getFileUrl(mContext),
-				viewHolder.contentImage, ImageUtils.getOptions(R.drawable.bg_pic_loading),new SimpleImageLoadingListener(){
-					public void onLoadingComplete(String imageUri, View view, android.graphics.Bitmap loadedImage) {
-						
-					};
-				} );
+			//viewHolder.contentImage.setAdapter(adapter);
+//		ImageLoader.getInstance().displayImage(
+//				mQiangItem.getContentfigureurl().getFileUrl(mContext)==null ?"":mQiangItem.getContentfigureurl().getFileUrl(mContext),
+//				viewHolder.contentImage, ImageUtils.getOptions(R.drawable.bg_pic_loading),new SimpleImageLoadingListener(){
+//					public void onLoadingComplete(String imageUri, View view, android.graphics.Bitmap loadedImage) {
+//						
+//					};
+//				} );
+		//TODO
+			ArrayList<String> paths = new ArrayList<String>();
+			if(mQiangItem.getContentfigureurl()!=null)
+				paths.add(mQiangItem.getContentfigureurl().getFileUrl(mContext));
+			if(mQiangItem.getContentfigureurl1()!=null)
+				paths.add(mQiangItem.getContentfigureurl1().getFileUrl(mContext));
+			if(mQiangItem.getContentfigureurl2()!=null)
+				paths.add(mQiangItem.getContentfigureurl2().getFileUrl(mContext));
+			if(mQiangItem.getContentfigureurl3()!=null)
+				paths.add(mQiangItem.getContentfigureurl3().getFileUrl(mContext));
+			if(mQiangItem.getContentfigureurl4()!=null)
+				paths.add(mQiangItem.getContentfigureurl4().getFileUrl(mContext));
+			if(mQiangItem.getContentfigureurl5()!=null)
+				paths.add(mQiangItem.getContentfigureurl5().getFileUrl(mContext));
+			if(mQiangItem.getContentfigureurl6()!=null)
+				paths.add(mQiangItem.getContentfigureurl6().getFileUrl(mContext));
+			if(mQiangItem.getContentfigureurl7()!=null)
+				paths.add(mQiangItem.getContentfigureurl7().getFileUrl(mContext));
+			if(mQiangItem.getContentfigureurl8()!=null)
+				paths.add(mQiangItem.getContentfigureurl8().getFileUrl(mContext));
+			mGridViewAdapter=new GridViewAdapter(mContext, paths);
+			viewHolder.contentImage.setAdapter(mGridViewAdapter);
 		}
 		
 		
@@ -157,20 +183,6 @@ public class QiangListAdapter extends BaseAdapter{
 						}
 					});
 				}
-				else{
-					user.getFocus().remove(targetUser);
-					user.update(mContext,new UpdateListener(){
-						@Override
-						public void onSuccess() {
-							Toast.makeText(mContext, "取消关注", Toast.LENGTH_SHORT).show();
-						}
-						
-						@Override
-						public void onFailure(int arg0, String arg1) {
-							Toast.makeText(mContext, "取消关注失败", Toast.LENGTH_SHORT).show();
-						}
-					});
-				}
 			}
 		});
 		return convertView;
@@ -180,7 +192,7 @@ public class QiangListAdapter extends BaseAdapter{
 		public TextView userName;
 		public TextView qiangtime;
 		public TextView contentText;
-		public ImageView contentImage;
+		public innerGridView contentImage;
 
 		public CheckBox focus;
 		public TextView love;

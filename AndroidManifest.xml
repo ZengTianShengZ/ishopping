@@ -79,6 +79,11 @@
             android:theme="@style/AppTheme"
             >
         </activity>
+         <activity
+            android:name="com.dz4.ishop.ui.ShowImageActivity"
+            android:theme="@style/AppTheme"
+            >
+           </activity> 
          <service 
             android:name="com.dz4.support.service.LocalService"
             android:exported="false" />

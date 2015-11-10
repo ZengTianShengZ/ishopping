@@ -18,13 +18,27 @@
         android:gravity="left|top"
         android:hint="说说商品的信息吧"
         android:inputType="textMultiLine"
-        android:minLines="8"
+        android:minLines="4"
         android:paddingLeft="4dip"
         android:paddingRight="4dip" >
 
         <requestFocus />
     </EditText>
-
+    <GridView
+        android:layout_margin="15dp"
+        android:id="@+id/edit_activity_gridView"
+        android:layout_below="@id/edit_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:cacheColorHint="@android:color/transparent"
+        android:clipChildren="true"
+        android:gravity="center"
+        android:horizontalSpacing="3dip"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="3"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="3dip" >
+    </GridView>
     <RelativeLayout
         android:id="@+id/pic_content"
         android:layout_width="match_parent"

@@ -86,4 +86,9 @@
        <item  name="android:layout_height">40dp</item>
        <item  name="android:layout_width">match_parent</item>
     </style>
+    <!-- zss ImageUpload -->
+    <style name="anim_popup_dir">
+        <item name="android:windowEnterAnimation">@anim/zss_slide_in</item>
+        <item name="android:windowExitAnimation">@anim/zss_slide_out</item>
+    </style>
 </resources>
