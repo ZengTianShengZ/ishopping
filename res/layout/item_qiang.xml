@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:padding="8dip" 
     android:background="#FFFFFF"
+     android:descendantFocusability="blocksDescendants"
      >
     <ImageView 
         android:id="@+id/user_logo"
@@ -50,7 +51,6 @@
 	    />
 	
 	 <com.dz4.ishop.view.innerGridView
-        android:layout_margin="15dp"
         android:id="@+id/content_image_gridView"
      	 android:layout_below="@id/content_text"
 	    	android:layout_centerHorizontal="true"

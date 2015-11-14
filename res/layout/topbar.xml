@@ -9,7 +9,7 @@
 
     <com.dz4.ishop.view.TopBar
         android:id="@+id/topbar"
-        android:background="#ff8800"
+        android:background="@color/theme_color"
         android:layout_width="match_parent"
         android:layout_height="45dp" 
         

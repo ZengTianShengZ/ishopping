@@ -36,11 +36,9 @@ import android.widget.Toast;
  *
  */
 public class QiangListAdapter extends BaseAdapter{
-	private final String TAG = "QiangListAdapter";
 	private ArrayList<QiangItem> Datalist;
 	private Context mContext;
 	private IshopApplication app;
-	private BmobRelation focusRelation;
 	private GridViewAdapter mGridViewAdapter;
 	public QiangListAdapter(Context mContext,ArrayList Datalist, IshopApplication app){
 		this.Datalist=Datalist;
@@ -73,6 +71,7 @@ public class QiangListAdapter extends BaseAdapter{
 		if(convertView==null){
 			viewHolder = new ViewHolder();
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.item_qiang, null);
+			
 			viewHolder.userName = (TextView) convertView
 					.findViewById(R.id.user_name);
 			viewHolder.userLogo = (ImageView) convertView
@@ -139,6 +138,10 @@ public class QiangListAdapter extends BaseAdapter{
 				paths.add(mQiangItem.getContentfigureurl8().getFileUrl(mContext));
 			mGridViewAdapter=new GridViewAdapter(mContext, paths);
 			viewHolder.contentImage.setAdapter(mGridViewAdapter);
+			viewHolder.contentImage.setFocusable(false);
+			viewHolder.contentImage.setClickable(false);
+			viewHolder.contentImage.setPressed(false);
+			viewHolder.contentImage.setEnabled(false);
 		}
 		
 		

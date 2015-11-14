@@ -55,13 +55,13 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_weight">1</item>
         <item name="android:shadowColor">#00000000</item>
+        <item name="android:textColor">#eeeeee</item>
         <item name="android:shadowDx">0</item>
         <item name="android:shadowDy">0</item>
         <item name="android:shadowRadius">0</item>
         <item name="android:background">@null</item>
         
         <item name="android:textSize">20sp</item>
-        <item name="android:textColor">#121212</item>
         <item name="android:textStyle">normal</item>
     </style>
     <style name="TextTheme.tipstheme">

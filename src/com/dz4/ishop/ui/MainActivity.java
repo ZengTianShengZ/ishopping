@@ -81,7 +81,6 @@ public class MainActivity extends FragmentBaseActivity implements TitlechangeLis
 		mTopBar.setLeftButtonImage(getResources().getDrawable(R.drawable.avatar_default_circle));
 		mTopBar.setLeftButtonVisible(View.VISIBLE);
 		mTopBar.setRightButtonVisible(View.VISIBLE);
-		
 	}
 	public void initData() {
 		// TODO 自动生成的方法存根

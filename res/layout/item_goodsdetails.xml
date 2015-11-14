@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+<RelativeLayout 
+    android:id="@+id/user_info"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/theme_color"
+    >
+    <ImageView
+        android:id="@+id/user_logo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/user_icon_default_main" />
+
+    <TextView
+        android:id="@+id/user_name"
+        style="@style/TitleTextTheme"
+        android:layout_alignTop="@id/user_logo"
+        android:layout_marginLeft="15dip"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/user_logo"
+        android:text="北方狼" />
+
+    <TextView
+        android:id="@+id/qiang_time"
+        style="@style/TitleTextTheme"
+        android:layout_alignBottom="@id/user_logo"
+        android:layout_marginBottom="1dp"
+        android:layout_marginLeft="15dip"
+        android:layout_toRightOf="@id/user_logo"
+        android:text="今天 18：31 上海"
+        android:textSize="12sp" />
+    </RelativeLayout>
+    <android.support.v4.view.ViewPager
+        android:layout_below="@id/user_info"
+        android:id="@+id/ImagePager"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
+	 <TextView
+        android:id="@+id/content_tip"
+        style="@style/TextTheme"
+        android:layout_below="@id/ImagePager"
+        android:layout_marginLeft="10dp"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:text="介绍"/>
+    <TextView
+        android:layout_margin="15dp"
+        android:padding="10dp"
+        android:clickable="true"
+        android:id="@+id/content_text"
+        style="@style/TextTheme"
+        android:background="@drawable/theme_btn_state"
+        android:layout_below="@id/content_tip"
+        android:text="十年之前，我不认识你 你不属于我，我们还是一样，陪在一个陌生人左右，走过渐渐熟悉的街头;十年之后，我们是朋友， 还可以问候，只是那种温柔，再也找不到拥抱的理由，情人最后难免沦为朋友。" />
+
+</RelativeLayout>

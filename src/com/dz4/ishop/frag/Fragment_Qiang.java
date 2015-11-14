@@ -3,17 +3,21 @@ package com.dz4.ishop.frag;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.zip.Inflater;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.listener.FindListener;
@@ -23,6 +27,7 @@ import com.dz4.ishop.app.IshopApplication;
 import com.dz4.ishop.domain.QiangItem;
 import com.dz4.ishop.domain.User;
 import com.dz4.ishop.listener.TitlechangeListener;
+import com.dz4.ishop.ui.GoodsDetailActivity;
 import com.dz4.ishop.utils.Constant;
 import com.dz4.ishop.utils.LogUtils;
 import com.dz4.ishopping.R;
@@ -38,9 +43,10 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
  * @author MZone
  *
  */
-public class Fragment_Qiang extends BaseFragment {
+public class Fragment_Qiang extends BaseFragment{
 	
 	
+	protected static final String TAG = "Fragment_Qiang";
 	private View contentView ;
 	private PullToRefreshListView mPullRefreshListView;
 	private ListView actualListView;
@@ -113,7 +119,17 @@ public class Fragment_Qiang extends BaseFragment {
 	
 	@Override
 	public void initEvent() {
-		// TODO 自动生成的方法存根
+		actualListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent,
+					View view, int position, long id) {
+				// TODO 自动生成的方法存根
+				Intent intent = new Intent(getContext(),GoodsDetailActivity.class);
+				intent.putExtra(Constant.BUNDLE_KEY_IMAGEURLS, mListItems.get(position-1));
+				startActivity(intent);
+				LogUtils.i(TAG, "Itemclick!!");
+			}
+		});
 		mPullRefreshListView.setOnRefreshListener(new OnRefreshListener2<ListView>() {
 			@Override
 			public void onPullDownToRefresh(
@@ -255,4 +271,10 @@ public class Fragment_Qiang extends BaseFragment {
 			break;
 		}
 	}
+
+
+	
+
+
+	
 }

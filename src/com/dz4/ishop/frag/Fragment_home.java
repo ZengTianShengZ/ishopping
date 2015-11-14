@@ -29,6 +29,7 @@ public class Fragment_home extends BaseFragment implements
 	private ViewPager viewPager;
 	private TitlechangeListener mlistener;
 	private int FragramPage = 0;
+	
 	public Fragment_home(TitlechangeListener mlistener) {
 		this.mlistener = mlistener;
 	}

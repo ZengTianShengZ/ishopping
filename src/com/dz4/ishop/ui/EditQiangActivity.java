@@ -109,7 +109,7 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 			showToast("内容不能为空");
 			return;
 		}
-		if (imgItem == null) {
+		if (sourcepathlist == null) {
 			publishWithoutFigure(commitContent, null);
 		} else {
 			publish(commitContent);
