@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@drawable/selector_edittext"
+    >
+
+    <RelativeLayout
+        android:id="@+id/goods_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" >
+
+        <RelativeLayout
+            android:id="@+id/goods_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/goods_name_tip"
+                style="@style/TextTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:text="商品名: " />
+
+            <EditText
+                android:padding="2dp"
+                android:id="@+id/goods_name_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/goods_name_tip"
+                android:background="@drawable/selector_edittext"
+                android:inputType="text"
+                android:hint=" 例：meizu mx5"
+                android:lines="1" >
+                <requestFocus />
+            </EditText>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_below="@id/goods_name"
+            android:id="@+id/goods_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/goods_category_tip"
+                style="@style/TextTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:text="种 类: " />
+
+            <EditText
+                android:padding="2dp"
+                android:id="@+id/goods_category_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/goods_category_tip"
+                android:background="@drawable/selector_edittext"
+                android:inputType="text"
+                android:lines="1" 
+                android:hint=" 例：手机"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+             android:layout_below="@id/goods_category"
+            android:id="@+id/goods_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/goods_price_tip"
+                style="@style/TextTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:text="价 格: " />
+
+            <EditText
+                android:padding="2dp"
+                android:id="@+id/goods_price_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/goods_price_tip"
+                android:background="@drawable/selector_edittext"
+                android:inputType="number"
+                android:lines="1"
+                android:hint="例：1799"
+                 />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

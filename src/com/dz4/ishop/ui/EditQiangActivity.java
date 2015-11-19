@@ -23,18 +23,21 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
 import com.bmob.BmobProFile;
 import com.bmob.btp.callback.UploadBatchListener;
 import com.dz4.ImageUpload_9_zss.utils.ZssMyAdapter;
+import com.dz4.ishop.domain.Goods;
 import com.dz4.ishop.domain.QiangItem;
 import com.dz4.ishop.domain.User;
 import com.dz4.ishop.utils.CacheUtils;
@@ -54,9 +57,13 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 	private ImageView albumPic;
 	private ImageView takePic;
 	private Context mContext;
+	private	EditText goods_name_edit;
+	private	EditText goods_category_edit;
+	private	EditText goods_price_edit;
 	
 	private ZssMyAdapter zssMyAadapter; 
 	private GridView gridView;
+	private Goods goods;
 	public static ArrayList<String>  imgItem = new ArrayList<String>();
 	public static ArrayList<String>  imgDirPath = new ArrayList<String>();
 	public static ArrayList<BmobFile>  BmobFileList = new ArrayList<BmobFile>();
@@ -82,6 +89,10 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 		albumPic = (ImageView) findViewById(R.id.open_pic);
 		takePic = (ImageView) findViewById(R.id.take_pic);
 		
+		goods_name_edit=(EditText)findViewById(R.id.goods_name_edit);
+		goods_category_edit=(EditText)findViewById(R.id.goods_category_edit);
+		goods_price_edit=(EditText)findViewById(R.id.goods_price_edit);
+		
 		mContext = getApplicationContext();
 		gridView = (GridView)findViewById(R.id.edit_activity_gridView);
 	}
@@ -105,14 +116,37 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 	public void rightbtnclick(View v) {
 		// TODO 自动生成的方法存根
 		String commitContent = qiang_content.getText().toString().trim();
+		String goods_name = goods_name_edit.getText().toString().trim();
+		String goods_category = goods_category_edit.getText().toString().trim();
+		String goods_price = goods_price_edit.getText().toString().trim();
+		
+ 		if (TextUtils.isEmpty(goods_name)) {
+			showToast("商品名不能为空");
+			return;
+		}
+ 		if (TextUtils.isEmpty(goods_category)) {
+			showToast("商品种类不能为空");
+			return;
+		}
+ 		if (TextUtils.isEmpty(goods_price)) {
+			showToast("商品价格不能为空");
+			return;
+		}
+ 		goods = new Goods();
+ 		goods.setCategory(goods_category);
+ 		goods.setName(goods_name);
+ 		goods.setPrice(Float.valueOf(goods_price));
+ 		goods.setDetails(commitContent);
+ 		
 		if (TextUtils.isEmpty(commitContent)) {
 			showToast("内容不能为空");
 			return;
 		}
 		if (sourcepathlist == null) {
-			publishWithoutFigure(commitContent, null);
-		} else {
-			publish(commitContent);
+			publishWithoutFigure(commitContent,null, goods);
+		} 
+		else {
+			publish(commitContent,goods);
 		}
 	}
 
@@ -174,7 +208,7 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 	/*
 	 * 发表带图片
 	 */
-	private void publish(final String commitContent) {
+	private void publish(final String commitContent, final Goods goods) {
 			
 			showProgressDialog("正在上传");
 			targeturls = new String[sourcepathlist.size()];
@@ -197,7 +231,7 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 	                //注：若上传的是图片，url(s)并不能直接在浏览器查看（会出现404错误），需要经过`URL签名`得到真正的可访问的URL地址,当然，`V3.4.1`版本可直接从BmobFile中获得可访问的文件地址。
 	        	    
 	        	    if(isFinish) {
-	            		publishWithoutFigure(commitContent, files);
+	            		publishWithoutFigure(commitContent,files,goods);
 	            	}
 	            	cancelProgressDialog();
 	            }
@@ -221,7 +255,7 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 	        });
 	 		}
 	private void publishWithoutFigure(final String commitContent,
-			final BmobFile[] BmobFileList) {
+			final BmobFile[] BmobFileList, final Goods goods) {
 		User user = BmobUser.getCurrentUser(mContext, User.class);
 
 		// JavaBean  对数据set 到 JavaBean 里面
@@ -242,22 +276,38 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 		qiangitem.setShare(0);
 		qiangitem.setComment(0);
 		qiangitem.setPass(true);
-		// Bmob 添加  JavaBean 的  方法  ！！！
-		qiangitem.save(mContext, new SaveListener() {
-
+		
+		goods.save(mContext,new SaveListener() {
+			
 			@Override
 			public void onSuccess() {
-				// TODO Auto-generated method stub
-				showToast("发表成功");
-				setResult(RESULT_OK);
-				finish();
+				// TODO 自动生成的方法存根
+				qiangitem.setGoods(goods);
+				// Bmob 添加  JavaBean 的  方法  ！！！
+				qiangitem.save(mContext, new SaveListener() {
+
+					@Override
+					public void onSuccess() {
+						// TODO Auto-generated method stub
+						showToast("发表成功");
+						setResult(RESULT_OK);
+						finish();
+					}
+					@Override
+					public void onFailure(int arg0, String arg1) {
+						// TODO Auto-generated method stub
+						showToast("发表失败");
+					}
+				});
 			}
+			
 			@Override
 			public void onFailure(int arg0, String arg1) {
-				// TODO Auto-generated method stub
-				showToast("发表失败");
+				// TODO 自动生成的方法存根
+				
 			}
 		});
+		
 	}
 
 	String targeturl = null;
@@ -279,10 +329,12 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 		 			sourcepathlist.add(imgDirPath.get(i)+"/"+imgItem.get(i));
 		 		}
 				if(sourcepathlist != null){ 
-					
+					gridView.setVisibility(View.VISIBLE);
 					zssMyAadapter = new ZssMyAdapter(getApplicationContext(),sourcepathlist,
 							R.layout.zss_show_image);
 					gridView.setAdapter(zssMyAadapter); 
+				}else{
+					gridView.setVisibility(View.GONE);
 				}
 				break;
 			case REQUEST_CODE_CAMERA:

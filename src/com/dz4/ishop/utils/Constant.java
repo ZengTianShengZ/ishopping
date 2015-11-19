@@ -39,7 +39,9 @@ public interface Constant {
 	public static final String BUNDLE_KEY_SIGNATURE = "pass_signature";
 	public static final String BUNDLE_KEY_USER = "pass_user";
 	public static final String BUNDLE_KEY_HANDLER = "pass_Hanlder";
-	public static final String BUNDLE_KEY_IMAGEURLS = "pass_imageurls";
+	public static final String BUNDLE_KEY_AUTHOR = "pass_author";
+	public static final String BUNDLE_KEY_QIANGITEM = "pass_qiangitem";
+	
 	
 	/**
 	 * sharepreference

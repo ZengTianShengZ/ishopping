@@ -13,6 +13,9 @@ import cn.bmob.v3.listener.UpdateListener;
 import com.dz4.ishop.app.IshopApplication;
 import com.dz4.ishop.domain.QiangItem;
 import com.dz4.ishop.domain.User;
+import com.dz4.ishop.ui.LoginActivity;
+import com.dz4.ishop.ui.PersonalActivity;
+import com.dz4.ishop.utils.Constant;
 import com.dz4.ishop.utils.ImageUtils;
 import com.dz4.ishop.view.innerGridView;
 import com.dz4.ishopping.R;
@@ -20,6 +23,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -103,7 +108,14 @@ public class QiangListAdapter extends BaseAdapter{
 		viewHolder.love.setText(mQiangItem.getLove()+"");
 		viewHolder.userName.setText(mQiangItem.getAuthor().getUsername());
 		viewHolder.qiangtime.setText(mQiangItem.getCreatedAt());
-		
+		viewHolder.userLogo.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(mContext,PersonalActivity.class);
+				intent.putExtra(Constant.BUNDLE_KEY_AUTHOR, mQiangItem.getAuthor());
+				mContext.startActivity(intent);
+			}
+		});
 		if (null == mQiangItem.getContentfigureurl()) {
 			viewHolder.contentImage.setVisibility(View.GONE);
 		} else {

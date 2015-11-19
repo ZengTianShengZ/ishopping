@@ -2,17 +2,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF" >
-
+    android:background="#FFFFFF" 
+    android:scrollbars="vertical"
+    >
+	
     <include
         android:id="@+id/topbarlayout"
         layout="@layout/topbar" />
+    
+    <include layout="@layout/part_goodsedit" 
+        android:id="@+id/layout_goods_info"
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_below="@id/topbarlayout" />
 
     <EditText
         android:id="@+id/edit_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/topbarlayout"
+        android:layout_below="@id/layout_goods_info"
         android:layout_margin="16dp"
         android:background="@drawable/selector_edittext"
         android:gravity="left|top"
@@ -22,7 +31,6 @@
         android:paddingLeft="4dip"
         android:paddingRight="4dip" >
 
-        <requestFocus />
     </EditText>
     <GridView
         android:layout_margin="15dp"
@@ -37,14 +45,18 @@
         android:listSelector="@android:color/transparent"
         android:numColumns="3"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="3dip" >
+        android:verticalSpacing="3dip"
+        android:visibility="gone"
+         >
     </GridView>
+    
+    
     <RelativeLayout
         android:id="@+id/pic_content"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/bg_pic_edit"
+        android:background="#00000000"
         android:paddingTop="8dp" >
 
         <View
@@ -57,6 +69,7 @@
             android:background="#00000000" />
 
         <LinearLayout
+            android:alpha="0.85"
             android:id="@+id/open_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -87,6 +100,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:alpha="0.85"
             android:id="@+id/take_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -116,5 +130,4 @@
                 android:text="拍照添加" />
         </LinearLayout>
     </RelativeLayout>
-
 </RelativeLayout>

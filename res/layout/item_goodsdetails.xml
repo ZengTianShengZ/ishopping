@@ -31,30 +31,79 @@
         android:layout_marginBottom="1dp"
         android:layout_marginLeft="15dip"
         android:layout_toRightOf="@id/user_logo"
-        android:text="今天 18：31 上海"
+        android:text="今天 18：31 厦门"
         android:textSize="12sp" />
     </RelativeLayout>
     <android.support.v4.view.ViewPager
         android:layout_below="@id/user_info"
         android:id="@+id/ImagePager"
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
-	 <TextView
-        android:id="@+id/content_tip"
+        android:layout_height="300dp"
+        android:background="@drawable/open_picture" />
+    <!-- goods name -->
+    
+     <LinearLayout  
+         android:id="@+id/layout_dotzone"
+         android:layout_width="match_parent"  
+         android:layout_height="wrap_content"  
+         android:layout_margin="20dip" 
+         android:layout_alignBottom="@id/ImagePager"
+         android:orientation="horizontal"
+         android:gravity="center" /> 
+    <TextView
+        android:padding="5dp"
+        android:id="@+id/goods_name_tip"
         style="@style/TextTheme"
         android:layout_below="@id/ImagePager"
         android:layout_marginLeft="10dp"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:textColor="#000000"
-        android:text="介绍"/>
+        android:text="商品名"/>
+	  <TextView
+	      android:padding="5dp"
+        android:layout_width="match_parent"
+        android:id="@+id/goods_name_text"
+        style="@style/TextTheme"
+        android:textSize="18sp"
+        android:layout_below="@id/ImagePager"
+        android:layout_toRightOf="@id/goods_name_tip"
+        android:text="内容区域.." />
+	  
+	  <!-- category -->
+	  <TextView
+        android:padding="5dp"
+        android:id="@+id/goods_category_tip"
+        style="@style/TextTheme"
+        android:layout_below="@id/goods_name_tip"
+        android:layout_marginLeft="10dp"
+        android:textSize="15sp"
+        android:textColor="#000000"
+        android:text="分类"/>
+	  <TextView
+	      android:padding="5dp"
+        android:layout_width="match_parent"
+        android:id="@+id/goods_category_text"
+        style="@style/TextTheme"
+        android:layout_below="@id/goods_name_text"
+        android:layout_toRightOf="@id/goods_name_tip"
+        android:text="内容区域.." />
+	  <!-- details -->
+	 <TextView
+        android:id="@+id/content_tip"
+        style="@style/TextTheme"
+        android:layout_below="@id/goods_category_tip"
+        android:layout_marginLeft="10dp"
+        android:padding="5dp"
+        android:textSize="15sp"
+        android:textColor="#000000"
+        android:text="描述"/>
     <TextView
-        android:layout_margin="15dp"
-        android:padding="10dp"
-        android:clickable="true"
+        android:padding="5dp"
+        android:layout_width="match_parent"
         android:id="@+id/content_text"
         style="@style/TextTheme"
-        android:background="@drawable/theme_btn_state"
-        android:layout_below="@id/content_tip"
-        android:text="十年之前，我不认识你 你不属于我，我们还是一样，陪在一个陌生人左右，走过渐渐熟悉的街头;十年之后，我们是朋友， 还可以问候，只是那种温柔，再也找不到拥抱的理由，情人最后难免沦为朋友。" />
+        android:layout_below="@id/goods_category_text"
+        android:layout_toRightOf="@id/goods_category_tip"
+        android:text="内容区域.." />
 
 </RelativeLayout>

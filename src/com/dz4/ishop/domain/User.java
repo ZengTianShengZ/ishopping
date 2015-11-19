@@ -19,6 +19,15 @@ public class User extends BmobUser implements Serializable{
 	private BmobRelation favorite;
 	private BmobRelation focus;
 	private String sex;
+	private String location;
+
+	public String getLocation() {
+		return this.location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
 
 	public String getSex() {
 		return sex;

@@ -80,7 +80,7 @@
             app:tagcolor="#008800"
             app:tagicon="@drawable/ic_navi_chat"
             app:tagsize="10dp"
-            app:tagtext="购物车" />
+            app:tagtext="推荐" />
 
         <LinearLayout
             android:layout_width="1dp"

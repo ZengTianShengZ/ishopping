@@ -89,6 +89,16 @@
             android:theme="@style/AppTheme"
             >
            </activity>
+           <activity
+               android:name="com.dz4.ishop.ui.PersonalActivity"
+               android:theme="@style/AppTheme"
+                >
+           </activity>
+           <activity
+               android:name="com.dz4.ishop.ui.NewsActivity"
+               android:theme="@style/AppTheme"
+                >
+           </activity>
          <service 
             android:name="com.dz4.support.service.LocalService"
             android:exported="false" />

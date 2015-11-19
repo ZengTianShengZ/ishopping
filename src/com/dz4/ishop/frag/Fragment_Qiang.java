@@ -125,7 +125,7 @@ public class Fragment_Qiang extends BaseFragment{
 					View view, int position, long id) {
 				// TODO 自动生成的方法存根
 				Intent intent = new Intent(getContext(),GoodsDetailActivity.class);
-				intent.putExtra(Constant.BUNDLE_KEY_IMAGEURLS, mListItems.get(position-1));
+				intent.putExtra(Constant.BUNDLE_KEY_QIANGITEM, mListItems.get(position-1));
 				startActivity(intent);
 				LogUtils.i(TAG, "Itemclick!!");
 			}

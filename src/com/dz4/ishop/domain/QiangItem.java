@@ -31,6 +31,17 @@ public class QiangItem extends BmobObject{
 	private boolean focus;//¹Ø×¢
 	private boolean myLove;//ÔÞ
 	private BmobRelation relation;
+	
+	private Goods goods;
+	
+	public Goods getGoods() {
+		return this.goods;
+	}
+
+	public void setGoods(Goods goods) {
+		this.goods = goods;
+	}
+
 	public void setBmobFileList(BmobFile contentfigureurls,int item){
 		switch (item) {
 		case 0:

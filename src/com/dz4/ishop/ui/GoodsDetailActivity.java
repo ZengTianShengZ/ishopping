@@ -5,9 +5,14 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.format.DateUtils;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -15,6 +20,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.GetListener;
 
 import com.dz4.ishop.adapter.ImagePagerAdapter;
+import com.dz4.ishop.domain.Goods;
 import com.dz4.ishop.domain.QiangItem;
 import com.dz4.ishop.domain.User;
 import com.dz4.ishop.utils.Constant;
@@ -42,10 +48,16 @@ public class GoodsDetailActivity extends BaseUIActivity {
 	private TextView mTimeView;
 	private TextView mContentView;
 	private ProgressBar mProgressBar;
+	private LinearLayout dot_layout;
 	private User author;
 	private String uploadtime;
 	private String username;
 	private String QiangItemId;
+	private ArrayList<View> dots;
+	private TextView goods_name;
+	private TextView goods_category;
+	private TextView goods_price;
+	private Goods goods;
 
 	@Override
 	public void initView() {
@@ -61,15 +73,23 @@ public class GoodsDetailActivity extends BaseUIActivity {
 		mTimeView = (TextView)findViewById(R.id.qiang_time);
 		mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 		mContentView = (TextView)findViewById(R.id.content_text);
+		
+		goods_name = (TextView)rootview.findViewById(R.id.goods_name_text);
+		goods_category= (TextView)rootview.findViewById(R.id.goods_category_text);
+		goods_price = (TextView)findViewById(R.id.goods_price_text);
+		dot_layout = (LinearLayout)findViewById(R.id.layout_dotzone);
+		
+		
 	}
-
+		
 	@Override
 	public void initData() {
 		
 		mContext = getApplicationContext();
-		mQiangItem=(QiangItem)getIntent().getSerializableExtra(Constant.BUNDLE_KEY_IMAGEURLS);
+		mQiangItem=(QiangItem)getIntent().getSerializableExtra(Constant.BUNDLE_KEY_QIANGITEM);
 		author = mQiangItem.getAuthor();
-		mImagePagerAdapter =  new ImagePagerAdapter(mContext,geturlsArray());
+		urls = geturlsArray();
+		mImagePagerAdapter =  new ImagePagerAdapter(mContext,urls);
 		if(imagePager!=null){
 			imagePager.setAdapter(mImagePagerAdapter);
 		}
@@ -81,10 +101,54 @@ public class GoodsDetailActivity extends BaseUIActivity {
 		username = author.getUsername();
 		uploadtime = mQiangItem.getUpdatedAt();
 		QiangItemId = mQiangItem.getObjectId();
+		goods = mQiangItem.getGoods();
 		mNameView.setText(username); 
 		mTimeView.setText(uploadtime);
 		mContentView.setText(mQiangItem.getContent());
-		refreshview.setMode(Mode.PULL_FROM_START);
+		if(goods!=null){
+			goods_name.setText(goods.getName());
+			goods_category.setText(goods.getCategory());
+			goods_price.setText(""+goods.getPrice());
+			refreshview.setMode(Mode.PULL_FROM_START);
+		}
+		initdot();
+		
+	}
+	private void initdot(){
+		dot_layout.removeAllViews();
+		if(urls.isEmpty()) return;
+		for(String url:geturlsArray()){
+			
+			ImageView view =new ImageView(mContext);
+			view.setBackgroundResource(R.drawable.dot_normal);
+			MarginLayoutParams layoutParams = new MarginLayoutParams((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics()),
+					(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,10, getResources().getDisplayMetrics()));
+			layoutParams.setMargins(10, 10, 10, 10);
+			view.setLayoutParams(layoutParams);
+			view.setAlpha(0.5f);
+			dot_layout.addView(view);
+		}
+		dot_layout.getChildAt(0).setBackgroundResource(R.drawable.dot_focused);
+		imagePager.setOnPageChangeListener(new OnPageChangeListener() {
+			int last = 0;
+			@Override
+			public void onPageSelected(int arg0) {
+				// TODO 自动生成的方法存根
+				dot_layout.getChildAt(arg0).setBackgroundResource(R.drawable.dot_focused);
+				dot_layout.getChildAt(last).setBackgroundResource(R.drawable.dot_normal);
+				last = arg0;
+			}
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+				// TODO 自动生成的方法存根
+				
+			}
+			
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+				// TODO 自动生成的方法存根
+			}
+		});
 	}
 	private void loadData(){
 		BmobQuery<QiangItem> query = new BmobQuery<QiangItem>();

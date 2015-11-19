@@ -168,7 +168,7 @@ public class MainActivity extends FragmentBaseActivity implements TitlechangeLis
 			}else{
 				mTransaction.show(mFragment_chat);
 			}
-			changeTitle(R.string.title_chat);
+			changeTitle(R.string.title_hot);
 			mTopBar.setLeftButtonVisible(View.VISIBLE);
 			mTopBar.setRightButtonVisible(View.VISIBLE);
 			mTopBar.setRightButtonImage(getResources().getDrawable(R.drawable.ic_action_edit));
