@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
      >
  <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+     android:background="#eeeeee"
         android:id="@+id/pull_refresh_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -16,6 +17,15 @@
         android:headerDividersEnabled="false"
         android:smoothScrollbar="true" 
         />
+ <ImageView 
+    	 android:id="@+id/back_btn"
+         android:layout_alignParentTop="true"
+         android:layout_width="30dp"
+         android:layout_height="30dp"
+         android:layout_margin="10dp"
+         android:src="@drawable/back"
+         
+         />
  <ProgressBar 
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
@@ -48,8 +58,9 @@
             android:layout_height="match_parent"
             >
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:layout_width="25dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:background="@drawable/money_logo"
                 />
@@ -59,8 +70,12 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:text="100"
-  							style="@style/TextTheme"              
+                android:text="0.0"
+  							style="@style/TextTheme"   
+  							android:textStyle="italic"
+  							android:textColor="#dd0000" 
+  							android:textSize="18sp"
+  							android:alpha="0.95"          
 	                />
             
         </LinearLayout>
@@ -71,26 +86,28 @@
             android:orientation="horizontal"
             >
             <TextView 
-                android:layout_margin="1px"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:clickable="true"
-                android:layout_width="0dp"
-                android:text="加入购物车"
-                android:background="@drawable/yellow_btn_state"
-                android:theme="@style/SingleButton"
-                />
-            <TextView 
+                android:id="@+id/comment_btn"
                 android:layout_margin="1px"
                 android:layout_weight="1"
                 android:clickable="true"
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
                 android:background="@drawable/red_btn_state"
-                android:text="购买"
+                android:text="评论"
                 android:theme="@style/SingleButton"
                 />
-            
+            <TextView 
+                android:id="@+id/contact_btn"
+                android:layout_margin="1px"
+                android:layout_weight="2"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:layout_width="0dp"
+                android:text="联系他"
+                android:background="@drawable/yellow_btn_state"
+                android:theme="@style/SingleButton"
+                />
+             
         </LinearLayout>
         
     </LinearLayout>

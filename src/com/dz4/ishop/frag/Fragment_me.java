@@ -20,6 +20,7 @@ import cn.bmob.v3.datatype.BmobFile;
 import com.dz4.ishop.app.IshopApplication;
 import com.dz4.ishop.domain.User;
 import com.dz4.ishop.ui.LoginActivity;
+import com.dz4.ishop.ui.PersonalActivity;
 import com.dz4.ishop.ui.UserInfoActivity;
 import com.dz4.ishop.utils.Constant;
 import com.dz4.ishop.utils.ImageUtils;
@@ -49,6 +50,7 @@ public class Fragment_me extends  BaseFragment implements OnClickListener{
 	private String iconurl;
 	
 	private IshopApplication appdata;
+	private View myPublish;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,6 +80,8 @@ public class Fragment_me extends  BaseFragment implements OnClickListener{
 		mUsername =(TextView) rootview.findViewById(R.id.me_username);
 		mSignature =(TextView) rootview.findViewById(R.id.me_signature);
 		mUser_info =(View) rootview.findViewById(R.id.me_userinfo);
+		myPublish=(View)rootview.findViewById(R.id.publish_content);
+		
 	}
 
 	@Override
@@ -110,6 +114,7 @@ public class Fragment_me extends  BaseFragment implements OnClickListener{
 	public void initEvent() {
 		// TODO 自动生成的方法存根
 		mUser_info.setOnClickListener(this);
+		myPublish.setOnClickListener(this);
 	}
 	@Override
 	public void onClick(View v) {
@@ -128,9 +133,17 @@ public class Fragment_me extends  BaseFragment implements OnClickListener{
 				startActivity(intent);
 			}
 			break;
+		case R.id.publish_content:
+			if(appdata.getloginState()){
+				Intent intent = new Intent(getContext(),PersonalActivity.class);
+				intent.putExtra(Constant.BUNDLE_KEY_AUTHOR, mUser);
+				startActivity(intent);
+			}else{
+				Intent intent = new Intent(getContext(),LoginActivity.class);
+				startActivity(intent);
+			}
+			break;
 		}
+		
 	}
-	
-
-	
 }

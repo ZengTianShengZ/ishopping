@@ -3,7 +3,6 @@ package com.dz4.ishop.frag;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import android.os.Bundle;
 import android.os.Message;
@@ -14,20 +13,16 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.datatype.BmobPointer;
+import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.listener.FindListener;
 
-import com.dz4.ishop.adapter.QiangListAdapter;
-import com.dz4.ishop.app.IshopApplication;
-import com.dz4.ishop.domain.QiangItem;
+import com.dz4.ishop.adapter.ContactListAdapter;
 import com.dz4.ishop.domain.User;
-import com.dz4.ishop.listener.TitlechangeListener;
 import com.dz4.ishop.utils.Constant;
-import com.dz4.ishop.utils.LogUtils;
 import com.dz4.ishopping.R;
 import com.dz4.support.widget.BaseFragment;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -49,8 +44,8 @@ public class Fragment_Qiang_focus extends BaseFragment {
 	private TextView networkTips;
 	private ProgressBar progressbar;
 	
-	private ArrayList<QiangItem> mListItems;
-	private QiangListAdapter mQiangListAdapter;
+	private ArrayList<User> mListItems;
+	private ContactListAdapter mContactListAdapter;
 	private enum RefreshType {Refresh,Loadmore};
 	private RefreshType mRefreshType=RefreshType.Loadmore;
 	private int pageNum;
@@ -66,7 +61,7 @@ public class Fragment_Qiang_focus extends BaseFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
-		contentView = getLayoutInflater(savedInstanceState).inflate(R.layout.fragment_qiang, null, false);
+		contentView = getLayoutInflater(savedInstanceState).inflate(R.layout.fragment_focus, null, false);
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -98,9 +93,9 @@ public class Fragment_Qiang_focus extends BaseFragment {
 	public void initData() {
 		// TODO 自动生成的方法存根
 		mPullRefreshListView.setMode(Mode.BOTH);
-		mListItems =new ArrayList<QiangItem>();
-		mQiangListAdapter = new QiangListAdapter(getContext(),mListItems,((IshopApplication)getActivity().getApplication()));
-		actualListView.setAdapter(mQiangListAdapter);
+		mListItems =new ArrayList<User>();
+		mContactListAdapter = new ContactListAdapter(getContext(),mListItems);
+		actualListView.setAdapter(mContactListAdapter);
 		if(mListItems.size() == 0){
 			mRefreshType=RefreshType.Refresh;
 			pageNum=0;
@@ -137,15 +132,15 @@ public class Fragment_Qiang_focus extends BaseFragment {
 	protected void loadData() {
 		setLoadingState(LOADING);
 		User user = BmobUser.getCurrentUser(getActivity(), User.class);
-		BmobQuery<QiangItem> query = new BmobQuery<QiangItem>();
-		query.addWhereRelatedTo("favourite", new BmobPointer(user));
+		BmobQuery<User> query = new BmobQuery<User>();
+		query.addWhereRelatedTo("focus", new BmobPointer(user));
 		query.order("-createdAt");
 		query.setLimit(Constant.NUMBERS_PER_PAGE);
 		BmobDate date = new BmobDate(new Date(System.currentTimeMillis()));
 		query.addWhereLessThan("createdAt", date);
 		query.setSkip(Constant.NUMBERS_PER_PAGE*(pageNum++));
 		query.include("author");
-		query.findObjects(getActivity(), new FindListener<QiangItem>() {
+		query.findObjects(getActivity(), new FindListener<User>() {
 			@Override
 			public void onError(int arg0, String arg1) {
 				// TODO 自动生成的方法存根
@@ -155,7 +150,7 @@ public class Fragment_Qiang_focus extends BaseFragment {
 			}
 
 			@Override
-			public void onSuccess(List<QiangItem> list) {
+			public void onSuccess(List<User> list) {
 				// TODO 自动生成的方法存根
 				if(list.size()!=0&&list.get(list.size()-1)!=null){
 					if(mRefreshType==RefreshType.Refresh){
@@ -163,9 +158,10 @@ public class Fragment_Qiang_focus extends BaseFragment {
 					}
 					if(list.size()<Constant.NUMBERS_PER_PAGE){
 					}
-					List<QiangItem> Targetlist = list;
+					List<User> Targetlist = list;
 					mListItems.addAll(Targetlist);
-					mQiangListAdapter.notifyDataSetChanged();
+					mContactListAdapter.notifyDataSetChanged();
+					
 					
 					setLoadingState(LOADING_COMPLETED);
 					mPullRefreshListView.onRefreshComplete();

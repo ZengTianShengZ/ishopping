@@ -28,10 +28,12 @@ public interface Constant {
 	public static final int MSG_USERINFO_CHANGE =0x111;
 
 	public static final int PUBLISH_COMMENT = 1;
+	public static final int CHANGER_COMMENT = 0x99;
 	public static final int NUMBERS_PER_PAGE = 15;// 每次请求返回评论条数
 	public static final int SAVE_FAVOURITE = 2;
 	public static final int GET_FAVOURITE = 3;
 	public static final int GO_SETTINGS = 4;
+	
 
 	public static final String SEX_MALE = "male";
 	public static final String SEX_FEMALE = "female";
@@ -41,6 +43,7 @@ public interface Constant {
 	public static final String BUNDLE_KEY_HANDLER = "pass_Hanlder";
 	public static final String BUNDLE_KEY_AUTHOR = "pass_author";
 	public static final String BUNDLE_KEY_QIANGITEM = "pass_qiangitem";
+	public static final String BUNDLE_KEY_COMMENT = "pass_comment";
 	
 	
 	/**

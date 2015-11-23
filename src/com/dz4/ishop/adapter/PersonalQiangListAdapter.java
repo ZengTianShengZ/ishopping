@@ -74,6 +74,7 @@ public class PersonalQiangListAdapter extends BaseAdapter{
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO 自动生成的方法存根
 		final ViewHolder viewHolder;
+		
 		if(convertView==null){
 			viewHolder = new ViewHolder();
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.item_qiang, null);

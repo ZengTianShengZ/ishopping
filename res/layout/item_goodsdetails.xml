@@ -1,109 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-<RelativeLayout 
-    android:id="@+id/user_info"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/theme_color"
-    >
-    <ImageView
-        android:id="@+id/user_logo"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/user_icon_default_main" />
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
 
-    <TextView
-        android:id="@+id/user_name"
-        style="@style/TitleTextTheme"
-        android:layout_alignTop="@id/user_logo"
-        android:layout_marginLeft="15dip"
-        android:layout_marginTop="5dp"
-        android:layout_toRightOf="@id/user_logo"
-        android:text="北方狼" />
-
-    <TextView
-        android:id="@+id/qiang_time"
-        style="@style/TitleTextTheme"
-        android:layout_alignBottom="@id/user_logo"
-        android:layout_marginBottom="1dp"
-        android:layout_marginLeft="15dip"
-        android:layout_toRightOf="@id/user_logo"
-        android:text="今天 18：31 厦门"
-        android:textSize="12sp" />
-    </RelativeLayout>
     <android.support.v4.view.ViewPager
-        android:layout_below="@id/user_info"
         android:id="@+id/ImagePager"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:background="@drawable/open_picture" />
     <!-- goods name -->
-    
-     <LinearLayout  
-         android:id="@+id/layout_dotzone"
-         android:layout_width="match_parent"  
-         android:layout_height="wrap_content"  
-         android:layout_margin="20dip" 
-         android:layout_alignBottom="@id/ImagePager"
-         android:orientation="horizontal"
-         android:gravity="center" /> 
-    <TextView
-        android:padding="5dp"
-        android:id="@+id/goods_name_tip"
-        style="@style/TextTheme"
+
+    <LinearLayout
+        android:id="@+id/layout_dotzone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/ImagePager"
+        android:layout_margin="20dip"
+        android:gravity="center"
+        android:orientation="horizontal" />
+
+    <RelativeLayout
+        android:id="@+id/user_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/ImagePager"
-        android:layout_marginLeft="10dp"
-        android:textSize="15sp"
-        android:textColor="#000000"
-        android:text="商品名"/>
-	  <TextView
-	      android:padding="5dp"
+        android:layout_margin="3dp"
+        android:background="@drawable/item_btn_state" >
+
+        <ImageView
+            android:id="@+id/user_logo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/user_icon_default_main" />
+
+        <TextView
+            android:id="@+id/user_name"
+            style="@style/TextTheme"
+            android:layout_alignTop="@id/user_logo"
+            android:layout_marginLeft="15dip"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/user_logo"
+            android:text="北方狼" />
+
+        <TextView
+            android:id="@+id/qiang_time"
+            style="@style/TextTheme"
+            android:layout_alignBottom="@id/user_logo"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="15dip"
+            android:layout_toRightOf="@id/user_logo"
+            android:text="今天 18：31 厦门"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/goods_info"
         android:layout_width="match_parent"
-        android:id="@+id/goods_name_text"
-        style="@style/TextTheme"
-        android:textSize="18sp"
-        android:layout_below="@id/ImagePager"
-        android:layout_toRightOf="@id/goods_name_tip"
-        android:text="内容区域.." />
-	  
-	  <!-- category -->
-	  <TextView
-        android:padding="5dp"
-        android:id="@+id/goods_category_tip"
-        style="@style/TextTheme"
-        android:layout_below="@id/goods_name_tip"
-        android:layout_marginLeft="10dp"
-        android:textSize="15sp"
-        android:textColor="#000000"
-        android:text="分类"/>
-	  <TextView
-	      android:padding="5dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_info"
+        android:layout_margin="3dp"
+        android:background="@drawable/item_btn_state"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/goods_name_tip"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginLeft="10dp"
+                android:text="商品名"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="#bbbbbb" />
+
+            <TextView
+                android:id="@+id/goods_name_text"
+                style="@style/TextTheme"
+                android:layout_width="match_parent"
+                android:layout_margin="5dp"
+                android:text="内容区域.."
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <!-- category -->
+
+            <TextView
+                android:id="@+id/goods_category_tip"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:text="分类"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="#bbbbbb" />
+
+            <TextView
+                android:id="@+id/goods_category_text"
+                style="@style/TextTheme"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:text="内容区域.." />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <!-- details -->
+
+            <TextView
+                android:id="@+id/content_tip"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:text="描述"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="#bbbbbb" />
+
+            <TextView
+                android:id="@+id/content_text"
+                style="@style/TextTheme"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:text="内容区域.." />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/comment"
         android:layout_width="match_parent"
-        android:id="@+id/goods_category_text"
-        style="@style/TextTheme"
-        android:layout_below="@id/goods_name_text"
-        android:layout_toRightOf="@id/goods_name_tip"
-        android:text="内容区域.." />
-	  <!-- details -->
-	 <TextView
-        android:id="@+id/content_tip"
-        style="@style/TextTheme"
-        android:layout_below="@id/goods_category_tip"
-        android:layout_marginLeft="10dp"
-        android:padding="5dp"
-        android:textSize="15sp"
-        android:textColor="#000000"
-        android:text="描述"/>
-    <TextView
-        android:padding="5dp"
-        android:layout_width="match_parent"
-        android:id="@+id/content_text"
-        style="@style/TextTheme"
-        android:layout_below="@id/goods_category_text"
-        android:layout_toRightOf="@id/goods_category_tip"
-        android:text="内容区域.." />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/goods_info"
+        android:layout_margin="3dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/more_comment"
+            style="@style/TextTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_btn_state"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="查看评论" />
+        <ListView
+            android:visibility="gone"
+            android:id="@+id/comment_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:layout_marginBottom="50dp"
+            >
+        </ListView>
+    </LinearLayout>
 
 </RelativeLayout>

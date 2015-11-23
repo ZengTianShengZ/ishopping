@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="com.dz4.ishop.ui.SplashActivity" 
      >
 
     <com.dz4.ishop.view.TopBar
@@ -12,7 +11,6 @@
         android:background="@color/theme_color"
         android:layout_width="match_parent"
         android:layout_height="45dp" 
-        
         custom:titleColor="#eeeeee"
         custom:titleSize="6sp"
        />

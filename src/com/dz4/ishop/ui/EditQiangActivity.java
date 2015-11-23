@@ -64,6 +64,7 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 	private ZssMyAdapter zssMyAadapter; 
 	private GridView gridView;
 	private Goods goods;
+	private EditText sailer_phone_edit;
 	public static ArrayList<String>  imgItem = new ArrayList<String>();
 	public static ArrayList<String>  imgDirPath = new ArrayList<String>();
 	public static ArrayList<BmobFile>  BmobFileList = new ArrayList<BmobFile>();
@@ -92,6 +93,8 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 		goods_name_edit=(EditText)findViewById(R.id.goods_name_edit);
 		goods_category_edit=(EditText)findViewById(R.id.goods_category_edit);
 		goods_price_edit=(EditText)findViewById(R.id.goods_price_edit);
+		sailer_phone_edit=(EditText)findViewById(R.id.sailer_phone_edit);
+		
 		
 		mContext = getApplicationContext();
 		gridView = (GridView)findViewById(R.id.edit_activity_gridView);
@@ -119,6 +122,8 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 		String goods_name = goods_name_edit.getText().toString().trim();
 		String goods_category = goods_category_edit.getText().toString().trim();
 		String goods_price = goods_price_edit.getText().toString().trim();
+		String sailer_phone = sailer_phone_edit.getText().toString().trim();
+		
 		
  		if (TextUtils.isEmpty(goods_name)) {
 			showToast("商品名不能为空");
@@ -132,12 +137,16 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 			showToast("商品价格不能为空");
 			return;
 		}
+ 		if (TextUtils.isEmpty(sailer_phone)) {
+			showToast("联系电话不能为空");
+			return;
+		}
  		goods = new Goods();
  		goods.setCategory(goods_category);
  		goods.setName(goods_name);
  		goods.setPrice(Float.valueOf(goods_price));
  		goods.setDetails(commitContent);
- 		
+ 		goods.setCellphone(sailer_phone);
 		if (TextUtils.isEmpty(commitContent)) {
 			showToast("内容不能为空");
 			return;
@@ -276,6 +285,7 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 		qiangitem.setShare(0);
 		qiangitem.setComment(0);
 		qiangitem.setPass(true);
+		qiangitem.setFocus(false);
 		
 		goods.save(mContext,new SaveListener() {
 			

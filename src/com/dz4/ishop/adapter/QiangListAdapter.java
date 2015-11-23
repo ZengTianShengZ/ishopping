@@ -1,19 +1,20 @@
 package com.dz4.ishop.adapter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobDate;
+import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.datatype.BmobRelation;
-import cn.bmob.v3.listener.DeleteListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 import com.dz4.ishop.app.IshopApplication;
 import com.dz4.ishop.domain.QiangItem;
 import com.dz4.ishop.domain.User;
-import com.dz4.ishop.ui.LoginActivity;
 import com.dz4.ishop.ui.PersonalActivity;
 import com.dz4.ishop.utils.Constant;
 import com.dz4.ishop.utils.ImageUtils;
@@ -24,7 +25,6 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,12 +43,10 @@ import android.widget.Toast;
 public class QiangListAdapter extends BaseAdapter{
 	private ArrayList<QiangItem> Datalist;
 	private Context mContext;
-	private IshopApplication app;
 	private GridViewAdapter mGridViewAdapter;
-	public QiangListAdapter(Context mContext,ArrayList Datalist, IshopApplication app){
+	public QiangListAdapter(Context mContext,ArrayList Datalist){
 		this.Datalist=Datalist;
 		this.mContext=mContext;
-		this.app=app;
 		
 	}
 	@Override
@@ -166,26 +164,52 @@ public class QiangListAdapter extends BaseAdapter{
 						
 					};
 				} );
-		if(mQiangItem.isFocus()){
-			viewHolder.focus.setChecked(true);
-		}else{
-			viewHolder.focus.setChecked(false);
+		User user = BmobUser.getCurrentUser(mContext, User.class);
+		viewHolder.focus.setTag(mQiangItem.getObjectId());
+		if(user!=null){
+			BmobQuery<User> query = new BmobQuery<User>();
+			query.addWhereRelatedTo("focus", new BmobPointer(user));
+			query.order("-createdAt");
+			query.setLimit(Constant.NUMBERS_PER_PAGE);
+			BmobDate date = new BmobDate(new Date(System.currentTimeMillis()));
+			query.addWhereLessThan("createdAt", date);
+			query.findObjects(mContext, new FindListener<User>() {
+				@Override
+				public void onError(int arg0, String arg1) {
+					// TODO 自动生成的方法存根
+				}
+
+				@Override
+				public void onSuccess(List<User> arg0) {
+					// TODO 自动生成的方法存根
+					if(!arg0.isEmpty()){
+						for(User author:arg0){
+							
+							if(BmobUser.getCurrentUser(mContext, User.class).getObjectId().equals(author.getObjectId())){
+								if(viewHolder.focus.getTag().equals(mQiangItem.getObjectId())) viewHolder.focus.setChecked(true);
+							}
+						}
+					}else{
+						if(viewHolder.focus.getTag().equals(mQiangItem.getObjectId())) viewHolder.focus.setChecked(false);
+					}
+				}
+				
+				
+				
+			});
 		}
 		viewHolder.focus.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				User user =app.getCurrentUser();
+				User user = BmobUser.getCurrentUser(mContext, User.class);
 				if(user==null){
 					return ;
 				}
 				User targetUser = mQiangItem.getAuthor();
-				BmobRelation relation =null;
-				if(!mQiangItem.isFocus()){
-					if(user.getFocus()==null){
-						user.setFocus(new BmobRelation());
-					}
-					user.getFocus().add(targetUser);
-					//user.setFocus(relation);
+				BmobRelation focus = new BmobRelation();
+				if(viewHolder.focus.isChecked()){
+					focus.add(targetUser);
+					user.setFocus(focus);
 					user.update(mContext, new UpdateListener() {
 						@Override
 						public void onSuccess() {
@@ -195,6 +219,22 @@ public class QiangListAdapter extends BaseAdapter{
 						@Override
 						public void onFailure(int arg0, String arg1) {
 							Toast.makeText(mContext, "关注失败"+arg1, Toast.LENGTH_SHORT).show();
+						}
+					});
+				}else{
+					focus.remove(targetUser);
+					user.setFocus(focus);
+					user.update(mContext, new UpdateListener() {
+						
+						@Override
+						public void onSuccess() {
+							mQiangItem.setFocus(false);
+							Toast.makeText(mContext, "取消关注", Toast.LENGTH_SHORT).show();
+						}
+						
+						@Override
+						public void onFailure(int arg0, String arg1) {
+							Toast.makeText(mContext, "取消关注失败", Toast.LENGTH_SHORT).show();
 						}
 					});
 				}

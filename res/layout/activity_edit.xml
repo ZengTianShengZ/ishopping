@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView    
+    xmlns:android="http://schemas.android.com/apk/res/android"    
+    android:layout_width="match_parent"    
+    android:layout_height="match_parent"    
+    android:scrollbars="vertical"    
+    android:fadingEdge="vertical"> 
+<RelativeLayout 
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#FFFFFF" 
     android:scrollbars="vertical"
     >
@@ -22,7 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/layout_goods_info"
-        android:layout_margin="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:background="@drawable/selector_edittext"
         android:gravity="left|top"
         android:hint="说说商品的信息吧"
@@ -32,7 +39,7 @@
         android:paddingRight="4dip" >
 
     </EditText>
-    <GridView
+    <com.dz4.ishop.view.innerGridView
         android:layout_margin="15dp"
         android:id="@+id/edit_activity_gridView"
         android:layout_below="@id/edit_content"
@@ -48,14 +55,14 @@
         android:verticalSpacing="3dip"
         android:visibility="gone"
          >
-    </GridView>
+    </com.dz4.ishop.view.innerGridView>
     
     
     <RelativeLayout
         android:id="@+id/pic_content"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/edit_activity_gridView"
         android:background="#00000000"
         android:paddingTop="8dp" >
 
@@ -69,7 +76,6 @@
             android:background="#00000000" />
 
         <LinearLayout
-            android:alpha="0.85"
             android:id="@+id/open_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -100,7 +106,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:alpha="0.85"
             android:id="@+id/take_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -131,3 +136,4 @@
         </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>
+</ScrollView>

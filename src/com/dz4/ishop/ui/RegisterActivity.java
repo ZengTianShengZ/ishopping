@@ -34,7 +34,6 @@ public class RegisterActivity extends BaseUIActivity implements onTopBarbtnclick
 	private UserProxy mUserProxy;
 	@Override
 	public void initView() {
-		// TODO �Զ����ɵķ������
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_regiest);
 		mTopBar = (TopBar) this.findViewById(R.id.topbar);
@@ -51,13 +50,11 @@ public class RegisterActivity extends BaseUIActivity implements onTopBarbtnclick
 
 	@Override
 	public void initData() {
-		// TODO �Զ����ɵķ������
 		mUserProxy=new UserProxy(this);
 	}
 
 	@Override
 	public void initEvent() {
-		// TODO �Զ����ɵķ������
 		mTopBar.setTopBarbtnclickListener(this);
 		regiest_btn.setOnClickListener(this);
 		mUserProxy.setOnSignUpListener(this);
@@ -65,19 +62,16 @@ public class RegisterActivity extends BaseUIActivity implements onTopBarbtnclick
 
 	@Override
 	public void rightbtnclick(View v) {
-		// TODO �Զ����ɵķ������
 		
 	}
 
 	@Override
 	public void leftbtnclick(View v) {
-		// TODO �Զ����ɵķ������
 		finish();
 	}
 
 	@Override
 	public void onClick(View v) {
-		// TODO �Զ����ɵķ������
 		username = input_username.getEditableText().toString();
 		password = input_password.getEditableText().toString();
 		email = input_email.getEditableText().toString();
@@ -92,7 +86,6 @@ public class RegisterActivity extends BaseUIActivity implements onTopBarbtnclick
 	}
 
 	private boolean isValid(String username, String password, String email,String repassword) {
-		// TODO �Զ����ɵķ������
 		if(UtilsTools.isStringInvalid(username)){
 			showToast("username Invalid");
 			return false;
@@ -119,7 +112,6 @@ public class RegisterActivity extends BaseUIActivity implements onTopBarbtnclick
 
 	@Override
 	public void onSignUpSuccess() {
-		// TODO �Զ����ɵķ������
 		
 		cancelProgressDialog();
 		showToast(R.string.regiest_success);
@@ -128,7 +120,6 @@ public class RegisterActivity extends BaseUIActivity implements onTopBarbtnclick
 
 	@Override
 	public void onSignUpFailure(String msg) {
-		// TODO �Զ����ɵķ������
 		
 		cancelProgressDialog();
 		showToast(msg);

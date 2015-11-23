@@ -2,14 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
-    android:background="@drawable/selector_edittext"
     >
 
     <RelativeLayout
         android:id="@+id/goods_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp" >
+        android:padding="10dp" 
+        android:background="@drawable/selector_edittext"
+        >
 
         <RelativeLayout
             android:id="@+id/goods_name"
@@ -96,5 +97,42 @@
                  />
         </RelativeLayout>
     </RelativeLayout>
+      <RelativeLayout
+          android:layout_marginTop="15dp"
+        android:id="@+id/sailer_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/goods_info"
+        android:padding="10dp" 
+         android:background="@drawable/selector_edittext"
+        >
 
+        <RelativeLayout
+            android:id="@+id/sailer_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/sailer_phone_tip"
+                style="@style/TextTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:text="联系电话: " />
+
+            <EditText
+                android:padding="2dp"
+                android:id="@+id/sailer_phone_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/sailer_phone_tip"
+                android:background="@drawable/selector_edittext"
+                android:inputType="number"
+                android:hint="手机号码"
+                android:lines="1" >
+            </EditText>
+       	 </RelativeLayout>
+</RelativeLayout>
 </RelativeLayout>

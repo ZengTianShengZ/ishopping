@@ -40,7 +40,7 @@
 			    android:layout_alignParentRight="true"
 			    android:scaleType="centerInside"
             android:button="@drawable/selector_push_switch"
-            android:checked="true"
+            android:checked="false"
             />
 	<TextView 
 	    android:id="@+id/content_text"

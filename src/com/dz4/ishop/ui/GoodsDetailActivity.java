@@ -2,38 +2,52 @@ package com.dz4.ishop.ui;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.format.DateUtils;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobPointer;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.GetListener;
 
+import com.dz4.ishop.adapter.CommentAdapter;
 import com.dz4.ishop.adapter.ImagePagerAdapter;
+import com.dz4.ishop.app.IshopApplication;
+import com.dz4.ishop.domain.Comment;
 import com.dz4.ishop.domain.Goods;
 import com.dz4.ishop.domain.QiangItem;
 import com.dz4.ishop.domain.User;
 import com.dz4.ishop.utils.Constant;
 import com.dz4.ishop.utils.ImageUtils;
+import com.dz4.ishop.utils.LogUtils;
 import com.dz4.ishopping.R;
 import com.dz4.support.activity.BaseUIActivity;
+import com.dz4.support.domain.Result.Cmds;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class GoodsDetailActivity extends BaseUIActivity {
+public class GoodsDetailActivity extends BaseUIActivity implements OnClickListener{
 
 	private ViewPager imagePager;
 	private QiangItem mQiangItem;
@@ -58,6 +72,16 @@ public class GoodsDetailActivity extends BaseUIActivity {
 	private TextView goods_category;
 	private TextView goods_price;
 	private Goods goods;
+	private TextView contact_btn;
+	private String sailer_phone;
+	private ImageView back_btn;
+	private TextView comment_btn;
+	private User mUser;
+	private ListView mCommentView;
+	private ArrayList<Comment> datalist;
+	private TextView more_comment;
+	private int pageNum;
+	private CommentAdapter mAdapter;
 
 	@Override
 	public void initView() {
@@ -73,10 +97,15 @@ public class GoodsDetailActivity extends BaseUIActivity {
 		mTimeView = (TextView)findViewById(R.id.qiang_time);
 		mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 		mContentView = (TextView)findViewById(R.id.content_text);
-		
+		contact_btn = (TextView)findViewById(R.id.contact_btn);
+		comment_btn = (TextView)findViewById(R.id.comment_btn);
 		goods_name = (TextView)rootview.findViewById(R.id.goods_name_text);
 		goods_category= (TextView)rootview.findViewById(R.id.goods_category_text);
 		goods_price = (TextView)findViewById(R.id.goods_price_text);
+		back_btn = (ImageView)findViewById(R.id.back_btn);
+		more_comment = (TextView)findViewById(R.id.more_comment);
+		mCommentView = (ListView)findViewById(R.id.comment_list);
+		
 		dot_layout = (LinearLayout)findViewById(R.id.layout_dotzone);
 		
 		
@@ -86,6 +115,7 @@ public class GoodsDetailActivity extends BaseUIActivity {
 	public void initData() {
 		
 		mContext = getApplicationContext();
+		mUser = ((IshopApplication)getApplication()).getCurrentUser();
 		mQiangItem=(QiangItem)getIntent().getSerializableExtra(Constant.BUNDLE_KEY_QIANGITEM);
 		author = mQiangItem.getAuthor();
 		urls = geturlsArray();
@@ -101,19 +131,30 @@ public class GoodsDetailActivity extends BaseUIActivity {
 		username = author.getUsername();
 		uploadtime = mQiangItem.getUpdatedAt();
 		QiangItemId = mQiangItem.getObjectId();
+		loadData();
+		mQiangItem.setAuthor(author);
 		goods = mQiangItem.getGoods();
 		mNameView.setText(username); 
 		mTimeView.setText(uploadtime);
 		mContentView.setText(mQiangItem.getContent());
 		if(goods!=null){
+			sailer_phone=goods.getCellphone();
+			LogUtils.i("TAG","phone:"+sailer_phone);
 			goods_name.setText(goods.getName());
 			goods_category.setText(goods.getCategory());
 			goods_price.setText(""+goods.getPrice());
-			refreshview.setMode(Mode.PULL_FROM_START);
 		}
+		refreshview.setMode(Mode.PULL_FROM_START);
 		initdot();
+		/**
+		 * 评论区
+		 * **/
+		datalist=new ArrayList<Comment>();
+		 mAdapter=new CommentAdapter(mContext, datalist);
+		mCommentView.setAdapter(mAdapter);
 		
 	}
+	
 	private void initdot(){
 		dot_layout.removeAllViews();
 		if(urls.isEmpty()) return;
@@ -152,6 +193,7 @@ public class GoodsDetailActivity extends BaseUIActivity {
 	}
 	private void loadData(){
 		BmobQuery<QiangItem> query = new BmobQuery<QiangItem>();
+		query.include("goods");
 		query.getObject(mContext, QiangItemId, new GetListener<QiangItem>() {
 			
 			@Override
@@ -166,7 +208,17 @@ public class GoodsDetailActivity extends BaseUIActivity {
 				// TODO 自动生成的方法存根
 				setLoadingState(LOADING_COMPLETED);
 				mQiangItem= qiangitem;
-				initData();
+				goods = mQiangItem.getGoods();
+				mNameView.setText(username); 
+				mTimeView.setText(uploadtime);
+				mContentView.setText(mQiangItem.getContent());
+				if(goods!=null){
+					sailer_phone=goods.getCellphone();
+					LogUtils.i("TAG","phone:"+sailer_phone);
+					goods_name.setText(goods.getName());
+					goods_category.setText(goods.getCategory());
+					goods_price.setText(""+goods.getPrice());
+				}
 				refreshview.onRefreshComplete();
 			}
 		});
@@ -215,6 +267,10 @@ public class GoodsDetailActivity extends BaseUIActivity {
 			}
 			
 		});
+		back_btn.setOnClickListener(this);
+		contact_btn.setOnClickListener(this);
+		comment_btn.setOnClickListener(this);
+		more_comment.setOnClickListener(this);
 	}
 	@Override
 	protected void onDestroy() {
@@ -250,5 +306,97 @@ public class GoodsDetailActivity extends BaseUIActivity {
 		default:
 			break;
 		}
+	}
+	@Override
+	public void onClick(View v) {
+		// TODO 自动生成的方法存根
+		switch(v.getId()){
+		case R.id.contact_btn:
+			 Uri uri = Uri.parse("tel:" + sailer_phone);  
+			 LogUtils.i("TAG", uri.toString());
+		         Intent intent = new Intent(Intent.ACTION_DIAL, uri);  
+		         startActivity(intent);  
+		break;
+		case R.id.comment_btn:
+			 Intent intent1 = new Intent(GoodsDetailActivity.this, EditCommentActivity.class);  
+			 intent1.putExtra(Constant.BUNDLE_KEY_USER, mUser);
+			 intent1.putExtra(Constant.BUNDLE_KEY_QIANGITEM, mQiangItem);
+			 startActivityForResult(intent1,Constant.CHANGER_COMMENT);
+			 break;
+		case R.id.more_comment:
+			showProgressDialog("加载评论");
+			mCommentView.setVisibility(View.VISIBLE);
+			loadCommentData();
+			 break;
+		case R.id.back_btn:
+			finish(); 
+		break;
+		}
+	}
+
+	private void loadCommentData() {
+		// TODO 自动生成的方法存根
+		BmobQuery<Comment> query = new BmobQuery<Comment>();
+		query.addWhereRelatedTo("comments", new BmobPointer(mQiangItem));
+		query.include("user");
+		query.order("createdAt");
+		query.setLimit(Constant.NUMBERS_PER_PAGE);
+		query.setSkip(Constant.NUMBERS_PER_PAGE * (pageNum++));
+		query.findObjects(this, new FindListener<Comment>() {
+
+			@Override
+			public void onSuccess(List<Comment> data) {
+				// TODO Auto-generated method stub
+				if (data.size() != 0 && data.get(data.size() - 1) != null) {
+
+					if (data.size() < Constant.NUMBERS_PER_PAGE) {
+						showToast( "已加载完所有评论~");
+					}
+
+					datalist.addAll(data);
+					mAdapter.notifyDataSetChanged();
+					setListViewHeightBasedOnChildren(mCommentView);
+				} else {
+					pageNum--;
+				}
+				cancelProgressDialog();
+			}
+
+			@Override
+			public void onError(int arg0, String arg1) {
+				// TODO Auto-generated method stub
+				showToast( "获取评论失败。请检查网络~");
+				cancelProgressDialog();
+				pageNum--;
+			}
+		});
+	}
+	public void setListViewHeightBasedOnChildren(ListView listView) {
+		ListAdapter listAdapter = listView.getAdapter();
+		if (listAdapter == null) {
+			return;
+		}
+		int totalHeight = 0;
+		for (int i = 0; i < listAdapter.getCount(); i++) {
+			View listItem = listAdapter.getView(i, null, listView);
+			listItem.measure(0, 0);
+			totalHeight += listItem.getMeasuredHeight();
+		}
+		ViewGroup.LayoutParams params = listView.getLayoutParams();
+		params.height = totalHeight
+				+ (listView.getDividerHeight() * (listAdapter.getCount() - 1))
+				+ 15;
+		listView.setLayoutParams(params);
+	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		if (resultCode == RESULT_CANCELED) {
+				// 登录完成
+			mAdapter.notifyDataSetChanged();
+			refreshview.requestLayout();
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+
 	}
 }

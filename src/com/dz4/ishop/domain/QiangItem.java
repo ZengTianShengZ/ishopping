@@ -30,7 +30,7 @@ public class QiangItem extends BmobObject{
 	private boolean isPass;
 	private boolean focus;//¹Ø×¢
 	private boolean myLove;//ÔÞ
-	private BmobRelation relation;
+	private BmobRelation comments;
 	
 	private Goods goods;
 	
@@ -186,11 +186,11 @@ public class QiangItem extends BmobObject{
 	public void setMyLove(boolean myLove) {
 		this.myLove = myLove;
 	}
-	public BmobRelation getRelation() {
-		return this.relation;
+	public BmobRelation getComments() {
+		return this.comments;
 	}
-	public void setRelation(BmobRelation relation) {
-		this.relation = relation;
+	public void setComments(BmobRelation comments) {
+		this.comments = comments;
 	}
 	@Override
 	public String toString() {
@@ -201,7 +201,7 @@ public class QiangItem extends BmobObject{
 				+ this.share + ", comment=" + this.comment
 				+ ", isPass=" + this.isPass + ", myFav="
 				+ this.focus + ", myLove=" + this.myLove
-				+ ", relation=" + this.relation + "]";
+				+ ", comments=" + this.comments + "]";
 	}
 	
 	

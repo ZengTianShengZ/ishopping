@@ -11,8 +11,15 @@ public class Goods extends BmobObject{
 	private float price;
 	private int count;
 	private String details;
+	private String cellphone;
 	
 	
+	public String getCellphone() {
+		return this.cellphone;
+	}
+	public void setCellphone(String cellphone) {
+		this.cellphone = cellphone;
+	}
 	public String getDetails() {
 		return this.details;
 	}

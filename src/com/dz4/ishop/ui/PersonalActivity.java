@@ -35,6 +35,7 @@ import com.dz4.ishop.domain.QiangItem;
 import com.dz4.ishop.domain.User;
 import com.dz4.ishop.utils.Constant;
 import com.dz4.ishop.utils.ImageUtils;
+import com.dz4.ishop.utils.LogUtils;
 import com.dz4.ishop.view.TopBar;
 import com.dz4.ishopping.R;
 import com.dz4.support.activity.BaseUIActivity;
@@ -97,14 +98,6 @@ public class PersonalActivity extends BaseUIActivity implements TopBar.onTopBarb
  
 	@Override
 	public void initData() {
-		
-		/*
-		mUser = getQiangItem().getAuthor();
-		
-		得到 Application 的全局变量要((IshopApplication) getApplicationContext())
-		不能  app = new IshopApplication(); app.getQiangItem()
-		不然会抛空指针*/
-		//mUser=((IshopApplication) getApplicationContext()).getQiangItem().getAuthor();
 		mUser = (User)getIntent().getSerializableExtra(Constant.BUNDLE_KEY_AUTHOR);
 		//更新个人信息
 		updatePersonalInfo(mUser);
@@ -178,15 +171,6 @@ public class PersonalActivity extends BaseUIActivity implements TopBar.onTopBarb
 					}
 				});
 		//mListView 点击用户发表过的 Item
-		mPullToRefreshListView
-				.setOnLastItemVisibleListener(new OnLastItemVisibleListener() {
-
-					@Override
-					public void onLastItemVisible() {
-						// TODO Auto-generated method stub
-
-					}
-				});
 		 
 		//mListView.addHeaderView(mPlaceHolderView);
 		//mListView = mPullToRefreshListView.getRefreshableView();
@@ -194,19 +178,6 @@ public class PersonalActivity extends BaseUIActivity implements TopBar.onTopBarb
 		mQiangYus = new ArrayList<QiangItem>();
 		personalQiangListAdapter = new PersonalQiangListAdapter(mContext,mQiangYus);
 		mListView.setAdapter(personalQiangListAdapter);
-		mListView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-		 /*
-				// MyApplication.getInstance().setCurrentQiangYu(mQiangYus.get(position-1));
-				Intent intent = new Intent();
-				intent.setClass(getActivity(), CommentActivity.class);
-				intent.putExtra("data", mQiangYus.get(position - 1));
-				startActivity(intent);*/
-			}
-		});
 	}
 	private void updatePersonalInfo(User mUser2) {
 		
@@ -298,6 +269,17 @@ public class PersonalActivity extends BaseUIActivity implements TopBar.onTopBarb
 	@Override
 	public void initEvent() {
 		mTopBar.setTopBarbtnclickListener(this);
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO 自动生成的方法存根
+				Intent intent = new Intent(mContext,GoodsDetailActivity.class);
+				intent.putExtra(Constant.BUNDLE_KEY_QIANGITEM, mQiangYus.get(position-2));
+				startActivity(intent);
+			}
+		});
 	}
 	
 	@Override

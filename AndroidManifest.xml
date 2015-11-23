@@ -34,6 +34,9 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+     <!--呼叫电话的权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    
     <application
         android:allowBackup="true"
         android:name="com.dz4.ishop.app.IshopApplication"
@@ -99,6 +102,11 @@
                android:theme="@style/AppTheme"
                 >
            </activity>
+           <activity
+            android:name="com.dz4.ishop.ui.EditCommentActivity"
+            android:theme="@style/mydialogTheme1"
+            >
+            </activity>
          <service 
             android:name="com.dz4.support.service.LocalService"
             android:exported="false" />
