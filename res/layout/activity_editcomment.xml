@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:background="@drawable/activity_dialog_bg"
+    android:orientation="vertical" >
+    <TextView android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:gravity="center"
+        style="@style/TextTheme.tipstheme"
+        android:text="评论"
+        />
+    <EditText 
+        android:id="@+id/comment_edittext"
+        android:hint="说点什么             "
+        style="@style/EditTextTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="5"
+        />
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        
+        >
+        <Button
+            android:id="@+id/comment_submit"
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提交"
+            android:background="@drawable/item_btn_state"
+            ></Button>
+          <Button
+               android:id="@+id/comment_cancel"
+              android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_btn_state"
+            android:text="取消"
+            ></Button>
+    </LinearLayout>
+    
+
+</LinearLayout>

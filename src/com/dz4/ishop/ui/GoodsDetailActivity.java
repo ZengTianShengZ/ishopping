@@ -1,15 +1,20 @@
 package com.dz4.ishop.ui;
 
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,10 +28,16 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.datatype.BmobPointer;
+import cn.bmob.v3.datatype.BmobRelation;
+import cn.bmob.v3.listener.FindCallback;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.GetListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 import com.dz4.ishop.adapter.CommentAdapter;
 import com.dz4.ishop.adapter.ImagePagerAdapter;
@@ -49,6 +60,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class GoodsDetailActivity extends BaseUIActivity implements OnClickListener{
 
+	protected static final String TAG = "GoodsDetailActivity";
 	private ViewPager imagePager;
 	private QiangItem mQiangItem;
 	private Context mContext;
@@ -82,6 +94,7 @@ public class GoodsDetailActivity extends BaseUIActivity implements OnClickListen
 	private TextView more_comment;
 	private int pageNum;
 	private CommentAdapter mAdapter;
+	private TextView focus_view;
 
 	@Override
 	public void initView() {
@@ -105,7 +118,7 @@ public class GoodsDetailActivity extends BaseUIActivity implements OnClickListen
 		back_btn = (ImageView)findViewById(R.id.back_btn);
 		more_comment = (TextView)findViewById(R.id.more_comment);
 		mCommentView = (ListView)findViewById(R.id.comment_list);
-		
+		focus_view = (TextView)findViewById(R.id.focus_view);
 		dot_layout = (LinearLayout)findViewById(R.id.layout_dotzone);
 		
 		
@@ -222,7 +235,42 @@ public class GoodsDetailActivity extends BaseUIActivity implements OnClickListen
 				refreshview.onRefreshComplete();
 			}
 		});
+		if(mUser!=null){
+			BmobQuery<User> query1 = new BmobQuery<User>();
+			query1.addWhereRelatedTo("focus", new BmobPointer(mUser));
+			final String id = mQiangItem.getAuthor().getObjectId();
+			query1.findObjects(mContext, new FindListener<User>() {
+
+				@Override
+				public void onError(int arg0, String arg1) {
+					// TODO 自动生成的方法存根
+				}
+
+				@Override
+				public void onSuccess(List<User> arg0) {
+					// TODO 自动生成的方法存根
+					if(arg0!=null){
+						StringBuffer info= new StringBuffer();
+						for(User user:arg0){
+							info.append(user.getObjectId()+"::"+id+",");
+							if(user.getObjectId().equals(id)){
+								focus_flag = true;
+								focus_view.setText("已关注");
+								focus_view.setTextColor(Color.parseColor("#777777"));
+								return ;
+							}else{
+								focus_flag = false;
+								focus_view.setText("关注Ta");
+								focus_view.setTextColor(Color.parseColor("#000000"));
+							}
+						}
+						Log.i(TAG,info.toString());
+					}
+				}
+			});
+		}
 	}
+	private boolean focus_flag = false;
 	private ArrayList<String> geturlsArray(){
 		urls = new ArrayList<String>();
 		if(mQiangItem.getContentfigureurl()!=null)
@@ -271,6 +319,7 @@ public class GoodsDetailActivity extends BaseUIActivity implements OnClickListen
 		contact_btn.setOnClickListener(this);
 		comment_btn.setOnClickListener(this);
 		more_comment.setOnClickListener(this);
+		focus_view.setOnClickListener(this);
 	}
 	@Override
 	protected void onDestroy() {
@@ -330,9 +379,52 @@ public class GoodsDetailActivity extends BaseUIActivity implements OnClickListen
 			 break;
 		case R.id.back_btn:
 			finish(); 
-		break;
+			break;
+		case R.id.focus_view:
+			if(mUser==null) break;
+			if(!focus_flag){
+				BmobRelation focus = new BmobRelation();
+				focus.add(mQiangItem.getAuthor());
+				mUser.setFocus(focus);
+				mUser.update(mContext, new UpdateListener() {
+					@Override
+					public void onSuccess() {
+						focus_flag=true;
+						focus_view.setText("已关注");
+						focus_view.setTextColor(Color.parseColor("#777777"));
+						showToast("已关注");
+					}
+					@Override
+					public void onFailure(int arg0, String arg1) {
+						showToast("关注失败");
+					}
+				});
+			}else{
+				BmobRelation focus = new BmobRelation();
+				focus.remove(mQiangItem.getAuthor());
+				mUser.setFocus(focus);
+				mUser.update(mContext, new UpdateListener() {
+					
+					@Override
+					public void onSuccess() {
+						focus_flag=false;
+						focus_view.setText("关注Ta");
+						focus_view.setTextColor(Color.parseColor("#000000"));
+						
+						showToast("取消关注");
+						
+					}
+					
+					@Override
+					public void onFailure(int arg0, String arg1) {
+						showToast("取消关注失败请，查看网络");
+					}
+				});
+			}
+			break;
 		}
 	}
+	
 
 	private void loadCommentData() {
 		// TODO 自动生成的方法存根

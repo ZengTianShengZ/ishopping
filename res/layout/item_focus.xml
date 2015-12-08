@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dip" 
+    android:background="#FFFFFF"
+     android:descendantFocusability="blocksDescendants"
+     >
+    <ImageView 
+        android:id="@+id/user_logo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/user_icon_default_main"
+        />
+    <TextView 
+	    android:id="@+id/user_name"
+		style="@style/TextTheme"
+		android:layout_toRightOf="@id/user_logo"
+	    android:text="北方狼"
+	    android:layout_alignTop="@id/user_logo"
+	    android:layout_marginLeft="15dip"
+	    android:layout_marginTop="5dp"
+	    />
+    <TextView 
+	    android:id="@+id/user_signature"
+		style="@style/TextTheme"
+		android:layout_toRightOf="@id/user_logo"
+	    android:text="他很懒，没有留下什么"
+	    android:textSize="12sp"
+	    android:layout_alignBottom="@id/user_logo"
+	    android:layout_marginLeft="15dip"
+	    android:layout_marginBottom="1dp"
+	    />
+    
+</RelativeLayout>

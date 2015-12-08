@@ -8,6 +8,14 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:background="@drawable/open_picture" />
+    <View 
+        android:layout_alignBottom="@id/ImagePager"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#000000"
+        android:alpha="0.4"
+        
+        />
     <!-- goods name -->
 
     <LinearLayout
@@ -52,6 +60,20 @@
             android:layout_toRightOf="@id/user_logo"
             android:text="今天 18：31 厦门"
             android:textSize="12sp" />
+         <TextView
+      		android:id="@+id/focus_view" 
+         android:layout_alignParentTop="true"
+         android:layout_alignParentRight="true"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:drawableLeft="@drawable/ic_action_share"
+         android:layout_margin="10dp"
+         android:padding="5dp"
+         android:clickable="true"
+      	  style="@style/TextTheme"
+         android:text="关注Ta"
+         
+         />
     </RelativeLayout>
 
     <LinearLayout
@@ -162,17 +184,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/goods_info"
         android:layout_margin="3dp"
+        android:background="@drawable/item_btn_state"
         android:orientation="vertical" >
 
         <TextView
             android:id="@+id/more_comment"
             style="@style/TextTheme"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/item_btn_state"
             android:clickable="true"
-            android:gravity="center"
+            android:layout_gravity="center"
             android:padding="10dp"
+            android:drawableLeft="@drawable/ic_action_comment"
             android:text="查看评论" />
         <ListView
             android:visibility="gone"

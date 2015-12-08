@@ -81,8 +81,8 @@ public class QiangListAdapter extends BaseAdapter{
 					.findViewById(R.id.user_logo);
 			viewHolder.qiangtime = (TextView) convertView
 					.findViewById(R.id.qiang_time);
-			viewHolder.focus = (CheckBox) convertView
-					.findViewById(R.id.item_action_focus);
+//			viewHolder.focus = (CheckBox) convertView
+//					.findViewById(R.id.item_action_focus);
 			viewHolder.contentText = (TextView) convertView
 					.findViewById(R.id.content_text);
 			viewHolder.contentImage = (innerGridView) convertView
@@ -93,8 +93,8 @@ public class QiangListAdapter extends BaseAdapter{
 					.findViewById(R.id.item_action_hate);
 			viewHolder.share = (TextView) convertView
 					.findViewById(R.id.item_action_share);
-			viewHolder.comment = (TextView) convertView
-					.findViewById(R.id.item_action_comment);
+//			viewHolder.comment = (TextView) convertView
+//					.findViewById(R.id.item_action_comment);
 			convertView.setTag(viewHolder);
 		}else{
 			viewHolder =(ViewHolder)convertView.getTag();
@@ -164,82 +164,81 @@ public class QiangListAdapter extends BaseAdapter{
 						
 					};
 				} );
-		User user = BmobUser.getCurrentUser(mContext, User.class);
-		viewHolder.focus.setTag(mQiangItem.getObjectId());
-		if(user!=null){
-			BmobQuery<User> query = new BmobQuery<User>();
-			query.addWhereRelatedTo("focus", new BmobPointer(user));
-			query.order("-createdAt");
-			query.setLimit(Constant.NUMBERS_PER_PAGE);
-			BmobDate date = new BmobDate(new Date(System.currentTimeMillis()));
-			query.addWhereLessThan("createdAt", date);
-			query.findObjects(mContext, new FindListener<User>() {
-				@Override
-				public void onError(int arg0, String arg1) {
-					// TODO 自动生成的方法存根
-				}
-
-				@Override
-				public void onSuccess(List<User> arg0) {
-					// TODO 自动生成的方法存根
-					if(!arg0.isEmpty()){
-						for(User author:arg0){
-							
-							if(BmobUser.getCurrentUser(mContext, User.class).getObjectId().equals(author.getObjectId())){
-								if(viewHolder.focus.getTag().equals(mQiangItem.getObjectId())) viewHolder.focus.setChecked(true);
-							}
-						}
-					}else{
-						if(viewHolder.focus.getTag().equals(mQiangItem.getObjectId())) viewHolder.focus.setChecked(false);
-					}
-				}
-				
-				
-				
-			});
-		}
-		viewHolder.focus.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				User user = BmobUser.getCurrentUser(mContext, User.class);
-				if(user==null){
-					return ;
-				}
-				User targetUser = mQiangItem.getAuthor();
-				BmobRelation focus = new BmobRelation();
-				if(viewHolder.focus.isChecked()){
-					focus.add(targetUser);
-					user.setFocus(focus);
-					user.update(mContext, new UpdateListener() {
-						@Override
-						public void onSuccess() {
-							mQiangItem.setFocus(true);
-							Toast.makeText(mContext, "已关注", Toast.LENGTH_SHORT).show();
-						}
-						@Override
-						public void onFailure(int arg0, String arg1) {
-							Toast.makeText(mContext, "关注失败"+arg1, Toast.LENGTH_SHORT).show();
-						}
-					});
-				}else{
-					focus.remove(targetUser);
-					user.setFocus(focus);
-					user.update(mContext, new UpdateListener() {
-						
-						@Override
-						public void onSuccess() {
-							mQiangItem.setFocus(false);
-							Toast.makeText(mContext, "取消关注", Toast.LENGTH_SHORT).show();
-						}
-						
-						@Override
-						public void onFailure(int arg0, String arg1) {
-							Toast.makeText(mContext, "取消关注失败", Toast.LENGTH_SHORT).show();
-						}
-					});
-				}
-			}
-		});
+//		User user = BmobUser.getCurrentUser(mContext, User.class);
+//		if(user!=null){
+//			BmobQuery<User> query = new BmobQuery<User>();
+//			query.addWhereRelatedTo("focus", new BmobPointer(user));
+//			query.order("-createdAt");
+//			query.setLimit(Constant.NUMBERS_PER_PAGE);
+//			BmobDate date = new BmobDate(new Date(System.currentTimeMillis()));
+//			query.addWhereLessThan("createdAt", date);
+//			query.findObjects(mContext, new FindListener<User>() {
+//				@Override
+//				public void onError(int arg0, String arg1) {
+//					// TODO 自动生成的方法存根
+//				}
+//
+//				@Override
+//				public void onSuccess(List<User> arg0) {
+//					// TODO 自动生成的方法存根
+//					if(!arg0.isEmpty()){
+//						for(User author:arg0){
+//							
+//							if(BmobUser.getCurrentUser(mContext, User.class).getObjectId().equals(author.getObjectId())){
+//								if(viewHolder.focus.getTag().equals(mQiangItem.getObjectId())) viewHolder.focus.setChecked(true);
+//							}
+//						}
+//					}else{
+//						if(viewHolder.focus.getTag().equals(mQiangItem.getObjectId())) viewHolder.focus.setChecked(false);
+//					}
+//				}
+//				
+//				
+//				
+//			});
+//		}
+//		viewHolder.focus.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				User user = BmobUser.getCurrentUser(mContext, User.class);
+//				if(user==null){
+//					return ;
+//				}
+//				User targetUser = mQiangItem.getAuthor();
+//				BmobRelation focus = new BmobRelation();
+//				if(viewHolder.focus.isChecked()){
+//					focus.add(targetUser);
+//					user.setFocus(focus);
+//					user.update(mContext, new UpdateListener() {
+//						@Override
+//						public void onSuccess() {
+//							mQiangItem.setFocus(true);
+//							Toast.makeText(mContext, "已关注", Toast.LENGTH_SHORT).show();
+//						}
+//						@Override
+//						public void onFailure(int arg0, String arg1) {
+//							Toast.makeText(mContext, "关注失败"+arg1, Toast.LENGTH_SHORT).show();
+//						}
+//					});
+//				}else{
+//					focus.remove(targetUser);
+//					user.setFocus(focus);
+//					user.update(mContext, new UpdateListener() {
+//						
+//						@Override
+//						public void onSuccess() {
+//							mQiangItem.setFocus(false);
+//							Toast.makeText(mContext, "取消关注", Toast.LENGTH_SHORT).show();
+//						}
+//						
+//						@Override
+//						public void onFailure(int arg0, String arg1) {
+//							Toast.makeText(mContext, "取消关注失败", Toast.LENGTH_SHORT).show();
+//						}
+//					});
+//				}
+//			}
+//		});
 		return convertView;
 	}
 	public  class ViewHolder {
@@ -249,7 +248,7 @@ public class QiangListAdapter extends BaseAdapter{
 		public TextView contentText;
 		public innerGridView contentImage;
 
-		public CheckBox focus;
+		//public CheckBox focus;
 		public TextView love;
 		public TextView hate;
 		public TextView share;

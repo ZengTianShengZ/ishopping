@@ -84,8 +84,6 @@ public class PersonalQiangListAdapter extends BaseAdapter{
 					.findViewById(R.id.user_logo);
 			viewHolder.qiangtime = (TextView) convertView
 					.findViewById(R.id.qiang_time);
-			viewHolder.focus = (CheckBox) convertView
-					.findViewById(R.id.item_action_focus);
 			viewHolder.contentText = (TextView) convertView
 					.findViewById(R.id.content_text);
 			viewHolder.contentImage = (innerGridView) convertView
@@ -96,8 +94,6 @@ public class PersonalQiangListAdapter extends BaseAdapter{
 					.findViewById(R.id.item_action_hate);
 			viewHolder.share = (TextView) convertView
 					.findViewById(R.id.item_action_share);
-			viewHolder.comment = (TextView) convertView
-					.findViewById(R.id.item_action_comment);
 			convertView.setTag(viewHolder);
 		}else{
 			viewHolder =(ViewHolder)convertView.getTag();
@@ -158,7 +154,6 @@ public class PersonalQiangListAdapter extends BaseAdapter{
 						
 					};
 				} );
-		viewHolder.focus.setVisibility(View.GONE);
 	 
 		return convertView;
 	}
@@ -169,7 +164,6 @@ public class PersonalQiangListAdapter extends BaseAdapter{
 		public TextView contentText;
 		public innerGridView contentImage;
 
-		public CheckBox focus;
 		public TextView love;
 		public TextView hate;
 		public TextView share;
