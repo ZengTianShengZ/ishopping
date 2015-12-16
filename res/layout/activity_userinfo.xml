@@ -3,11 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+     >
 		<!--标题  -->
     <include layout="@layout/topbar" />
 		<!-- 主体 -->
     <LinearLayout
+         android:focusable="true"
+   			 android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -54,7 +57,10 @@
             android:background="@drawable/selector_settings_item_down"
             android:clickable="true"
             android:paddingBottom="8dp"
-            android:paddingTop="8dp" >
+            android:paddingTop="8dp" 
+               android:focusable="true"
+    android:focusableInTouchMode="true"
+            >
 
             <TextView
                 android:id="@+id/user_nick_tips"
@@ -66,7 +72,7 @@
                 android:paddingTop="8dip"
                 android:text="昵称" />
 
-            <TextView
+            <EditText
                 android:id="@+id/user_nick_text"
                 style="@style/TextTheme.tipstheme_second"
                 android:layout_width="wrap_content"
@@ -75,7 +81,7 @@
                 android:layout_centerVertical="true"
                 android:paddingBottom="8dip"
                 android:paddingTop="8dip"
-                android:text="点击登录" />
+                android:text="点击修改" />
         </RelativeLayout>
 
         <View

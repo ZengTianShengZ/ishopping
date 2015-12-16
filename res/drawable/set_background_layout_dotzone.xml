@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"  
+      android:shape="rectangle" >
+  <!-- 指定4個角的弧度 -->
+    <corners android:topLeftRadius="10px"
+        android:topRightRadius="10px"
+        android:bottomLeftRadius="10px"
+        android:bottomRightRadius="10px"/>
+    <!-- 指定背景顏色 -->
+    <solid android:color="#545454"/>
+    <!-- 指定框條的顏色的寬度 -->
+    <stroke android:width="0.5dp" android:color="#FFFFFF"/>
+</shape>
+

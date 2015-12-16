@@ -16,6 +16,7 @@
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
         android:smoothScrollbar="true" 
+        android:layout_marginBottom="50dp"
         />
  <ImageView 
     	 android:id="@+id/back_btn"
@@ -45,12 +46,13 @@
         android:textColor="@android:color/black"
         android:visibility="visible"
         />
+     
     <LinearLayout 
-        android:layout_marginTop="10dp"
+        android:id="@+id/bottomView"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#00000000"
+        android:background="#ffffff"
         android:orientation="horizontal"
         >
         <LinearLayout
@@ -58,12 +60,15 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             >
-            <ImageView
+            <TextView
                 android:layout_margin="10dp"
                 android:layout_width="25dp"
                 android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:background="@drawable/money_logo"
+                android:gravity="center"
+                android:textColor="#BA222E"
+                android:textSize="24sp"
+                android:textStyle="italic"
+                android:text="￥"
                 />
             <TextView 
                 android:id="@+id/goods_price_text"
@@ -74,9 +79,8 @@
                 android:text="0.0"
   							style="@style/TextTheme"   
   							android:textStyle="italic"
-  							android:textColor="#dd0000" 
+  							android:textColor="#BA222E" 
   							android:textSize="18sp"
-  							android:alpha="0.95"          
 	                />
             
         </LinearLayout>
@@ -100,7 +104,7 @@
             <TextView 
                 android:id="@+id/contact_btn"
                 android:layout_margin="1px"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:clickable="true"
                 android:layout_width="0dp"
@@ -112,4 +116,10 @@
         </LinearLayout>
         
     </LinearLayout>
+    <View 
+        android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:background="#dddddd"
+				android:layout_above="@id/bottomView"
+        />
 </RelativeLayout>

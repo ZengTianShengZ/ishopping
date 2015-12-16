@@ -60,14 +60,14 @@ TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener,OnFocusC
 	private Context mContext;
 	private TopBar mTopBar;
 	private ImageView usericon;
-	private EditText usernickname_Text;
-	private CheckBox sex_checkbox;
-	private CheckBox push_checkbox;
-	private TextView usersign_Text;
-	private View usersign;
+	private EditText userNickNameText;
+	private CheckBox sexCheckBox;
+	private CheckBox pushCheckBox;
+	private TextView userSignText;
+	private View userSign;
 	private View iconitem;
-	private View cl_cache;
-	private View user_nick;
+	private View clCache;
+	private View userNick;
 	
 	private String iconurl;
 	private String nickname;
@@ -97,13 +97,13 @@ TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener,OnFocusC
 		
 		usericon =(ImageView) findViewById(R.id.user_icon_image);
 		iconitem =(View) findViewById(R.id.user_icon);
-		usernickname_Text =(EditText)findViewById(R.id.user_nick_text);
-		sex_checkbox =(CheckBox) findViewById(R.id.sex_choice_switch);
-		push_checkbox =(CheckBox) findViewById(R.id.settings_push_switch);
-		usersign_Text = (TextView) findViewById(R.id.user_sign_text);
-		user_nick = (View)findViewById(R.id.user_nick);
-		usersign=(View)findViewById(R.id.user_sign);
-		cl_cache = (View)findViewById(R.id.settings_cache);
+		userNickNameText =(EditText)findViewById(R.id.user_nick_text);
+		sexCheckBox =(CheckBox) findViewById(R.id.sex_choice_switch);
+		pushCheckBox =(CheckBox) findViewById(R.id.settings_push_switch);
+		userSignText = (TextView) findViewById(R.id.user_sign_text);
+		userNick = (View)findViewById(R.id.user_nick);
+		userSign=(View)findViewById(R.id.user_sign);
+		clCache = (View)findViewById(R.id.settings_cache);
 		
 	}
 	public void logout(View v){
@@ -141,24 +141,24 @@ TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener,OnFocusC
 		user = ((IshopApplication)getApplication()).getCurrentUser();
 		nickname=user.getNickname();
 		if(!UtilsTools.isStringInvalid(nickname)){
-			usernickname_Text.setText(nickname);
+			userNickNameText.setText(nickname);
 		}else{
-			usernickname_Text.setText(user.getUsername());
+			userNickNameText.setText(user.getUsername());
 		}
 		sex=user.getSex();
 		if(!UtilsTools.isStringInvalid(sex)){
 			
 			if(sex.trim().equals(Constant.SEX_MALE)){
-				sex_checkbox.setChecked(false);
+				sexCheckBox.setChecked(false);
 			}
 			else if(sex.trim().equals(Constant.SEX_FEMALE))
 			{
-				sex_checkbox.setChecked(true);
+				sexCheckBox.setChecked(true);
 			}
 		}
 		sign = user.getSignature();
 		if(!UtilsTools.isStringInvalid(sign)){
-			usersign_Text.setText(sign);
+			userSignText.setText(sign);
 		}
 		BmobFile icon;
 		if((icon= user.getAvatar())!=null){
@@ -174,13 +174,13 @@ TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener,OnFocusC
 	public void initEvent() {
 		// TODO 自动生成的方法存根
 		iconitem.setOnClickListener(this);
-		usersign.setOnClickListener(this);
-		user_nick.setOnClickListener(this);
-		usernickname_Text.setOnFocusChangeListener(this);
+		userSign.setOnClickListener(this);
+		userNick.setOnClickListener(this);
+		userNickNameText.setOnFocusChangeListener(this);
 		
-		sex_checkbox.setOnCheckedChangeListener(this);
-		push_checkbox.setOnCheckedChangeListener(this);
-		cl_cache.setOnClickListener(this);
+		sexCheckBox.setOnCheckedChangeListener(this);
+		pushCheckBox.setOnCheckedChangeListener(this);
+		clCache.setOnClickListener(this);
 		
 	}
 	@Override

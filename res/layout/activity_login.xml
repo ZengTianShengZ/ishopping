@@ -33,10 +33,10 @@
                 android:layout_margin="5dp"
                 />
             <EditText 
-                android:id="@+id/input_username"
-                android:hint="@string/login_username_hint"
+                android:id="@+id/input_account"
+                android:hint="@string/login_account_hint"
                 android:layout_weight="1"
-                android:layout_height="match_parent"
+                android:layout_height="match_parent" 
                 android:layout_width="0dp"
                 android:ems="10"
                 android:background="@null"

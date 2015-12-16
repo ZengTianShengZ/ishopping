@@ -251,7 +251,6 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 	                // curPercent  :表示当前上传文件的进度值（百分比）
 	                // total       :表示总的上传文件数
 	                // totalPercent:表示总的上传进度（百分比）
-	        	    showProgressDialog("图片上传中");
 	            	 
 	            }
 

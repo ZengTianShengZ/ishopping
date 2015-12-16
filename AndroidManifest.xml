@@ -107,6 +107,11 @@
             android:theme="@style/mydialogTheme1"
             >
             </activity>
+             <activity
+            android:name="com.dz4.ishop.ui.PersonalCommentActivity"
+            android:theme="@style/AppTheme"
+            >
+            </activity>
          <service 
             android:name="com.dz4.support.service.LocalService"
             android:exported="false" />

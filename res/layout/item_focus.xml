@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res/com.dz4.ishopping"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="8dip" 
     android:background="#FFFFFF"
      android:descendantFocusability="blocksDescendants"
      >
-    <ImageView 
+    <com.dz4.ishop.view.CircleImageView 
         android:id="@+id/user_logo"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:scaleType="centerInside"
+        android:layout_width="@dimen/user_icon_width"
+        android:layout_height="@dimen/user_icon_width"
         android:src="@drawable/user_icon_default_main"
+        app:border_color="#FFFFFF"
+      	app:border_width="2dp"
         />
     <TextView 
 	    android:id="@+id/user_name"
@@ -32,5 +34,17 @@
 	    android:layout_marginLeft="15dip"
 	    android:layout_marginBottom="1dp"
 	    />
+     <TextView
+      		android:id="@+id/focus_cancel" 
+      		android:layout_centerVertical="true"
+         android:layout_alignParentRight="true"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:drawableLeft="@drawable/ic_action_share"
+         android:clickable="true"
+         android:textSize="12sp"
+         android:text="取消关注"
+         
+         />
     
 </RelativeLayout>

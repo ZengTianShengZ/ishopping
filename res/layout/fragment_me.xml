@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res/com.dz4.ishopping"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    
     android:background="#eeeeee"
     android:orientation="vertical" >
 	<!-- 主要信息 -->
@@ -22,13 +24,15 @@
             android:padding="10dp" 
             >
 
-            <ImageView
+            <com.dz4.ishop.view.CircleImageView
                 android:id="@+id/me_usericon"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center_vertical"
-                android:background="#eeeeee"
-                android:src="@drawable/user_icon_default_main" />
+                android:src="@drawable/user_icon_default_main" 
+                   app:border_color="#FFFFFF"
+      						  app:border_width="2dp"
+                />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -74,9 +78,12 @@
             <!-- info1 -->
 
             <LinearLayout
+                android:id="@+id/publish"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@drawable/item_btn_state"
+                android:clickable="true"
                 android:gravity="center"
                 android:orientation="vertical" >
 								<!-- 发表数量 -->
@@ -94,9 +101,12 @@
             <!-- info2 -->
 
             <LinearLayout
+                android:id="@+id/focus"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@drawable/item_btn_state"
+                android:clickable="true"
                 android:gravity="center"
                 android:orientation="vertical" >
 							<!-- 关注数量 -->
@@ -114,9 +124,12 @@
             <!-- info3 -->
 
             <LinearLayout
+                android:id="@+id/comment"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@drawable/item_btn_state"
+                android:clickable="true"
                 android:gravity="center"
                 android:orientation="vertical" >
 
@@ -156,6 +169,7 @@
                 android:id="@+id/publish_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:background="@drawable/item_btn_state"
                 android:clickable="true"
                 android:orientation="horizontal" >
@@ -164,11 +178,8 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="20dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="8dp"
-                    android:src="@drawable/ic_action_fav_choose" />
+                    android:src="@drawable/ic_publish" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -192,6 +203,7 @@
                 android:id="@+id/comment_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:background="@drawable/item_btn_state"
                 android:clickable="true"
                 android:orientation="horizontal" >
@@ -200,11 +212,8 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="20dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="8dp"
-                    android:src="@drawable/ic_action_fav_choose" />
+                    android:src="@drawable/ic_comment" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -230,16 +239,14 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/item_btn_state"
                 android:clickable="true"
+                android:padding="10dp"
                 android:orientation="horizontal" >
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="20dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="8dp"
                     android:src="@drawable/ic_action_fav_choose" />
 
                 <TextView
@@ -263,6 +270,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:background="@drawable/item_btn_state"
                 android:clickable="true"
                 android:orientation="horizontal" >
@@ -271,10 +279,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="20dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="8dp"
                     android:src="@drawable/ic_action_fav_choose" />
 
                 <TextView

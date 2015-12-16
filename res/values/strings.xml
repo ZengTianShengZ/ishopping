@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">iShopping</string>
+    <string name="app_name">爱商品</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_me">我</string>
@@ -13,6 +13,7 @@
     <string name="login_username">账 号：</string>
     <string name="login_password">密 码：</string>
     <string name="login_username_hint">  请输入账号    </string>
+    <string name="login_account_hint">  手机号 / 用户名   </string>
     <string name="login_password_hint">  请输入密码    </string>
     <string name="login_success">  登录成功    </string>
     <string name="login_faile">  登录失败   </string>
@@ -21,18 +22,33 @@
     <string name="regiest_password">密 码：</string>
     <string name="regiest_repassword">重 复：</string>
     <string name="regiest_email">邮 箱：</string>
-    <string name="regiest_username_hint">  请输入账号    </string>
+    <string name="regiest_username_hint">  请输入账号   </string>
     <string name="regiest_password_hint">  请输入密码    </string>
     <string name="regiest_repassword_hint">  请再次输入密码    </string>
     <string name="regiest_email_hint">  xx.@xx.com    </string>
     <string name="regiest_success"> 注册成功   </string>
     <string name="regiest_faile"> 注册失败   </string>
     
+    <string name="regiest_telephone_null"> 手机号码不能为空  </string>
+    <string name="regiest_telephone_or_code_null"> 手机号码或验证码、密码不能为空  </string>
+    <string name="wait_SMS_code"> 短信已发送，等待接收 </string>
+    <string name="telephone_is_wrong">手机号码不正确</string>
+    <string name="telephone_or_SMScode_is_wrong">手机号码或验证码不正确</string>
+    <string name="SMScode_FALL">短信验证失败 请重新获取验证码</string>
+    <string name="telephone_no_exist">此手机号还没注册</string>
+    <string name="telephone_is_exist">此手机号已被注册</string>
+    <string name="find_Password">找回密码</string>
+    <string name="reset_Password">重新设置密码</string>
+    
     <string name="login">登录</string>
     <string name="userinfo">用户信息</string>
     <string name="logout">注销</string>
-    <string name="findpsw">找回密码</string>
+    <string name="findpsw">忘记密码</string>
     <string name="regiest">注册</string>
+    <string name="regiest_detial">填写详细信息</string>
     <string name="more">更多</string>
+    
+    <string name="update_success">更新成功</string>
+    <string name="update_faile">更新失败</string>
 
 </resources>

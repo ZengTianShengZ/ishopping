@@ -1,13 +1,51 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
+    android:layout_height="match_parent" 
+    android:background="@color/theme_color"
+    >
+<LinearLayout 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="100dp"
+    android:gravity="center"
+    android:layout_centerHorizontal="true"
+    >
     <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:contentDescription="@null"
-        android:scaleType="fitXY"
-        android:src="@drawable/welcome" />
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_welcome" />
+    <TextView 
+        android:id="@+id/tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/imageView"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:textStyle="italic"
+        android:text="代购，上爱商品！"
+        />
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/tip"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff"
+        android:textSize="16sp"
+        android:textStyle="italic"
+        android:text="design:czmc zss"
+        />
+	</LinearLayout>
+
+	<ImageView
+	    android:layout_width="match_parent"
+	    android:layout_height="60dp"
+	    android:layout_alignParentBottom="true"
+	    android:background="@drawable/ic_welcome_a" />
 
 </RelativeLayout>

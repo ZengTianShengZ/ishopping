@@ -13,24 +13,6 @@
         android:layout_height="wrap_content"
         android:background="#eeeeee"
         android:orientation="horizontal" >
-
-        <View
-            android:id="@+id/page1"
-            android:visibility="gone"
-            android:layout_width="0dp"
-            android:layout_height="3dp"
-            android:layout_margin="1dp"
-            android:layout_weight="1"
-            android:background="#ff8800" />
-
-        <View
-            android:id="@+id/page2"
-            android:visibility="gone"
-            android:layout_width="0dp"
-            android:layout_height="3dp"
-            android:layout_margin="1dp"
-            android:layout_weight="1"
-            android:background="#ff8800" />
     </LinearLayout>
     <FrameLayout
         android:id="@+id/fragment_zone"
@@ -41,12 +23,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#ffffff"
+        android:layout_height="2px"
+        android:background="#eeeeee"
         android:orientation="horizontal" />
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:padding="2dp"
         android:layout_height="50dp"
         android:layout_weight="0"
         android:background="#fafafa"
@@ -59,16 +42,11 @@
             android:layout_weight="1"
             android:onClick="onTagClick"
             android:padding="8dp"
-           app:tagcolor="#008800"
-            app:tagicon="@drawable/ic_navi_home"
+          	 app:tagcolor="@color/theme_color"
+            app:tagicon="@drawable/icon_tag_home"
             app:tagsize="10dp"
             app:tagtext="主页" />
 
-        <LinearLayout
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#ffffff"
-            android:orientation="horizontal" />
 
         <com.dz4.ishop.view.BottomTagView
             android:id="@+id/BottomTag_chat"
@@ -77,16 +55,11 @@
             android:layout_weight="1"
             android:onClick="onTagClick"
             android:padding="8dp"
-            app:tagcolor="#008800"
-            app:tagicon="@drawable/ic_navi_chat"
+            app:tagcolor="@color/theme_color"
+            app:tagicon="@drawable/icon_tag_news"
             app:tagsize="10dp"
             app:tagtext="推荐" />
 
-        <LinearLayout
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#ffffff"
-            android:orientation="horizontal" />
 
         <com.dz4.ishop.view.BottomTagView
             android:id="@+id/BottomTag_me"
@@ -95,8 +68,8 @@
             android:layout_weight="1"
             android:onClick="onTagClick"
             android:padding="8dp"
-            app:tagcolor="#008800"
-            app:tagicon="@drawable/ic_navi_me"
+            app:tagcolor="@color/theme_color"
+            app:tagicon="@drawable/icon_tag_me"
             app:tagsize="10dp"
             app:tagtext="我的" />
     </LinearLayout>

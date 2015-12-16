@@ -8,24 +8,43 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:background="@drawable/open_picture" />
-    <View 
-        android:layout_alignBottom="@id/ImagePager"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#000000"
-        android:alpha="0.4"
-        
-        />
-    <!-- goods name -->
 
-    <LinearLayout
-        android:id="@+id/layout_dotzone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/ImagePager"
-        android:layout_margin="20dip"
-        android:gravity="center"
-        android:orientation="horizontal" />
+ <LinearLayout
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_margin="10dp"
+     android:layout_alignBottom="@id/ImagePager"
+     android:layout_alignParentRight="true"
+     android:alpha="0.4"
+     android:background="@drawable/set_background_layout_dotzone"
+     android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/tv_dotzone_L"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="0"
+                        android:textColor="#ffffff"
+                        android:textSize="10pt" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/"
+                        android:textColor="#ffffff"
+                        android:textSize="10pt" />
+
+                    <TextView
+                        android:id="@+id/tv_dotzone_R"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp" 
+                        android:text="0"
+                        android:textColor="#ffffff"
+                        android:textSize="10pt" />
+                </LinearLayout>
+    <!-- goods name -->
 
     <RelativeLayout
         android:id="@+id/user_info"
@@ -184,25 +203,24 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/goods_info"
         android:layout_margin="3dp"
-        android:background="@drawable/item_btn_state"
         android:orientation="vertical" >
 
         <TextView
             android:id="@+id/more_comment"
             style="@style/TextTheme"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:layout_gravity="center"
+            android:gravity="center"
             android:padding="10dp"
             android:drawableLeft="@drawable/ic_action_comment"
+            android:background="@drawable/item_btn_state"
             android:text="查看评论" />
         <ListView
-            android:visibility="gone"
+            android:layout_marginTop="1dp"
             android:id="@+id/comment_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" 
-            android:layout_marginBottom="50dp"
             >
         </ListView>
     </LinearLayout>
