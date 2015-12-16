@@ -1,10 +1,15 @@
 package com.dz4.ishop.ui;
 
+import android.content.Intent;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import cn.bmob.v3.Bmob;
 
 import com.dz4.ishop.proxy.UserProxy;
@@ -22,35 +27,45 @@ public class RegisterActivity extends BaseUIActivity implements onTopBarbtnclick
 	private EditText input_username;
 	private EditText input_password;
 	private EditText input_repassword;
-	private EditText input_email;
+ 
 	
 	private Button regiest_btn;
 	
 	private String username;
 	private String password;
 	private String repassword;
-	private String email;
+ 
+	private String telephoneum;
 	
 	private UserProxy mUserProxy;
+ 
+	
 	@Override
 	public void initView() {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_regiest);
 		mTopBar = (TopBar) this.findViewById(R.id.topbar);
-		mTopBar.setTitleText(getString(R.string.regiest));
+		 
 		mTopBar.setLeftButtonImage(getResources().getDrawable(R.drawable.back));
 		mTopBar.setLeftButtonVisible(View.VISIBLE);
 		
 		input_username = (EditText) findViewById(R.id.input_username);
 		input_password = (EditText) findViewById(R.id.input_password);
 		input_repassword = (EditText) findViewById(R.id.input_repassword);
-		input_email = (EditText) findViewById(R.id.input_email);
+ 
 		regiest_btn = (Button)findViewById(R.id.regiest_btn);
+ 
+		 
+		
+				
 	}
 
 	@Override
 	public void initData() {
 		mUserProxy=new UserProxy(this);
+		
+		Intent intent = getIntent();
+		telephoneum = intent.getStringExtra("telephoneum");
 	}
 
 	@Override
@@ -74,22 +89,28 @@ public class RegisterActivity extends BaseUIActivity implements onTopBarbtnclick
 	public void onClick(View v) {
 		username = input_username.getEditableText().toString();
 		password = input_password.getEditableText().toString();
-		email = input_email.getEditableText().toString();
+ 
 		repassword =input_repassword.getEditableText().toString(); 
 		showProgressDialog();
-		if(isValid(username,password,email,repassword)){
-			mUserProxy.signUp(username, password, email);
+		if(isValid(username,password, repassword)){
+
+		   mUserProxy.signUp(username, password, telephoneum);
+			 
 		}else{
 			cancelProgressDialog();
 			showToast(R.string.regiest_faile);
 		}
 	}
 
-	private boolean isValid(String username, String password, String email,String repassword) {
+	private boolean isValid(String username, String password ,String repassword) {
+		
+ 
 		if(UtilsTools.isStringInvalid(username)){
 			showToast("username Invalid");
 			return false;
 		}
+	 
+		 
 		if(UtilsTools.isStringInvalid(password)){
 			showToast("password Invalid");
 			return false;
@@ -98,10 +119,7 @@ public class RegisterActivity extends BaseUIActivity implements onTopBarbtnclick
 			showToast("repassword Invalid");
 			return false;
 		}
-		if(UtilsTools.isStringInvalid(email)){
-			showToast("email Invalid");
-			return false;
-		}
+ 
 		if(!password.equals(repassword)){
 			showToast(" Invalid");
 			return false;
@@ -115,6 +133,10 @@ public class RegisterActivity extends BaseUIActivity implements onTopBarbtnclick
 		
 		cancelProgressDialog();
 		showToast(R.string.regiest_success);
+
+
+		Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+		startActivity(intent);
 		finish();
 	}
 
@@ -124,5 +146,6 @@ public class RegisterActivity extends BaseUIActivity implements onTopBarbtnclick
 		cancelProgressDialog();
 		showToast(msg);
 	}
+	
 	
 }

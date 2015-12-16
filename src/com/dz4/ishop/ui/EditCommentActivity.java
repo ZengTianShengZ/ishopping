@@ -88,41 +88,23 @@ public class EditCommentActivity extends BaseUIActivity implements
 		final Comment comment = new Comment();
 		comment.setUser(user);
 		comment.setCommentContent(content);
+		comment.setQiang(mQiangItem);
 		comment.save(this, new SaveListener() {
 
 			@Override
 			public void onSuccess() {
 				// TODO Auto-generated method stub
 				showToast("评论成功。");
-				// 将该评论与强语绑定到一起
-				BmobRelation comments = new BmobRelation();
-				comments.add(comment);
-				mQiangItem.setComments(comments);
-				mQiangItem.update(mContext, new UpdateListener() {
-
-					@Override
-					public void onSuccess() {
-						// TODO Auto-generated method stub
-						LogUtils.i(TAG, "更新评论成功。");
-						finish();
-						cancelProgressDialog();
-						// fetchData();
-					}
-
-					@Override
-					public void onFailure(int arg0, String arg1) {
-						// TODO Auto-generated method stub
-						LogUtils.i(TAG, "更新评论失败。" + arg1);
-						cancelProgressDialog();
-					}
-				});
-
+				LogUtils.i(TAG, "更新评论成功。");
+				finish();
+				cancelProgressDialog();
 			}
 
 			@Override
 			public void onFailure(int arg0, String arg1) {
-				// TODO Auto-generated method stub
 				showToast("评论失败。请检查网络~");
+				LogUtils.i(TAG, "更新评论失败。" + arg1);
+				cancelProgressDialog();
 			}
 		});
 	}

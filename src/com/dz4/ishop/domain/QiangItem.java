@@ -12,15 +12,15 @@ import cn.bmob.v3.datatype.BmobRelation;
 public class QiangItem extends BmobObject{
 	private User author;
 	private String content;
-	private BmobFile Contentfigureurl;
- 	private BmobFile Contentfigureurl1;
-	private BmobFile Contentfigureurl2;
-	private BmobFile Contentfigureurl3;
-	private BmobFile Contentfigureurl4;
-	private BmobFile Contentfigureurl5;
-	private BmobFile Contentfigureurl6;
-	private BmobFile Contentfigureurl7;
-	private BmobFile Contentfigureurl8;
+	private BmobFile contentfigureurl;
+ 	private BmobFile contentfigureurl1;
+	private BmobFile contentfigureurl2;
+	private BmobFile contentfigureurl3;
+	private BmobFile contentfigureurl4;
+	private BmobFile contentfigureurl5;
+	private BmobFile contentfigureurl6;
+	private BmobFile contentfigureurl7;
+	private BmobFile contentfigureurl8;
 	
 	private int love;
 	private int hate;
@@ -79,52 +79,52 @@ public class QiangItem extends BmobObject{
 	}
 	
 	public BmobFile getContentfigureurl1() {
-		return this.Contentfigureurl1;
+		return this.contentfigureurl1;
 	}
 	public void setContentfigureurl1(BmobFile contentfigureurl1) {
-		this.Contentfigureurl1 = contentfigureurl1;
+		this.contentfigureurl1 = contentfigureurl1;
 	}
 	public BmobFile getContentfigureurl2() {
-		return this.Contentfigureurl2;
+		return this.contentfigureurl2;
 	}
 	public void setContentfigureurl2(BmobFile contentfigureurl2) {
-		this.Contentfigureurl2 = contentfigureurl2;
+		this.contentfigureurl2 = contentfigureurl2;
 	}
 	public BmobFile getContentfigureurl3() {
-		return this.Contentfigureurl3;
+		return this.contentfigureurl3;
 	}
 	public void setContentfigureurl3(BmobFile contentfigureurl3) {
-		this.Contentfigureurl3 = contentfigureurl3;
+		this.contentfigureurl3 = contentfigureurl3;
 	}
 	public BmobFile getContentfigureurl4() {
-		return this.Contentfigureurl4;
+		return this.contentfigureurl4;
 	}
 	public void setContentfigureurl4(BmobFile contentfigureurl4) {
-		this.Contentfigureurl4 = contentfigureurl4;
+		this.contentfigureurl4 = contentfigureurl4;
 	}
 	public BmobFile getContentfigureurl5() {
-		return this.Contentfigureurl5;
+		return this.contentfigureurl5;
 	}
 	public void setContentfigureurl5(BmobFile contentfigureurl5) {
-		this.Contentfigureurl5 = contentfigureurl5;
+		this.contentfigureurl5 = contentfigureurl5;
 	}
 	public BmobFile getContentfigureurl6() {
-		return this.Contentfigureurl6;
+		return this.contentfigureurl6;
 	}
 	public void setContentfigureurl6(BmobFile contentfigureurl6) {
-		this.Contentfigureurl6 = contentfigureurl6;
+		this.contentfigureurl6 = contentfigureurl6;
 	}
 	public BmobFile getContentfigureurl7() {
-		return this.Contentfigureurl7;
+		return this.contentfigureurl7;
 	}
 	public void setContentfigureurl7(BmobFile contentfigureurl7) {
-		this.Contentfigureurl7 = contentfigureurl7;
+		this.contentfigureurl7 = contentfigureurl7;
 	}
 	public BmobFile getContentfigureurl8() {
-		return this.Contentfigureurl8;
+		return this.contentfigureurl8;
 	}
 	public void setContentfigureurl8(BmobFile contentfigureurl8) {
-		this.Contentfigureurl8 = contentfigureurl8;
+		this.contentfigureurl8 = contentfigureurl8;
 	}
 	public User getAuthor() {
 		return this.author;
@@ -139,10 +139,10 @@ public class QiangItem extends BmobObject{
 		this.content = content;
 	}
 	public BmobFile getContentfigureurl() {
-		return this.Contentfigureurl;
+		return this.contentfigureurl;
 	}
 	public void setContentfigureurl(BmobFile contentfigureurl) {
-		this.Contentfigureurl = contentfigureurl;
+		this.contentfigureurl = contentfigureurl;
 	}
 	public int getLove() {
 		return this.love;
@@ -196,7 +196,7 @@ public class QiangItem extends BmobObject{
 	public String toString() {
 		return "QiangItem [author=" + this.author + ", content="
 				+ this.content + ", Contentfigureurl="
-				+ this.Contentfigureurl + ", love=" + this.love
+				+ this.contentfigureurl + ", love=" + this.love
 				+ ", hate=" + this.hate + ", share="
 				+ this.share + ", comment=" + this.comment
 				+ ", isPass=" + this.isPass + ", myFav="

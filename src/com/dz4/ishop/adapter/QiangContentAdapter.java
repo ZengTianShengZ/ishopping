@@ -7,8 +7,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.View;
 
-import com.dz4.ishop.frag.Fragment_Qiang;
-import com.dz4.ishop.frag.Fragment_home;
+import com.dz4.ishop.frag.QiangFragment;
+import com.dz4.ishop.frag.HomeFragment;
 import com.dz4.ishop.listener.TitlechangeListener;
 import com.dz4.ishop.utils.LogUtils;
 import com.dz4.ishopping.R;

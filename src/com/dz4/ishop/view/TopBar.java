@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -38,7 +39,7 @@ public class TopBar extends RelativeLayout {
 	
 	private TextView title;
 	private ImageButton rightButton;
-	private ImageButton leftButton;
+	private CircleImageView leftButton;
 	
 	private LayoutParams leftParams;
 	private LayoutParams rightParams;
@@ -71,7 +72,7 @@ public class TopBar extends RelativeLayout {
 		
 		title=new TextView(context);
 		rightButton=new ImageButton(context);
-		leftButton = new ImageButton(context);
+		leftButton = new CircleImageView(context,null);
 		
 		title.setTextColor(titleColor);
 		title.setTextSize(TypedValue.COMPLEX_UNIT_SP,titleSize);
@@ -90,8 +91,8 @@ public class TopBar extends RelativeLayout {
 				mlistener.rightbtnclick(v);
 			}
 		});
-		leftButton.setBackground(leftButtonImage);
-		//leftButton.setImageDrawable(leftButtonImage);
+		//leftButton.setBackground(leftButtonImage);
+		leftButton.setImageDrawable(leftButtonImage);
 		leftButton.setVisibility(leftButtonVisible);
 		leftButton.setOnClickListener(new OnClickListener() {
 			
@@ -191,11 +192,11 @@ public class TopBar extends RelativeLayout {
 		return this.rightButton;
 	}
 
-	public ImageButton getLeftButton() {
+	public CircleImageView getLeftButton() {
 		return this.leftButton;
 	}
 
-	public void setLeftButton(ImageButton leftButton) {
+	public void setLeftButton(CircleImageView leftButton) {
 		this.leftButton = leftButton;
 	}
 

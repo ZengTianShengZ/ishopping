@@ -11,6 +11,7 @@ import cn.bmob.v3.BmobACL;
 import cn.bmob.v3.BmobUser;
 
 import com.dz4.ishop.domain.User;
+import com.dz4.ishop.listener.OnUserInfoChangeListener;
 import com.dz4.ishop.utils.Constant;
 import com.dz4.support.app.IApplication;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
@@ -29,6 +30,7 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
 public class IshopApplication extends IApplication {
 	private boolean mIsFirstLaunch=true;
 	private SharedPreferences pre;
+	private OnUserInfoChangeListener monUserInfoChangeListener;
 	@Override
 	public void onCreate() {
 		// TODO 自动生成的方法存根
@@ -98,5 +100,12 @@ public class IshopApplication extends IApplication {
 	public void setFirstLaunch(boolean isFirstLaunch) {
 		mIsFirstLaunch = isFirstLaunch;
 	}
-	
+	public void setOnUserInfoChangeListener(OnUserInfoChangeListener monUserInfoChangeListener){
+		this.monUserInfoChangeListener = monUserInfoChangeListener;
+	}
+	public void notifyDataChange(){
+		if(monUserInfoChangeListener!=null){
+			monUserInfoChangeListener.OnUserInfoChange();
+		}
+	}
 }

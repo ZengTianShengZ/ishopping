@@ -20,7 +20,8 @@ import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.listener.FindListener;
 
-import com.dz4.ishop.adapter.ContactListAdapter;
+import com.dz4.ishop.adapter.FocusListAdapter;
+import com.dz4.ishop.app.IshopApplication;
 import com.dz4.ishop.domain.User;
 import com.dz4.ishop.utils.Constant;
 import com.dz4.ishopping.R;
@@ -35,7 +36,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
  * @author MZone
  *
  */
-public class Fragment_Qiang_focus extends BaseFragment {
+public class FocusFragment extends BaseFragment {
 	
 	
 	private View contentView ;
@@ -45,13 +46,13 @@ public class Fragment_Qiang_focus extends BaseFragment {
 	private ProgressBar progressbar;
 	
 	private ArrayList<User> mListItems;
-	private ContactListAdapter mContactListAdapter;
+	private FocusListAdapter mContactListAdapter;
 	private enum RefreshType {Refresh,Loadmore};
 	private RefreshType mRefreshType=RefreshType.Loadmore;
 	private int pageNum;
 	public static BaseFragment newInstance(int position) {
 		// TODO 自动生成的方法存根
-		BaseFragment fragment = new Fragment_Qiang_focus();
+		BaseFragment fragment = new FocusFragment();
 		Bundle bundle = new Bundle();
 		bundle.putInt("page", position);
 		fragment.setArguments(bundle);
@@ -94,7 +95,7 @@ public class Fragment_Qiang_focus extends BaseFragment {
 		// TODO 自动生成的方法存根
 		mPullRefreshListView.setMode(Mode.BOTH);
 		mListItems =new ArrayList<User>();
-		mContactListAdapter = new ContactListAdapter(getContext(),mListItems);
+		mContactListAdapter = new FocusListAdapter(getContext(),mListItems,((IshopApplication)(getActivity().getApplication())).getCurrentUser());
 		actualListView.setAdapter(mContactListAdapter);
 		if(mListItems.size() == 0){
 			mRefreshType=RefreshType.Refresh;

@@ -14,6 +14,7 @@ import cn.bmob.v3.datatype.BmobRelation;
  */
 public class User extends BmobUser implements Serializable{
 	
+	private String nickname;
 	private String signature;
 	private BmobFile avatar;
 	private BmobRelation favorite;
@@ -21,12 +22,21 @@ public class User extends BmobUser implements Serializable{
 	private String sex;
 	private String location;
 
+	
 	public String getLocation() {
 		return this.location;
 	}
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+	
+	public String getNickname() {
+		return this.nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	public String getSex() {

@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import cn.bmob.v3.listener.UpdateListener;
 
+import com.dz4.ishop.app.IshopApplication;
 import com.dz4.ishop.domain.User;
 import com.dz4.ishop.utils.Constant;
 import com.dz4.ishop.utils.LogUtils;
@@ -62,6 +63,7 @@ public class EditSigntureActivity extends BaseUIActivity implements
 					showToast("提交成功");
 					finish();
 					LogUtils.i(TAG, "signature is update success!");
+					((IshopApplication)getApplication()).notifyDataChange();
 				}
 				
 				@Override

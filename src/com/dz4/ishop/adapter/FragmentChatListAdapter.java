@@ -16,12 +16,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
-public class FragmentChatLiatAdapter extends CommonAdapter<PushNews>{
+public class FragmentChatListAdapter extends CommonAdapter<PushNews>{
 
 	private Context context;
 	private ImageView imageView;
 	
-	public FragmentChatLiatAdapter(Context context, List<PushNews> mPushNews,int fragmentChatList) {
+	public FragmentChatListAdapter(Context context, List<PushNews> mPushNews,int fragmentChatList) {
 		 
 		super(context, mPushNews, fragmentChatList);
 		

@@ -44,7 +44,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
  * @author MZone
  *
  */
-public class Fragment_Qiang extends BaseFragment{
+public class QiangFragment extends BaseFragment{
 	
 	
 	protected static final String TAG = "Fragment_Qiang";
@@ -62,7 +62,7 @@ public class Fragment_Qiang extends BaseFragment{
 	
 	public static BaseFragment newInstance(int position) {
 		// TODO 自动生成的方法存根
-		BaseFragment fragment = new Fragment_Qiang();
+		BaseFragment fragment = new QiangFragment();
 		Bundle bundle = new Bundle();
 		bundle.putInt("page", position);
 		fragment.setArguments(bundle);
@@ -118,17 +118,6 @@ public class Fragment_Qiang extends BaseFragment{
 	
 	@Override
 	public void initEvent() {
-		actualListView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent,
-					View view, int position, long id) {
-				// TODO 自动生成的方法存根
-				Intent intent = new Intent(getContext(),GoodsDetailActivity.class);
-				intent.putExtra(Constant.BUNDLE_KEY_QIANGITEM, mListItems.get(position-1));
-				startActivity(intent);
-				LogUtils.i(TAG, "Itemclick!!");
-			}
-		});
 		mPullRefreshListView.setOnRefreshListener(new OnRefreshListener2<ListView>() {
 			@Override
 			public void onPullDownToRefresh(
@@ -240,10 +229,4 @@ public class Fragment_Qiang extends BaseFragment{
 			break;
 		}
 	}
-
-
-	
-
-
-	
 }

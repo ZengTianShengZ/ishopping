@@ -15,9 +15,11 @@ import cn.bmob.v3.listener.UpdateListener;
 import com.dz4.ishop.app.IshopApplication;
 import com.dz4.ishop.domain.QiangItem;
 import com.dz4.ishop.domain.User;
+import com.dz4.ishop.ui.GoodsDetailActivity;
 import com.dz4.ishop.ui.PersonalActivity;
 import com.dz4.ishop.utils.Constant;
 import com.dz4.ishop.utils.ImageUtils;
+import com.dz4.ishop.utils.LogUtils;
 import com.dz4.ishop.view.innerGridView;
 import com.dz4.ishopping.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -29,6 +31,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -41,24 +45,26 @@ import android.widget.Toast;
  *
  */
 public class QiangListAdapter extends BaseAdapter{
-	private ArrayList<QiangItem> Datalist;
+	
+	private final String TAG = "QiangListAdapter";
+	private ArrayList<QiangItem> datalist;
 	private Context mContext;
 	private GridViewAdapter mGridViewAdapter;
-	public QiangListAdapter(Context mContext,ArrayList Datalist){
-		this.Datalist=Datalist;
+	public QiangListAdapter(Context mContext,ArrayList datalist){
+		this.datalist=datalist;
 		this.mContext=mContext;
 		
 	}
 	@Override
 	public int getCount() {
 		// TODO 自动生成的方法存根
-		return Datalist.size();
+		return datalist.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
 		// TODO 自动生成的方法存根
-		return Datalist.get(position);
+		return datalist.get(position);
 	}
 
 	@Override
@@ -75,7 +81,7 @@ public class QiangListAdapter extends BaseAdapter{
 			viewHolder = new ViewHolder();
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.item_qiang, null);
 			
-			viewHolder.userName = (TextView) convertView
+			viewHolder.nickName = (TextView) convertView
 					.findViewById(R.id.user_name);
 			viewHolder.userLogo = (ImageView) convertView
 					.findViewById(R.id.user_logo);
@@ -100,11 +106,11 @@ public class QiangListAdapter extends BaseAdapter{
 			viewHolder =(ViewHolder)convertView.getTag();
 		}
 		//TODO
-		final QiangItem mQiangItem= (QiangItem) Datalist.get(position);
+		final QiangItem mQiangItem= (QiangItem) datalist.get(position);
 		viewHolder.contentText.setText(mQiangItem.getContent()+"");
 		viewHolder.hate.setText(mQiangItem.getHate()+"");
 		viewHolder.love.setText(mQiangItem.getLove()+"");
-		viewHolder.userName.setText(mQiangItem.getAuthor().getUsername());
+		viewHolder.nickName.setText(mQiangItem.getAuthor().getNickname());
 		viewHolder.qiangtime.setText(mQiangItem.getCreatedAt());
 		viewHolder.userLogo.setOnClickListener(new OnClickListener(){
 			@Override
@@ -112,6 +118,34 @@ public class QiangListAdapter extends BaseAdapter{
 				Intent intent = new Intent(mContext,PersonalActivity.class);
 				intent.putExtra(Constant.BUNDLE_KEY_AUTHOR, mQiangItem.getAuthor());
 				mContext.startActivity(intent);
+			}
+		});
+
+		viewHolder.love.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO 自动生成的方法存根
+				Toast.makeText(mContext, "love", Toast.LENGTH_SHORT).show();
+			}
+		});
+		convertView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO 自动生成的方法存根
+				Intent intent = new Intent(mContext,GoodsDetailActivity.class);
+				intent.putExtra(Constant.BUNDLE_KEY_QIANGITEM, mQiangItem);
+				mContext.startActivity(intent);
+				LogUtils.i(TAG, "Itemclick!!");
+			}
+		});
+		viewHolder.share.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO 自动生成的方法存根
+				Toast.makeText(mContext, "share", Toast.LENGTH_SHORT).show();
 			}
 		});
 		if (null == mQiangItem.getContentfigureurl()) {
@@ -126,7 +160,7 @@ public class QiangListAdapter extends BaseAdapter{
 //						
 //					};
 //				} );
-		//TODO
+			
 			ArrayList<String> paths = new ArrayList<String>();
 			if(mQiangItem.getContentfigureurl()!=null)
 				paths.add(mQiangItem.getContentfigureurl().getFileUrl(mContext));
@@ -243,7 +277,7 @@ public class QiangListAdapter extends BaseAdapter{
 	}
 	public  class ViewHolder {
 		public ImageView userLogo;
-		public TextView userName;
+		public TextView nickName;
 		public TextView qiangtime;
 		public TextView contentText;
 		public innerGridView contentImage;

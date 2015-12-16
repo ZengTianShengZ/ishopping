@@ -49,7 +49,7 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 public class PersonalActivity extends BaseUIActivity implements TopBar.onTopBarbtnclickListener{
  
-	private View Personal_inforView;
+	private View mPersonInfoView;
 	
 	private TopBar mTopBar;
 	private ImageView personalIcon;
@@ -87,13 +87,13 @@ public class PersonalActivity extends BaseUIActivity implements TopBar.onTopBarb
 		mPullToRefreshListView = (PullToRefreshListView)findViewById(R.id.pull_refresh_list_personal);
 		mListView = mPullToRefreshListView.getRefreshableView();
 		
-		Personal_inforView = getLayoutInflater().inflate(R.layout.personal_info, mListView, false);
+		mPersonInfoView = getLayoutInflater().inflate(R.layout.personal_info, mListView, false);
 	
-		personalIcon = (ImageView) Personal_inforView.findViewById(R.id.personal_icon);
-		personalName = (TextView) Personal_inforView.findViewById(R.id.personl_name);
-		personalSign = (TextView) Personal_inforView.findViewById(R.id.personl_signature);
-		goSettings = (ImageView) Personal_inforView.findViewById(R.id.go_settings);
-		personalTitle = (TextView) Personal_inforView.findViewById(R.id.personl_title);
+		personalIcon = (ImageView) mPersonInfoView.findViewById(R.id.personal_icon);
+		personalName = (TextView) mPersonInfoView.findViewById(R.id.personl_name);
+		personalSign = (TextView) mPersonInfoView.findViewById(R.id.personl_signature);
+		goSettings = (ImageView) mPersonInfoView.findViewById(R.id.go_settings);
+		personalTitle = (TextView) mPersonInfoView.findViewById(R.id.personl_title);
 	}
  
 	@Override
@@ -131,7 +131,7 @@ public class PersonalActivity extends BaseUIActivity implements TopBar.onTopBarb
 	            	//这样是得不到  ScrollY 的 得到 1.1.1.1.1.1
 	            	Log.i("getScrollY",mPullToRefreshListView.getScrollY()+"..."); 
 	            	//自己定义得到 ScrollY
-	            	Log.i("getScrollY",MygetScrollY()+"..."+Personal_inforView.getHeight()); 
+	            	Log.i("getScrollY",MygetScrollY()+"..."+mPersonInfoView.getHeight()); 
 	              
 	            	if(MygetScrollY()>=810){
 	            		mTopBar.setTitleText(mUser.getUsername());
@@ -174,14 +174,14 @@ public class PersonalActivity extends BaseUIActivity implements TopBar.onTopBarb
 		 
 		//mListView.addHeaderView(mPlaceHolderView);
 		//mListView = mPullToRefreshListView.getRefreshableView();
-		mListView.addHeaderView(Personal_inforView);
+		mListView.addHeaderView(mPersonInfoView);
 		mQiangYus = new ArrayList<QiangItem>();
-		personalQiangListAdapter = new PersonalQiangListAdapter(mContext,mQiangYus);
+		personalQiangListAdapter = new PersonalQiangListAdapter(mContext,mQiangYus,mUser);
 		mListView.setAdapter(personalQiangListAdapter);
 	}
 	private void updatePersonalInfo(User mUser2) {
 		
-		personalName.setText(mUser2.getUsername());
+		personalName.setText(mUser2.getNickname());
 		personalSign.setText(mUser2.getSignature());
 		if (mUser2.getAvatar() != null) {
 			// 设置 个人 头像 ，采用开源的 图片加载程序
@@ -269,17 +269,6 @@ public class PersonalActivity extends BaseUIActivity implements TopBar.onTopBarb
 	@Override
 	public void initEvent() {
 		mTopBar.setTopBarbtnclickListener(this);
-		mListView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// TODO 自动生成的方法存根
-				Intent intent = new Intent(mContext,GoodsDetailActivity.class);
-				intent.putExtra(Constant.BUNDLE_KEY_QIANGITEM, mQiangYus.get(position-2));
-				startActivity(intent);
-			}
-		});
 	}
 	
 	@Override

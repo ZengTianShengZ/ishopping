@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -15,17 +16,25 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
@@ -45,35 +54,36 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 public class UserInfoActivity extends BaseUIActivity implements
-TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener {
+TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener,OnFocusChangeListener{
 	private final String TAG ="UserInfoActivity";
 	
 	private Context mContext;
 	private TopBar mTopBar;
 	private ImageView usericon;
-	private TextView usernickname_Text;
+	private EditText usernickname_Text;
 	private CheckBox sex_checkbox;
 	private CheckBox push_checkbox;
 	private TextView usersign_Text;
 	private View usersign;
 	private View iconitem;
 	private View cl_cache;
+	private View user_nick;
 	
 	private String iconurl;
-	private String username;
+	private String nickname;
 	private String sex;
 	private String sign;
 	
 	private User user; 
-	
-	private Handler mHandler ;
-	
+
+	private IshopApplication app;
 	
 	private AlertDialog albumDialog;
 	private String dateTime;
 
 
 	private String iconUrl;
+
 	@Override
 	public void initView() {
 		// TODO 自动生成的方法存根
@@ -87,10 +97,11 @@ TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener {
 		
 		usericon =(ImageView) findViewById(R.id.user_icon_image);
 		iconitem =(View) findViewById(R.id.user_icon);
-		usernickname_Text =(TextView)findViewById(R.id.user_nick_text);
+		usernickname_Text =(EditText)findViewById(R.id.user_nick_text);
 		sex_checkbox =(CheckBox) findViewById(R.id.sex_choice_switch);
 		push_checkbox =(CheckBox) findViewById(R.id.settings_push_switch);
 		usersign_Text = (TextView) findViewById(R.id.user_sign_text);
+		user_nick = (View)findViewById(R.id.user_nick);
 		usersign=(View)findViewById(R.id.user_sign);
 		cl_cache = (View)findViewById(R.id.settings_cache);
 		
@@ -102,10 +113,8 @@ TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener {
 			public void onClick(View v) {
 				// TODO 自动生成的方法存根
 				new UserProxy(getApplicationContext()).logout();
-				((IshopApplication)getApplication()).removeLogin();//清楚登录标记
-				if(mHandler!=null){
-					mHandler.sendEmptyMessage(Constant.MSG_LOGIN_CHANGE);
-				}
+				app.removeLogin();//清楚登录标记
+				app.notifyDataChange();
 				finish();
 			}
 		}, new OnClickListener() {
@@ -128,11 +137,13 @@ TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener {
 	public void initData() {
 		mContext=getApplicationContext();
 		// TODO 自动生成的方法存根
-		mHandler=((IshopApplication)getApplication()).getHandler();
+		app = (IshopApplication)getApplication();
 		user = ((IshopApplication)getApplication()).getCurrentUser();
-		username=user.getUsername();
-		if(!UtilsTools.isStringInvalid(username)){
-			usernickname_Text.setText(username);
+		nickname=user.getNickname();
+		if(!UtilsTools.isStringInvalid(nickname)){
+			usernickname_Text.setText(nickname);
+		}else{
+			usernickname_Text.setText(user.getUsername());
 		}
 		sex=user.getSex();
 		if(!UtilsTools.isStringInvalid(sex)){
@@ -164,6 +175,8 @@ TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener {
 		// TODO 自动生成的方法存根
 		iconitem.setOnClickListener(this);
 		usersign.setOnClickListener(this);
+		user_nick.setOnClickListener(this);
+		usernickname_Text.setOnFocusChangeListener(this);
 		
 		sex_checkbox.setOnCheckedChangeListener(this);
 		push_checkbox.setOnCheckedChangeListener(this);
@@ -174,6 +187,9 @@ TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener {
 	public void onClick(View v) {
 		// TODO 自动生成的方法存根
 		switch (v.getId()) {
+		case R.id.user_nick:
+			
+			break;
 		case R.id.user_sign:
 			LogUtils.i(TAG, "user_sign click");
 			Intent intent = new Intent(UserInfoActivity.this,EditSigntureActivity.class);
@@ -211,6 +227,7 @@ TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener {
 				@Override
 				public void onSuccess() {
 					// TODO 自动生成的方法存根
+					app.notifyDataChange();
 					showToast("数据更新成功");
 				}
 				
@@ -364,6 +381,7 @@ TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener {
 							LogUtils.i(TAG, "上传头像成功");
 							showToast("上传头像成功");
 							initData();
+							app.notifyDataChange();
 						}
 						@Override
 						public void onFailure(int arg0, String arg1) {
@@ -430,5 +448,33 @@ TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener {
 			
 		}
 	}
+
+	@Override
+	public void onFocusChange(View v, boolean hasFocus) {
+		// TODO 自动生成的方法存根
+		LogUtils.i(TAG, "onFocusChange value："+hasFocus);
+		if(!hasFocus){
+			String ninkname =((EditText)v).getEditableText().toString();
+			user.setNickname(ninkname);
+			user.update(mContext, new UpdateListener() {
+				
+				@Override
+				public void onSuccess() {
+					showToast(R.string.update_success);
+					app.notifyDataChange();
+					LogUtils.i(TAG, "nickname update success!!");
+					
+				}
+				
+				@Override
+				public void onFailure(int arg0, String arg1) {
+					// TODO 自动生成的方法存根
+					LogUtils.i(TAG, "nickname update failure!!");
+					showToast(R.string.update_faile);
+				}
+			});
+		}
+	}
+	
 	
 }

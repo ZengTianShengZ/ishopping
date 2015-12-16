@@ -13,19 +13,21 @@ import cn.bmob.v3.Bmob;
 import com.dz4.ishop.app.IshopApplication;
 import com.dz4.ishop.proxy.UserProxy;
 import com.dz4.ishop.utils.Constant;
+import com.dz4.ishop.utils.LogUtils;
+import com.dz4.ishop.utils.RegularExpression;
 import com.dz4.ishop.view.TopBar;
 import com.dz4.ishopping.R;
 import com.dz4.support.activity.BaseUIActivity;
 
 public class LoginActivity extends BaseUIActivity implements TopBar.onTopBarbtnclickListener,OnClickListener
-,UserProxy.onLoginListener{
+,UserProxy.onLoginListener,UserProxy.onQueryListener{
 	private TopBar mTopBar;
-	private EditText input_username;
+	private EditText input_account;
 	private EditText input_password;
 	private Button login_btn;
-	private TextView more;
+	private TextView more; 
 	
-	private String username;
+	private String account;
 	private String password;
 	
 	private UserProxy mUserProxy;
@@ -40,7 +42,7 @@ public class LoginActivity extends BaseUIActivity implements TopBar.onTopBarbtnc
 		mTopBar.setLeftButtonImage(getResources().getDrawable(R.drawable.login_back));
 		mTopBar.setLeftButtonVisible(View.VISIBLE);
 		
-		input_username = (EditText) findViewById(R.id.input_username);
+		input_account = (EditText) findViewById(R.id.input_account);
 		input_password = (EditText) findViewById(R.id.input_password);
 		login_btn = (Button)findViewById(R.id.login_btn);
 		more=(TextView)findViewById(R.id.more);
@@ -61,6 +63,7 @@ public class LoginActivity extends BaseUIActivity implements TopBar.onTopBarbtnc
 		login_btn.setOnClickListener(this);
 		more.setOnClickListener(this);
 		mUserProxy.setOnLoginListener(this);
+		mUserProxy.setOnQueryListener(this);
 	}
 
 	@Override
@@ -86,8 +89,9 @@ public class LoginActivity extends BaseUIActivity implements TopBar.onTopBarbtnc
 					
 					@Override
 					public void onClick(View v) {
-						// TODO 自动生成的方法存根
-						Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);
+						 
+						//Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);
+						Intent intent = new Intent(getApplicationContext(),RegisterActivity_For_telephone.class);
 						startActivity(intent);
 					}
 				}, new OnClickListener() {
@@ -95,7 +99,10 @@ public class LoginActivity extends BaseUIActivity implements TopBar.onTopBarbtnc
 					@Override
 					public void onClick(View v) {
 						// TODO 自动生成的方法存根
-						showToast(getString(R.string.findpsw));
+						//showToast(getString(R.string.findpsw));
+						
+						Intent intent = new Intent(getApplicationContext(),ResetPasswordActivity.class);
+						startActivity(intent);
 					}
 				});
 				break;
@@ -104,9 +111,25 @@ public class LoginActivity extends BaseUIActivity implements TopBar.onTopBarbtnc
 
 	private void login() {
 		// TODO 自动生成的方法存根
-		username=input_username.getEditableText().toString();
+		account=input_account.getEditableText().toString();
 		password=input_password.getEditableText().toString();
-		mUserProxy.login(username, password);
+		
+		 
+		
+  	    if(RegularExpression.RegExp_is_allNumber(account)){  // 如果纯 数字
+ 	    	LogUtils.i("query","......sion.RegExp_is_allNu  ");
+			if(RegularExpression.RegExp_telephoneNumber(account)){
+				mUserProxy.query(account);
+			}else{
+				showToast("手机号码有误");
+				return; //  return 是跳出整个 方法
+			}
+ 	    } 
+ 	    else{
+ 	    	LogUtils.i("query","...... login(account, password);  ");
+	 		mUserProxy.login(account, password);  //  否则 用户名登录
+		}
+ 
 		if(((IshopApplication)getApplication()).getHandler()!=null){
 			((IshopApplication)getApplication()).getHandler().sendEmptyMessage(Constant.MSG_LOGIN_CHANGE);
 		}
@@ -114,6 +137,9 @@ public class LoginActivity extends BaseUIActivity implements TopBar.onTopBarbtnc
 				
 	}
 
+	/**
+	 * 登录回调
+	 */
 	@Override
 	public void onLoginSuccess() {
 		// TODO 自动生成的方法存根
@@ -122,6 +148,9 @@ public class LoginActivity extends BaseUIActivity implements TopBar.onTopBarbtnc
 		showToast(R.string.login_success);
 		IshopApplication appdata=((IshopApplication)getApplication());
 		appdata.setLogin();//标记登录
+		
+		Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+		startActivity(intent);
 		finish();
 	}
 
@@ -130,6 +159,21 @@ public class LoginActivity extends BaseUIActivity implements TopBar.onTopBarbtnc
 		// TODO 自动生成的方法存根
 		cancelProgressDialog();
 		showToast(R.string.login_faile);
+	}
+
+	/**
+	 * 查询回调
+	 */
+	@Override
+	public void onQuerySuccess(String Username) {
+		mUserProxy.login(Username, password);  // 正则表达式通过代表是手机号登录，传人 true
+	}
+
+	@Override
+	public void onQueryFailure(String msg) {
+		LogUtils.i("query","......query....sibsisisib");
+		cancelProgressDialog();
+		showToast(R.string.telephone_no_exist);
 	}
 	
 }

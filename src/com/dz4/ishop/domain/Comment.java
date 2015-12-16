@@ -9,6 +9,14 @@ public class Comment extends BmobObject implements Serializable{
 	public static final String TAG = "Comment";
 
 	private User user;
+	private QiangItem qiang;
+	
+	public QiangItem getQiang() {
+		return this.qiang;
+	}
+	public void setQiang(QiangItem qiang) {
+		this.qiang = qiang;
+	}
 	private String commentContent;
 	public User getUser() {
 		return user;
