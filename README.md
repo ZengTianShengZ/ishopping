@@ -13,4 +13,4 @@
 
 ##相关：
 本人是一名大学准毕业生，尚在深入学习和探索android技术的路中，这是本人和同学合作，第一次尝试做一款完整的应用。
-非常感谢我的合作伙伴 [@zss](https://github.com/ZengTianShengZ)
+非常感谢我的合作伙伴 [@ZengTianShengZ](https://github.com/ZengTianShengZ)
