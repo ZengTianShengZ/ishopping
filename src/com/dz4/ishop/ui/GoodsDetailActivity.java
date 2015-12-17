@@ -158,7 +158,7 @@ public class GoodsDetailActivity extends BaseUIActivity implements
 			goodsPrice.setText("" + goods.getPrice());
 		}
 		refreshview.setMode(Mode.BOTH);
-		if (mUser.getObjectId().equals(
+		if (mUser == null || mUser.getObjectId().equals(
 				mQiangItem.getAuthor().getObjectId())) {
 			focusView.setVisibility(View.GONE);
 		} else {

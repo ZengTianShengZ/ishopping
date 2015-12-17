@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.dz4.ishopping"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
@@ -11,13 +12,14 @@
         android:background="@color/theme_color"
         android:padding="16dp"
         >
-        <ImageView 
+         <com.dz4.ishop.view.CircleImageView
             android:id="@+id/personal_icon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/user_icon_default"
+             android:layout_width="60dp"
+        		android:layout_height="60dp"
+        		android:src="@drawable/user_icon_default_main"
+            app:border_width="2dp"
             android:layout_marginRight="4dp"
+           app:border_color ="#dddddd"
             />
         <TextView
             android:id="@+id/personl_name"

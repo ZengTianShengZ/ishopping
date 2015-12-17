@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.dz4.ishop.adapter.QiangContentAdapter;
+import com.dz4.ishop.adapter.HomeContentAdapter;
 import com.dz4.ishop.listener.TitlechangeListener;
 import com.dz4.ishop.utils.LogUtils;
 import com.dz4.ishopping.R;
@@ -71,7 +71,7 @@ public class HomeFragment extends BaseFragment implements ViewPager.OnPageChange
 		fragments.add(QiangFragment.newInstance(0));
 		fragments.add(FocusFragment.newInstance(1));
 
-		QiangContentAdapter adapter = new QiangContentAdapter(
+		HomeContentAdapter adapter = new HomeContentAdapter(
 				getFragmentManager(), fragments);
 		viewPager.setAdapter(adapter);
 		viewPager.addOnPageChangeListener(this);

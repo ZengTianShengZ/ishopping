@@ -107,6 +107,17 @@
             android:theme="@style/mydialogTheme1"
             >
             </activity>
+            <activity
+            android:name="com.dz4.ishop.ui.RegisterActivity_For_telephone"
+            android:theme="@style/AppTheme"
+            >
+           </activity> 
+           
+           <activity
+            android:name="com.dz4.ishop.ui.ResetPasswordActivity"
+            android:theme="@style/AppTheme"
+            >
+           </activity> 
              <activity
             android:name="com.dz4.ishop.ui.PersonalCommentActivity"
             android:theme="@style/AppTheme"

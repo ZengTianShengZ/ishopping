@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.dz4.ishopping"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dip" 
     android:background="#FFFFFF"
-     android:descendantFocusability="blocksDescendants"
      >
-    <ImageView 
+    <com.dz4.ishop.view.CircleImageView
         android:id="@+id/user_logo"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:scaleType="centerInside"
         android:src="@drawable/user_icon_default_main"
-        />
+        app:border_color="#FFFFFF"
+        app:border_width="2dp" />
     <TextView 
 	    android:id="@+id/user_name"
 		style="@style/TextTheme"
@@ -39,6 +40,7 @@
 	    android:text="十年之前，我不认识你 你不属于我，我们还是一样，陪在一个陌生人左右，走过渐渐熟悉的街头;十年之后，我们是朋友， 还可以问候，只是那种温柔，再也找不到拥抱的理由，情人最后难免沦为朋友。"
 	    android:layout_below="@id/user_logo"
 	    android:layout_margin="4dp"
+	    android:clickable="true"
 	    />
 	
 	 <com.dz4.ishop.view.innerGridView
@@ -55,6 +57,7 @@
         android:numColumns="3"
         android:stretchMode="columnWidth"
         android:verticalSpacing="3dip" 
+        android:clickable="true"
         
         >
     </com.dz4.ishop.view.innerGridView>

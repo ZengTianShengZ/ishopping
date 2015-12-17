@@ -20,10 +20,10 @@ import com.dz4.support.widget.BaseFragment;
  * 
  *
  */
-public class QiangContentAdapter extends FragmentStatePagerAdapter {
+public class HomeContentAdapter extends FragmentStatePagerAdapter {
 
 	private ArrayList<BaseFragment> fragments;
-	public QiangContentAdapter(FragmentManager fragmentManager, ArrayList<BaseFragment> fragments) {
+	public HomeContentAdapter(FragmentManager fragmentManager, ArrayList<BaseFragment> fragments) {
 		super(fragmentManager);
 		// TODO Auto-generated constructor stub
 		this.fragments =fragments;

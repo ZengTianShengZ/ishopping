@@ -7,7 +7,7 @@
         android:id="@+id/ImagePager"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:background="@drawable/open_picture" />
+        />
 
  <LinearLayout
      android:layout_width="wrap_content"
