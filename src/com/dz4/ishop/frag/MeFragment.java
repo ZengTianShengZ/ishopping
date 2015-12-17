@@ -123,7 +123,7 @@ public class MeFragment extends  BaseFragment implements OnClickListener,OnUserI
 		}else{
 
 			mNickname.setText("未登录");
-			mSignature.setText("他很懒，什么都没有留下!");
+			mSignature.setText("您还没有登录！");
 			mIconView.setImageDrawable(getResources().getDrawable(R.drawable.user_icon_default_main));
 			commentCount.setText("0");
 			publishCount.setText("0");
@@ -234,11 +234,13 @@ public class MeFragment extends  BaseFragment implements OnClickListener,OnUserI
 			}
 			break;
 		case R.id.comment:
+			if(mUser == null) return;
 			Intent intent = new  Intent(getContext(),PersonalCommentActivity.class);
 			intent.putExtra(Constant.BUNDLE_KEY_AUTHOR, mUser);
 			startActivity(intent);
 			break;
 		case R.id.publish:
+			if(mUser == null) return;
 			Intent intent1 = new  Intent(getContext(),PersonalActivity.class);
 			intent1.putExtra(Constant.BUNDLE_KEY_AUTHOR, mUser);
 			startActivity(intent1);

@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="top"
-                    android:text="他很懒，什么都没有留下!" />
+                    android:text="您还没有登录！" />
             </LinearLayout>
         </LinearLayout>
         <!-- 分割线 -->

@@ -242,7 +242,6 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 	        	    if(isFinish) {
 	            		publishWithoutFigure(commitContent,files,goods);
 	            	}
-	            	cancelProgressDialog();
 	            }
 
 	            
