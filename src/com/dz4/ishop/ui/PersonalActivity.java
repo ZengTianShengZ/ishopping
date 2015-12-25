@@ -31,6 +31,7 @@ import cn.bmob.v3.listener.FindListener;
 import com.dz4.ishop.adapter.PersonalQiangListAdapter;
 import com.dz4.ishop.adapter.QiangListAdapter;
 import com.dz4.ishop.app.IshopApplication;
+import com.dz4.ishop.db.DatabaseUtil;
 import com.dz4.ishop.domain.QiangItem;
 import com.dz4.ishop.domain.User;
 import com.dz4.ishop.utils.Constant;
@@ -61,7 +62,7 @@ public class PersonalActivity extends BaseUIActivity implements TopBar.onTopBarb
 	private PullToRefreshListView mPullToRefreshListView;
  
 	private ListView mListView;
-	private ArrayList<QiangItem> mQiangYus;
+	private ArrayList<QiangItem> mQiangItems;
 	private PersonalQiangListAdapter personalQiangListAdapter;
 	
 	private User mUser;
@@ -175,8 +176,8 @@ public class PersonalActivity extends BaseUIActivity implements TopBar.onTopBarb
 		//mListView.addHeaderView(mPlaceHolderView);
 		//mListView = mPullToRefreshListView.getRefreshableView();
 		mListView.addHeaderView(mPersonInfoView);
-		mQiangYus = new ArrayList<QiangItem>();
-		personalQiangListAdapter = new PersonalQiangListAdapter(mContext,mQiangYus,mUser);
+		mQiangItems = new ArrayList<QiangItem>();
+		personalQiangListAdapter = new PersonalQiangListAdapter(mContext,mQiangItems,mUser);
 		mListView.setAdapter(personalQiangListAdapter);
 	}
 	private void updatePersonalInfo(User mUser2) {
@@ -235,16 +236,20 @@ public class PersonalActivity extends BaseUIActivity implements TopBar.onTopBarb
 				// TODO Auto-generated method stub
 				//mIProgressControllor.hideActionBarProgress();
 				if (data.size() != 0 && data.get(data.size() - 1) != null) {
+					User user = null;
 					if (mRefreshType == RefreshType.REFRESH) {
 						// 如果是向上刷新，则先清除掉当前数据
-						mQiangYus.clear();
+						mQiangItems.clear();
 					}
 
 					if (data.size() < NUMBERS_PER_PAGE) {
 						showToast("已加载完所有数据~");
 					}
-
-					mQiangYus.addAll(data);
+					if((user = ((IshopApplication)getApplication()).getCurrentUser())!=null){
+						data=DatabaseUtil.getInstance(mContext).setLove(data, user);
+					}
+					List<QiangItem> Targetlist = data;
+					mQiangItems.addAll(Targetlist);
 					//更新数据
 					personalQiangListAdapter.notifyDataSetChanged();
 					//刷新完成

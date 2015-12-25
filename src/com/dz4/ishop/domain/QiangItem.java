@@ -1,5 +1,7 @@
 package com.dz4.ishop.domain;
 
+import java.io.Serializable;
+
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.datatype.BmobRelation;
@@ -9,7 +11,9 @@ import cn.bmob.v3.datatype.BmobRelation;
  * @author MZone
  *
  */
-public class QiangItem extends BmobObject{
+public class QiangItem extends BmobObject implements Serializable{
+	private static final long serialVersionUID = -6280656428527540320L;
+	
 	private User author;
 	private String content;
 	private BmobFile contentfigureurl;

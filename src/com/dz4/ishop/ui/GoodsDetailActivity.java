@@ -69,7 +69,7 @@ public class GoodsDetailActivity extends BaseUIActivity implements
 	private String nickname;
 	private String QiangItemId;
 	private ArrayList<View> dots;
-	private TextView goodNname;
+	private TextView goodsNname;
 	private TextView goodsCategory;
 	private TextView goodsPrice;
 	private Goods goods;
@@ -105,7 +105,7 @@ public class GoodsDetailActivity extends BaseUIActivity implements
 		mContentView = (TextView) findViewById(R.id.content_text);
 		contact_btn = (TextView) findViewById(R.id.contact_btn);
 		comment_btn = (TextView) findViewById(R.id.comment_btn);
-		goodNname = (TextView) rootview
+		goodsNname = (TextView) rootview
 				.findViewById(R.id.goods_name_text);
 		goodsCategory = (TextView) rootview
 				.findViewById(R.id.goods_category_text);
@@ -153,7 +153,7 @@ public class GoodsDetailActivity extends BaseUIActivity implements
 		if (goods != null) {
 			sailerPhone = goods.getCellphone();
 			LogUtils.i("TAG", "phone:" + sailerPhone);
-			goodNname.setText(goods.getName());
+			goodsNname.setText(goods.getName());
 			goodsCategory.setText(goods.getCategory());
 			goodsPrice.setText("" + goods.getPrice());
 		}
@@ -170,7 +170,7 @@ public class GoodsDetailActivity extends BaseUIActivity implements
 		 * **/
 		loadCommentData();
 		datalist = new ArrayList<Comment>();
-		mAdapter = new CommentAdapter(mContext, datalist);
+		mAdapter = new CommentAdapter(mContext, datalist,mQiangItem);
 		mCommentView.setAdapter(mAdapter);
 
 	}
@@ -235,7 +235,7 @@ public class GoodsDetailActivity extends BaseUIActivity implements
 							LogUtils.i("TAG",
 									"phone:"
 											+ sailerPhone);
-							goodNname.setText(goods
+							goodsNname.setText(goods
 									.getName());
 							goodsCategory.setText(goods
 									.getCategory());
@@ -474,20 +474,6 @@ public class GoodsDetailActivity extends BaseUIActivity implements
 		// TODO 自动生成的方法存根
 		BmobQuery<Comment> query = new BmobQuery<Comment>();
 		query.addWhereEqualTo("qiang", mQiangItem);
-		query.count(mContext, Comment.class, new CountListener() {
-
-			@Override
-			public void onFailure(int arg0, String arg1) {
-				// TODO 自动生成的方法存根
-
-			}
-
-			@Override
-			public void onSuccess(int arg0) {
-				// TODO 自动生成的方法存根
-				mAdapter.setCommentCount(arg0);
-			}
-		});
 		query.include("user");
 		query.order("-createdAt");
 		query.setLimit(Constant.COMMENT_NUMBERS_PER_PAGE);

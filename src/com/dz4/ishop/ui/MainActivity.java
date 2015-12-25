@@ -1,5 +1,7 @@
 package com.dz4.ishop.ui;
 
+import java.io.File;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
@@ -7,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
 import cn.bmob.v3.Bmob;
 
 import com.dz4.ishop.app.IshopApplication;
@@ -18,12 +21,18 @@ import com.dz4.ishop.listener.TitlechangeListener;
 import com.dz4.ishop.proxy.UserProxy;
 import com.dz4.ishop.utils.Constant;
 import com.dz4.ishop.utils.ImageUtils;
+import com.dz4.ishop.utils.LogUtils;
 import com.dz4.ishop.view.BottomTagView;
 import com.dz4.ishop.view.TopBar;
 import com.dz4.ishopping.R;
 import com.dz4.support.activity.FragmentBaseActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+import com.umeng.update.UmengDialogButtonListener;
+import com.umeng.update.UmengUpdateAgent;
+import com.umeng.update.UmengUpdateListener;
+import com.umeng.update.UpdateResponse;
+import com.umeng.update.UpdateStatus;
 
 /**
  * 
@@ -31,6 +40,7 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
  *
  */
 public class MainActivity extends FragmentBaseActivity implements TitlechangeListener,TopBar.onTopBarbtnclickListener{
+	private final String TAG = "MainActivity";
 	
 	private BottomTagView homeBottomTag;
 	private BottomTagView chatBottomTag;
@@ -56,7 +66,8 @@ public class MainActivity extends FragmentBaseActivity implements TitlechangeLis
 		initView();
 		setSelected(0);
 		homeBottomTag.setIconAlpha(1);
-		
+		UmengUpdateAgent.update(this);
+		initEvent();
 	}
 
 	@Override
@@ -75,8 +86,38 @@ public class MainActivity extends FragmentBaseActivity implements TitlechangeLis
 		mTopBar.setLeftButtonVisible(View.VISIBLE);
 		mTopBar.setRightButtonVisible(View.VISIBLE);
 	}
-	public void initData() {
-		
+	public void initEvent() {
+		UmengUpdateAgent.setDialogListener(new UmengDialogButtonListener() {
+			@Override
+			    public void onClick(int status) {
+			        switch (status) {
+			        case UpdateStatus.Update:
+			        	LogUtils.i(TAG,"User choose Update");
+			            break;
+			        case UpdateStatus.Ignore:
+			        	LogUtils.i(TAG,"User choose Ignore");
+			            break;
+			        case UpdateStatus.NotNow:
+			        	LogUtils.i(TAG,"User choose NotNow");
+			            break;
+			        }
+			    }
+			});
+			
+		/* UmengUpdateAgent.setUpdateListener(new UmengUpdateListener() {
+
+			@Override
+			public void onUpdateReturned(int updateStatus,
+					UpdateResponse updateInfo) {
+				// TODO 自动生成的方法存根d
+				  switch (updateStatus) {
+			                // 有更新
+			                case UpdateStatus.Yes:
+			                	//UmengUpdateAgent.showUpdateDialog(getApplicationContext(), updateInfo);
+			                	showToast("sad");
+			                	break;
+				  }
+			}});*/
 	}
 	@Override
 	protected void onResume() {

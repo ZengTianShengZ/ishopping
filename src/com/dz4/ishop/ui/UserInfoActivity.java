@@ -52,6 +52,10 @@ import com.dz4.support.activity.BaseUIActivity;
 import com.dz4.support.utils.UtilsTools;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+import com.umeng.update.UmengUpdateAgent;
+import com.umeng.update.UmengUpdateListener;
+import com.umeng.update.UpdateResponse;
+import com.umeng.update.UpdateStatus;
 
 public class UserInfoActivity extends BaseUIActivity implements
 TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener,OnFocusChangeListener{
@@ -66,7 +70,7 @@ TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener,OnFocusC
 	private TextView userSignText;
 	private View userSign;
 	private View iconitem;
-	private View clCache;
+	private View clCacheBtn;
 	private View userNick;
 	
 	private String iconurl;
@@ -83,6 +87,8 @@ TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener,OnFocusC
 
 
 	private String iconUrl;
+
+	private View UpdateBtn;
 
 	@Override
 	public void initView() {
@@ -103,7 +109,8 @@ TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener,OnFocusC
 		userSignText = (TextView) findViewById(R.id.user_sign_text);
 		userNick = (View)findViewById(R.id.user_nick);
 		userSign=(View)findViewById(R.id.user_sign);
-		clCache = (View)findViewById(R.id.settings_cache);
+		clCacheBtn = (View)findViewById(R.id.settings_cache);
+		UpdateBtn = (View)findViewById(R.id.settings_update);
 		
 	}
 	public void logout(View v){
@@ -180,7 +187,8 @@ TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener,OnFocusC
 		
 		sexCheckBox.setOnCheckedChangeListener(this);
 		pushCheckBox.setOnCheckedChangeListener(this);
-		clCache.setOnClickListener(this);
+		clCacheBtn.setOnClickListener(this);
+		UpdateBtn.setOnClickListener(this);
 		
 	}
 	@Override
@@ -205,6 +213,27 @@ TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener,OnFocusC
 			ImageLoader.getInstance().clearMemoryCache();
 			ImageLoader.getInstance().clearDiscCache();
 			showToast("清除图片缓存");
+			break;
+		case R.id.settings_update:
+			UmengUpdateAgent.forceUpdate(mContext);
+			UmengUpdateAgent.setUpdateListener(new UmengUpdateListener() {
+				
+				@Override
+				public void onUpdateReturned(int arg0, UpdateResponse arg1) {
+					// TODO 自动生成的方法存根
+					switch (arg0) {
+					case UpdateStatus.Yes:
+						LogUtils.i(TAG,"need update");
+						break;
+					case UpdateStatus.No:
+						LogUtils.i(TAG,"don't need update");
+						showToast("已经是最新版本了！");
+						break;
+					default:
+						break;
+					}
+				}
+			});
 			break;
 		default:
 			break;

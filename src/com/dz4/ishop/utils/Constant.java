@@ -45,7 +45,7 @@ public interface Constant {
 	public static final String BUNDLE_KEY_AUTHOR = "pass_author";
 	public static final String BUNDLE_KEY_QIANGITEM = "pass_qiangitem";
 	public static final String BUNDLE_KEY_COMMENT = "pass_comment";
-	
+	public static final String BUNDLE_KEY_REPLYTO = "pass_reply_user";
 	
 	/**
 	 * sharepreference

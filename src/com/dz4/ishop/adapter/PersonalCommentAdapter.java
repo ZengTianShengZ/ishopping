@@ -63,6 +63,7 @@ public class PersonalCommentAdapter extends BaseAdapter{
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.item_personal_comment, null);
 			viewHolder.commentContent = (TextView)convertView.findViewById(R.id.content_comment);
 			viewHolder.commentFor = (TextView)convertView.findViewById(R.id.comment_for);
+			viewHolder.replyTo = (TextView)convertView.findViewById(R.id.replyto);
 			viewHolder.userIcon = (ImageView)convertView.findViewById(R.id.userIcon_comment);
 			viewHolder.time = (TextView)convertView.findViewById(R.id.time_comment);
 			convertView.setTag(viewHolder);
@@ -72,7 +73,12 @@ public class PersonalCommentAdapter extends BaseAdapter{
 		
 		final Comment comment = datalist.get(position);
 		if(mUser!=null){
-			LogUtils.i("CommentActivity","NAME:"+comment.getUser().getNickname());
+			if(comment.getReplyTo()!=null) {
+				viewHolder.replyTo.setText("回复 "+comment.getReplyTo()+":");
+				viewHolder.replyTo.setVisibility(View.VISIBLE);
+			}else{
+				viewHolder.replyTo.setVisibility(View.GONE);
+			}
 			viewHolder.commentContent.setText(comment.getCommentContent());
 			viewHolder.time.setText(comment.getCreatedAt());
 			viewHolder.commentFor.setText("评论至"+" ~"+comment.getQiang().getAuthor().getNickname());
@@ -96,5 +102,6 @@ public class PersonalCommentAdapter extends BaseAdapter{
 		public ImageView userIcon;
 		public TextView commentContent;
 		public TextView commentFor;
+		public TextView replyTo;
 	}
 }

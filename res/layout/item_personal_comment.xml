@@ -12,7 +12,7 @@
         >
         <com.dz4.ishop.view.CircleImageView
             android:id="@+id/userIcon_comment"
-             android:layout_width="40dp"
+             android:layout_width="@dimen/user_icon_width2"
         		android:layout_height="40dp"
         		android:src="@drawable/user_icon_default_main"
             czmc:border_width="2dp"
@@ -43,6 +43,18 @@
 			android:background="@drawable/bg_comment_floor"
             />
     </RelativeLayout>
+    <TextView
+            android:id="@+id/replyto"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dip"
+            android:text = "回复："
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:visibility="gone"
+            />
 	<TextView
             android:id="@+id/content_comment"
             android:layout_marginLeft="20dp"

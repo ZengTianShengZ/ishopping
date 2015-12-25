@@ -11,6 +11,7 @@ import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
+import com.dz4.ishop.app.IshopApplication;
 import com.dz4.ishop.domain.Comment;
 import com.dz4.ishop.domain.QiangItem;
 import com.dz4.ishop.domain.User;
@@ -31,6 +32,7 @@ public class EditCommentActivity extends BaseUIActivity implements
 	private QiangItem mQiangItem;
 	private String commentEdit;
 	private Context mContext;
+	private User mReplyTo;
 	@Override
 	public void initView() {
 		// TODO 自动生成的方法存根
@@ -44,8 +46,10 @@ public class EditCommentActivity extends BaseUIActivity implements
 	public void initData() {
 		// TODO 自动生成的方法存根
 		mContext = getApplicationContext();
-		mUser = (User)getIntent().getSerializableExtra(Constant.BUNDLE_KEY_USER);
+		mUser = ((IshopApplication)getApplication()).getCurrentUser();
+		mReplyTo = (User)getIntent().getSerializableExtra(Constant.BUNDLE_KEY_REPLYTO);
 		mQiangItem = (QiangItem)getIntent().getSerializableExtra(Constant.BUNDLE_KEY_QIANGITEM);
+		
 	}
 
 	@Override
@@ -87,6 +91,8 @@ public class EditCommentActivity extends BaseUIActivity implements
 
 		final Comment comment = new Comment();
 		comment.setUser(user);
+		comment.setReplyTo(mReplyTo.getNickname());
+		LogUtils.i(TAG,mReplyTo.getNickname());
 		comment.setCommentContent(content);
 		comment.setQiang(mQiangItem);
 		comment.save(this, new SaveListener() {

@@ -13,9 +13,13 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 import com.dz4.ishop.app.IshopApplication;
+import com.dz4.ishop.db.DatabaseUtil;
 import com.dz4.ishop.domain.QiangItem;
 import com.dz4.ishop.domain.User;
+import com.dz4.ishop.sns.TencentShare;
+import com.dz4.ishop.sns.TencentShareEntity;
 import com.dz4.ishop.ui.GoodsDetailActivity;
+import com.dz4.ishop.ui.LoginActivity;
 import com.dz4.ishop.ui.PersonalActivity;
 import com.dz4.ishop.utils.Constant;
 import com.dz4.ishop.utils.ImageUtils;
@@ -25,17 +29,23 @@ import com.dz4.ishopping.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 /**
@@ -50,9 +60,25 @@ public class QiangListAdapter extends BaseAdapter{
 	private ArrayList<QiangItem> datalist;
 	private Context mContext;
 	private GridViewAdapter mGridViewAdapter;
-	public QiangListAdapter(Context mContext,ArrayList datalist){
+	private User cUser;
+	private AnimationSet animationSet;
+	private ScaleAnimation scaleAnimation_b,scaleAnimation_s;
+	private Activity activity;
+	
+	public QiangListAdapter(Activity activity,ArrayList datalist){
 		this.datalist=datalist;
-		this.mContext=mContext;
+		this.mContext=activity.getApplicationContext();
+		this.activity=activity;
+		initAnimation();
+	}
+	private void initAnimation() {
+		 
+		//前四个参数表示从原来大小的100%缩小到10%，后四个参数是为确定“中心点”  
+        scaleAnimation_s = new ScaleAnimation(1.5f, 0.8f, 1.5f,  
+                0.8f, Animation.RELATIVE_TO_SELF, 0.5f,  
+                Animation.RELATIVE_TO_SELF, 0.5f); 
+        scaleAnimation_s.setFillBefore(false);
+        scaleAnimation_s.setDuration(800);
 		
 	}
 	@Override
@@ -87,20 +113,20 @@ public class QiangListAdapter extends BaseAdapter{
 					.findViewById(R.id.user_logo);
 			viewHolder.qiangtime = (TextView) convertView
 					.findViewById(R.id.qiang_time);
-//			viewHolder.focus = (CheckBox) convertView
-//					.findViewById(R.id.item_action_focus);
 			viewHolder.contentText = (TextView) convertView
 					.findViewById(R.id.content_text);
 			viewHolder.contentImage = (innerGridView) convertView
 					.findViewById(R.id.content_image_gridView);
+			viewHolder.lin_love =  (LinearLayout) convertView
+					.findViewById(R.id.item_action_lin_love);
+			viewHolder.img_love =   (ImageView) convertView
+					.findViewById(R.id.item_action_img_love);
 			viewHolder.love = (TextView) convertView
 					.findViewById(R.id.item_action_love);
 			viewHolder.hate = (TextView) convertView
 					.findViewById(R.id.item_action_hate);
 			viewHolder.share = (TextView) convertView
 					.findViewById(R.id.item_action_share);
-//			viewHolder.comment = (TextView) convertView
-//					.findViewById(R.id.item_action_comment);
 			convertView.setTag(viewHolder);
 		}else{
 			viewHolder =(ViewHolder)convertView.getTag();
@@ -121,20 +147,77 @@ public class QiangListAdapter extends BaseAdapter{
 			}
 		});
 
-		viewHolder.love.setOnClickListener(new OnClickListener() {
-			
+
+
+		cUser = BmobUser.getCurrentUser(mContext, User.class);
+		viewHolder.love.setText(mQiangItem.getLove()+"");
+ 
+		if(null != cUser){
+			if(mQiangItem.isMyLove()){
+				viewHolder.love.setTextColor(Color.parseColor("#D95555"));
+				viewHolder.img_love.setImageResource(R.drawable.ic_action_love_b);
+			}else{
+				viewHolder.love.setTextColor(Color.parseColor("#000000"));
+				viewHolder.img_love.setImageResource(R.drawable.ic_action_love_a);
+			} 
+		}else{
+			viewHolder.love.setTextColor(Color.parseColor("#000000"));
+			viewHolder.img_love.setImageResource(R.drawable.ic_action_love_a);
+		 
+		}
+		/**
+		 * 点赞
+		 */
+		viewHolder.lin_love.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO 自动生成的方法存根
-				Toast.makeText(mContext, "love", Toast.LENGTH_SHORT).show();
+				if(null == cUser){
+					Toast.makeText(mContext, "您还没登录，请先登录", Toast.LENGTH_SHORT).show();
+					Intent intent = new Intent(mContext,LoginActivity.class);
+					mContext.startActivity(intent);
+					return ;
+				}
+				if(mQiangItem.isMyLove()){
+					Toast.makeText(mContext, "您已赞过", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				if (DatabaseUtil.getInstance(mContext).isLoved(mQiangItem,cUser)) {
+					Toast.makeText(mContext, "您已赞过", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				mQiangItem.setLove(mQiangItem.getLove()+1);
+				mQiangItem.update(mContext, new UpdateListener(){
+
+					@Override
+					public void onFailure(int arg0, String arg1) {
+						
+						Toast.makeText(mContext, "点赞失败", Toast.LENGTH_SHORT).show();
+						
+					}
+
+					@Override
+					public void onSuccess() {
+						mQiangItem.setMyLove(true);
+						DatabaseUtil.getInstance(mContext).insertLove(mQiangItem, cUser);
+						viewHolder.love.setText(mQiangItem.getLove()+"");
+						viewHolder.love.setTextColor(Color.parseColor("#D95555"));
+						viewHolder.img_love.setImageResource(R.drawable.ic_action_love_b);
+						viewHolder.img_love.startAnimation(scaleAnimation_s);
+			 
+					}
+					
+				});
 			}
 		});
+		
+		
 		convertView.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO 自动生成的方法存根
 				Intent intent = new Intent(mContext,GoodsDetailActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				intent.putExtra(Constant.BUNDLE_KEY_QIANGITEM, mQiangItem);
 				mContext.startActivity(intent);
 				LogUtils.i(TAG, "Itemclick!!");
@@ -145,22 +228,17 @@ public class QiangListAdapter extends BaseAdapter{
 			@Override
 			public void onClick(View v) {
 				// TODO 自动生成的方法存根
-				Toast.makeText(mContext, "share", Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, "分享给好友看哦~", Toast.LENGTH_SHORT).show();
+				final TencentShare tencentShare = new TencentShare(
+						activity,
+						getQQShareEntity(mQiangItem));
+				tencentShare.shareToQQ();
 			}
 		});
 		if (null == mQiangItem.getContentfigureurl()) {
 			viewHolder.contentImage.setVisibility(View.GONE);
 		} else {
 			viewHolder.contentImage.setVisibility(View.VISIBLE);
-			//viewHolder.contentImage.setAdapter(adapter);
-//		ImageLoader.getInstance().displayImage(
-//				mQiangItem.getContentfigureurl().getFileUrl(mContext)==null ?"":mQiangItem.getContentfigureurl().getFileUrl(mContext),
-//				viewHolder.contentImage, ImageUtils.getOptions(R.drawable.bg_pic_loading),new SimpleImageLoadingListener(){
-//					public void onLoadingComplete(String imageUri, View view, android.graphics.Bitmap loadedImage) {
-//						
-//					};
-//				} );
-			
 			ArrayList<String> paths = new ArrayList<String>();
 			if(mQiangItem.getContentfigureurl()!=null)
 				paths.add(mQiangItem.getContentfigureurl().getFileUrl(mContext));
@@ -198,82 +276,24 @@ public class QiangListAdapter extends BaseAdapter{
 						
 					};
 				} );
-//		User user = BmobUser.getCurrentUser(mContext, User.class);
-//		if(user!=null){
-//			BmobQuery<User> query = new BmobQuery<User>();
-//			query.addWhereRelatedTo("focus", new BmobPointer(user));
-//			query.order("-createdAt");
-//			query.setLimit(Constant.NUMBERS_PER_PAGE);
-//			BmobDate date = new BmobDate(new Date(System.currentTimeMillis()));
-//			query.addWhereLessThan("createdAt", date);
-//			query.findObjects(mContext, new FindListener<User>() {
-//				@Override
-//				public void onError(int arg0, String arg1) {
-//					// TODO 自动生成的方法存根
-//				}
-//
-//				@Override
-//				public void onSuccess(List<User> arg0) {
-//					// TODO 自动生成的方法存根
-//					if(!arg0.isEmpty()){
-//						for(User author:arg0){
-//							
-//							if(BmobUser.getCurrentUser(mContext, User.class).getObjectId().equals(author.getObjectId())){
-//								if(viewHolder.focus.getTag().equals(mQiangItem.getObjectId())) viewHolder.focus.setChecked(true);
-//							}
-//						}
-//					}else{
-//						if(viewHolder.focus.getTag().equals(mQiangItem.getObjectId())) viewHolder.focus.setChecked(false);
-//					}
-//				}
-//				
-//				
-//				
-//			});
-//		}
-//		viewHolder.focus.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				User user = BmobUser.getCurrentUser(mContext, User.class);
-//				if(user==null){
-//					return ;
-//				}
-//				User targetUser = mQiangItem.getAuthor();
-//				BmobRelation focus = new BmobRelation();
-//				if(viewHolder.focus.isChecked()){
-//					focus.add(targetUser);
-//					user.setFocus(focus);
-//					user.update(mContext, new UpdateListener() {
-//						@Override
-//						public void onSuccess() {
-//							mQiangItem.setFocus(true);
-//							Toast.makeText(mContext, "已关注", Toast.LENGTH_SHORT).show();
-//						}
-//						@Override
-//						public void onFailure(int arg0, String arg1) {
-//							Toast.makeText(mContext, "关注失败"+arg1, Toast.LENGTH_SHORT).show();
-//						}
-//					});
-//				}else{
-//					focus.remove(targetUser);
-//					user.setFocus(focus);
-//					user.update(mContext, new UpdateListener() {
-//						
-//						@Override
-//						public void onSuccess() {
-//							mQiangItem.setFocus(false);
-//							Toast.makeText(mContext, "取消关注", Toast.LENGTH_SHORT).show();
-//						}
-//						
-//						@Override
-//						public void onFailure(int arg0, String arg1) {
-//							Toast.makeText(mContext, "取消关注失败", Toast.LENGTH_SHORT).show();
-//						}
-//					});
-//				}
-//			}
-//		});
+
 		return convertView;
+	}
+	private TencentShareEntity getQQShareEntity(QiangItem qy) {
+		String title = "我在爱商品上看到了好东西！";
+		String comment = "来看看";
+		String img = null;
+		if (qy.getContentfigureurl() != null) {
+			img = qy.getContentfigureurl().getFileUrl(mContext);
+		} else {
+			img = "http://www.codenow.cn/appwebsite/website/yyquan/uploads/53af6851d5d72.png";
+		}
+		String summary = qy.getContent();
+
+		String targetUrl = "http://sdisa.bmob.cn";
+		TencentShareEntity entity = new TencentShareEntity(title, img,
+				targetUrl, summary, comment);
+		return entity;
 	}
 	public  class ViewHolder {
 		public ImageView userLogo;
@@ -283,9 +303,12 @@ public class QiangListAdapter extends BaseAdapter{
 		public innerGridView contentImage;
 
 		//public CheckBox focus;
+		public LinearLayout lin_love;
+		public ImageView img_love;
 		public TextView love;
 		public TextView hate;
 		public TextView share;
 		public TextView comment;
 	}
+ 
 }

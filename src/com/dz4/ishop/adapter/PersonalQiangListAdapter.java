@@ -11,6 +11,7 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 import com.dz4.ishop.app.IshopApplication;
+import com.dz4.ishop.db.DatabaseUtil;
 import com.dz4.ishop.domain.QiangItem;
 import com.dz4.ishop.domain.User;
 import com.dz4.ishop.ui.EditQiangActivity;
@@ -26,16 +27,20 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 /**
@@ -50,11 +55,27 @@ public class PersonalQiangListAdapter extends BaseAdapter {
 	private Context mContext;
 	private BmobRelation focusRelation;
 	private GridViewAdapter mGridViewAdapter;
+	private ScaleAnimation scaleAnimation_b,scaleAnimation_s;
 	private User user;
+	private User cUser;
+	
 	public PersonalQiangListAdapter(Context mContext,ArrayList datalist,User user){
 		this.datalist=datalist;
 		this.mContext=mContext;
 		this.user = user;
+		
+		initAnimation();
+	}
+	
+	private void initAnimation() {
+		 
+		//前四个参数表示从原来大小的100%缩小到10%，后四个参数是为确定“中心点”  
+        scaleAnimation_s = new ScaleAnimation(1.5f, 0.8f, 1.5f,  
+                0.8f, Animation.RELATIVE_TO_SELF, 0.5f,  
+                Animation.RELATIVE_TO_SELF, 0.5f); 
+        scaleAnimation_s.setFillBefore(false);
+        scaleAnimation_s.setDuration(800);
+		
 	}
 	@Override
 	public int getCount() {
@@ -92,6 +113,10 @@ public class PersonalQiangListAdapter extends BaseAdapter {
 					.findViewById(R.id.content_text);
 			viewHolder.contentImage = (innerGridView) convertView
 					.findViewById(R.id.content_image_gridView);
+			viewHolder.lin_love =  (LinearLayout) convertView
+					.findViewById(R.id.item_action_lin_love);
+			viewHolder.img_love =   (ImageView) convertView
+					.findViewById(R.id.item_action_img_love);
 			viewHolder.love = (TextView) convertView
 					.findViewById(R.id.item_action_love);
 			viewHolder.hate = (TextView) convertView
@@ -131,6 +156,71 @@ public class PersonalQiangListAdapter extends BaseAdapter {
 			}
 			
 		});
+		
+		
+
+		cUser = BmobUser.getCurrentUser(mContext, User.class);
+		viewHolder.love.setText(mQiangItem.getLove()+"");
+ 
+
+		if(null != cUser){
+			if(mQiangItem.isMyLove()){
+				viewHolder.love.setTextColor(Color.parseColor("#D95555"));
+				viewHolder.img_love.setImageResource(R.drawable.ic_action_love_b);
+			}else{
+				viewHolder.love.setTextColor(Color.parseColor("#000000"));
+				viewHolder.img_love.setImageResource(R.drawable.ic_action_love_a);
+			} 
+		}else{
+			viewHolder.love.setTextColor(Color.parseColor("#000000"));
+			viewHolder.img_love.setImageResource(R.drawable.ic_action_love_a);
+		}
+		/**
+		 * 点赞
+		 */
+		viewHolder.lin_love.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(null == cUser){
+					Toast.makeText(mContext, "您还没登录，请先登录", Toast.LENGTH_SHORT).show();
+					Intent intent = new Intent(mContext,LoginActivity.class);
+					mContext.startActivity(intent);
+					return ;
+				}
+				if(mQiangItem.isMyLove()){
+					Toast.makeText(mContext, "您已赞过", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				if (DatabaseUtil.getInstance(mContext).isLoved(mQiangItem,cUser)) {
+					Toast.makeText(mContext, "您已赞过", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				mQiangItem.setLove(mQiangItem.getLove()+1);
+				mQiangItem.update(mContext, new UpdateListener(){
+
+					@Override
+					public void onFailure(int arg0, String arg1) {
+						
+						Toast.makeText(mContext, "点赞失败", Toast.LENGTH_SHORT).show();
+						
+					}
+
+					@Override
+					public void onSuccess() {
+						mQiangItem.setMyLove(true);
+						DatabaseUtil.getInstance(mContext).insertLove(mQiangItem, cUser);
+						viewHolder.love.setText(mQiangItem.getLove()+"");
+						viewHolder.love.setTextColor(Color.parseColor("#D95555"));
+						viewHolder.img_love.setImageResource(R.drawable.ic_action_love_b);
+						viewHolder.img_love.startAnimation(scaleAnimation_s);
+			 
+					}
+					
+				});
+			}
+		});
+		
+		
 		viewHolder.contentImage.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -202,6 +292,8 @@ public class PersonalQiangListAdapter extends BaseAdapter {
 		public TextView contentText;
 		public innerGridView contentImage;
 
+		public LinearLayout lin_love;
+		public ImageView img_love;
 		public TextView love;
 		public TextView hate;
 		public TextView share;

@@ -1,8 +1,14 @@
 eclipse.preferences.version=1
 encoding//src/com/dz4/ishop/adapter/CommentAdapter.java=UTF-8
 encoding//src/com/dz4/ishop/adapter/PersonalCommentAdapter.java=UTF-8
+encoding//src/com/dz4/ishop/db/DatabaseUtil.java=UTF-8
 encoding//src/com/dz4/ishop/proxy/UserProxy.java=UTF-8
+encoding//src/com/dz4/ishop/sns/TencentShare.java=UTF-8
+encoding//src/com/dz4/ishop/sns/TencentShareConstants.java=UTF-8
+encoding//src/com/dz4/ishop/sns/TencentShareEntity.java=UTF-8
 encoding//src/com/dz4/ishop/ui/RegisterActivity.java=UTF-8
 encoding//src/com/dz4/ishop/ui/UserInfoActivity.java=UTF-8
 encoding//src/com/dz4/ishop/utils/Constant.java=UTF-8
 encoding//src/com/dz4/ishop/utils/LogUtils.java=UTF-8
+encoding//src/com/dz4/ishop/utils/NetworkUtil.java=UTF-8
+encoding//src/com/dz4/ishop/utils/Sputil.java=UTF-8

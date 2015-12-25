@@ -2,6 +2,7 @@
 <resources>
 		
 		<dimen name="user_icon_width">50dp</dimen>
+		<dimen name="user_icon_width2">40dp</dimen>
 		
 		
     <dimen name="indicator_right_padding">10dp</dimen>

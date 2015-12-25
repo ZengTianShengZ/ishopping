@@ -25,6 +25,7 @@ import cn.bmob.v3.listener.FindListener;
 
 import com.dz4.ishop.adapter.QiangListAdapter;
 import com.dz4.ishop.app.IshopApplication;
+import com.dz4.ishop.db.DatabaseUtil;
 import com.dz4.ishop.domain.QiangItem;
 import com.dz4.ishop.domain.User;
 import com.dz4.ishop.listener.TitlechangeListener;
@@ -107,7 +108,7 @@ public class QiangFragment extends BaseFragment{
 		// TODO 自动生成的方法存根
 		mPullRefreshListView.setMode(Mode.BOTH);
 		mListItems =new ArrayList<QiangItem>();
-		mQiangListAdapter = new QiangListAdapter(getContext(),mListItems);
+		mQiangListAdapter = new QiangListAdapter(getActivity(),mListItems);
 		actualListView.setAdapter(mQiangListAdapter);
 		if(mListItems.size() == 0){
 			mRefreshType=RefreshType.Refresh;
@@ -165,6 +166,7 @@ public class QiangFragment extends BaseFragment{
 			@Override
 			public void onSuccess(List<QiangItem> list) {
 				// TODO 自动生成的方法存根
+				User user = null;
 				if(list.size()!=0&&list.get(list.size()-1)!=null){
 					if(mRefreshType==RefreshType.Refresh){
 						mListItems.clear();
@@ -173,7 +175,9 @@ public class QiangFragment extends BaseFragment{
 					if(list.size()<Constant.NUMBERS_PER_PAGE){
 						
 					}
-					
+					if((user = ((IshopApplication)getActivity().getApplication()).getCurrentUser())!=null){
+						list = DatabaseUtil.getInstance(getContext()).setLove(list,user);
+					}
 					List<QiangItem> Targetlist = list;
 					mListItems.addAll(Targetlist);
 					mQiangListAdapter.notifyDataSetChanged();

@@ -10,7 +10,14 @@ public class Comment extends BmobObject implements Serializable{
 
 	private User user;
 	private QiangItem qiang;
+	private String replyTo;
 	
+	public String getReplyTo() {
+		return this.replyTo;
+	}
+	public void setReplyTo(String replyTo) {
+		this.replyTo = replyTo;
+	}
 	public QiangItem getQiang() {
 		return this.qiang;
 	}

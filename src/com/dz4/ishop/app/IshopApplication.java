@@ -108,4 +108,5 @@ public class IshopApplication extends IApplication {
 			monUserInfoChangeListener.OnUserInfoChange();
 		}
 	}
+	
 }
