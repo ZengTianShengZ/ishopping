@@ -25,7 +25,6 @@ public class HomeContentAdapter extends FragmentStatePagerAdapter {
 	private ArrayList<BaseFragment> fragments;
 	public HomeContentAdapter(FragmentManager fragmentManager, ArrayList<BaseFragment> fragments) {
 		super(fragmentManager);
-		// TODO Auto-generated constructor stub
 		this.fragments =fragments;
 	}
 	@Override
@@ -36,7 +35,6 @@ public class HomeContentAdapter extends FragmentStatePagerAdapter {
 	
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return fragments.size();
 	}
 	

@@ -39,7 +39,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 public class FocusFragment extends BaseFragment {
 	
 	
-	private View contentView ;
+	private View mContentView ;
 	private PullToRefreshListView mPullRefreshListView;
 	private ListView actualListView;
 	private TextView networkTips;
@@ -51,7 +51,6 @@ public class FocusFragment extends BaseFragment {
 	private RefreshType mRefreshType=RefreshType.Loadmore;
 	private int pageNum;
 	public static BaseFragment newInstance(int position) {
-		// TODO 自动生成的方法存根
 		BaseFragment fragment = new FocusFragment();
 		Bundle bundle = new Bundle();
 		bundle.putInt("page", position);
@@ -60,39 +59,33 @@ public class FocusFragment extends BaseFragment {
 	}
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
-		contentView = getLayoutInflater(savedInstanceState).inflate(R.layout.fragment_focus, null, false);
+		mContentView = getLayoutInflater(savedInstanceState).inflate(R.layout.fragment_focus, null, false);
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		//contentView = inflater.inflate(R.layout.fragment_qiang, null);
 		super.onCreateView(inflater, container, savedInstanceState);
-		return contentView;
+		return mContentView;
 	}
 	@Override
 	public void processHandlerMessage(Message msg) {
-		// TODO 自动生成的方法存根
 	}
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		// TODO 自动生成的方法存根
 		super.onViewCreated(view, savedInstanceState);
 	}
 	@Override
 	public void initView() {
-		// TODO 自动生成的方法存根
-		mPullRefreshListView = (PullToRefreshListView)contentView
+		mPullRefreshListView = (PullToRefreshListView)mContentView
 				.findViewById(R.id.pull_refresh_list);
-		networkTips = (TextView)contentView.findViewById(R.id.networkTips);
-		progressbar = (ProgressBar)contentView.findViewById(R.id.progressBar);
+		networkTips = (TextView)mContentView.findViewById(R.id.networkTips);
+		progressbar = (ProgressBar)mContentView.findViewById(R.id.progressBar);
 		actualListView = mPullRefreshListView.getRefreshableView();
 	}
 
 	@Override
 	public void initData() {
-		// TODO 自动生成的方法存根
 		mPullRefreshListView.setMode(Mode.BOTH);
 		mListItems =new ArrayList<User>();
 		mContactListAdapter = new FocusListAdapter(getContext(),mListItems,((IshopApplication)(getActivity().getApplication())).getCurrentUser());
@@ -106,12 +99,10 @@ public class FocusFragment extends BaseFragment {
 	
 	@Override
 	public void initEvent() {
-		// TODO 自动生成的方法存根
 		mPullRefreshListView.setOnRefreshListener(new OnRefreshListener2<ListView>() {
 			@Override
 			public void onPullDownToRefresh(
 					PullToRefreshBase refreshView) {
-				// TODO 自动生成的方法存根
 				String label = DateUtils.formatDateTime(getActivity(), System.currentTimeMillis(),
 						DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
 				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
@@ -122,7 +113,6 @@ public class FocusFragment extends BaseFragment {
 			@Override
 			public void onPullUpToRefresh(
 					PullToRefreshBase refreshView) {
-				// TODO 自动生成的方法存根
 				mRefreshType=RefreshType.Loadmore;
 				loadData();
 				
@@ -144,7 +134,6 @@ public class FocusFragment extends BaseFragment {
 		query.findObjects(getActivity(), new FindListener<User>() {
 			@Override
 			public void onError(int arg0, String arg1) {
-				// TODO 自动生成的方法存根
 				pageNum--;
 				setLoadingState(LOADING_FAILED);
 				mPullRefreshListView.onRefreshComplete();
@@ -152,7 +141,6 @@ public class FocusFragment extends BaseFragment {
 
 			@Override
 			public void onSuccess(List<User> list) {
-				// TODO 自动生成的方法存根
 				if(list.size()!=0&&list.get(list.size()-1)!=null){
 					if(mRefreshType==RefreshType.Refresh){
 						mListItems.clear();
@@ -193,10 +181,8 @@ public class FocusFragment extends BaseFragment {
 			networkTips.setVisibility(View.GONE);
 			progressbar.setVisibility(View.GONE);
 			
-		    mPullRefreshListView.setVisibility(View.VISIBLE);
-		    mPullRefreshListView.setMode(Mode.BOTH);
-
-			
+			mPullRefreshListView.setVisibility(View.VISIBLE);
+			mPullRefreshListView.setMode(Mode.BOTH);
 			break;
 		case LOADING_FAILED:
 			if(mListItems.size()==0){

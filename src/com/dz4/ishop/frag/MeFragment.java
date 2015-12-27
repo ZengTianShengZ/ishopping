@@ -30,6 +30,7 @@ import com.dz4.ishop.domain.Comment;
 import com.dz4.ishop.domain.QiangItem;
 import com.dz4.ishop.domain.User;
 import com.dz4.ishop.listener.OnUserInfoChangeListener;
+import com.dz4.ishop.ui.AboutActivity;
 import com.dz4.ishop.ui.LoginActivity;
 import com.dz4.ishop.ui.PersonalActivity;
 import com.dz4.ishop.ui.PersonalCommentActivity;
@@ -48,7 +49,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  *
  */
 public class MeFragment extends  BaseFragment implements OnClickListener,OnUserInfoChangeListener{
-	private final String TAG ="Fragment_me";
+	private final String TAG ="MeFragment";
 	private View rootView;
 	
 	private ImageView mIconView;
@@ -70,6 +71,7 @@ public class MeFragment extends  BaseFragment implements OnClickListener,OnUserI
 	private View publishView;
 	private View commentView;
 	private View focusView;
+	private View aboutUsView;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,7 +86,6 @@ public class MeFragment extends  BaseFragment implements OnClickListener,OnUserI
 	}
 	@Override
 	public void initView() {
-		// TODO 自动生成的方法存根
 		mIconView =(ImageView) rootView.findViewById(R.id.me_usericon);
 		mNickname =(TextView) rootView.findViewById(R.id.me_username);
 		mSignature =(TextView) rootView.findViewById(R.id.me_signature);
@@ -99,6 +100,7 @@ public class MeFragment extends  BaseFragment implements OnClickListener,OnUserI
 		publishView=(View)rootView.findViewById(R.id.publish);
 		commentView=(View)rootView.findViewById(R.id.comment);
 		focusView=(View)rootView.findViewById(R.id.focus);
+		aboutUsView=(View)rootView.findViewById(R.id.about_us);
 		
 		
 	}
@@ -133,7 +135,6 @@ public class MeFragment extends  BaseFragment implements OnClickListener,OnUserI
 	}
 	
 	private void loadNetData() {
-		// TODO 自动生成的方法存根
 		BmobQuery<Comment> query = new BmobQuery<Comment>();
 		query.addWhereEqualTo("user", mUser);
 		query.count(getContext(), Comment.class, new CountListener() {
@@ -185,7 +186,6 @@ public class MeFragment extends  BaseFragment implements OnClickListener,OnUserI
 	}
 	@Override
 	public void initEvent() {
-		// TODO 自动生成的方法存根
 		appData.setOnUserInfoChangeListener(this);
 		mUserInfo.setOnClickListener(this);
 		myPublish.setOnClickListener(this);
@@ -194,19 +194,16 @@ public class MeFragment extends  BaseFragment implements OnClickListener,OnUserI
 		publishView.setOnClickListener(this);
 		commentView.setOnClickListener(this);
 		focusView.setOnClickListener(this);
+		aboutUsView.setOnClickListener(this);
 		
 	}
 	@Override
 	public void onClick(View v) {
-		// TODO 自动生成的方法存根
 		LogUtils.i(TAG, "onClick");
 		switch(v.getId()){
 		case R.id.me_userinfo:
 			if(appData.getloginState()){
 				Intent intent = new Intent(getContext(),UserInfoActivity.class);
-				//Bundle bundle =new Bundle();
-				//bundle携带信息。。
-				//intent.putExtra("userinfo", bundle);
 				startActivity(intent);
 			}else{
 				Intent intent = new Intent(getContext(),LoginActivity.class);
@@ -247,18 +244,21 @@ public class MeFragment extends  BaseFragment implements OnClickListener,OnUserI
 			break;
 		case R.id.focus:
 			break;
+		
+		case R.id.about_us:
+			Intent intent2 = new  Intent(getContext(),AboutActivity.class);
+			startActivity(intent2);
+			break;
 		}
 	}
 		
 	@Override
 	public void OnUserInfoChange() {
-		// TODO 自动生成的方法存根
 		initData();
 		LogUtils.i(TAG, "OnUserInfoChange");
 	}
 	@Override
 	public void processHandlerMessage(Message msg) {
-		// TODO 自动生成的方法存根
 		
 	}
 }

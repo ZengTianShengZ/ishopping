@@ -91,8 +91,12 @@ public class EditCommentActivity extends BaseUIActivity implements
 
 		final Comment comment = new Comment();
 		comment.setUser(user);
-		comment.setReplyTo(mReplyTo.getNickname());
-		LogUtils.i(TAG,mReplyTo.getNickname());
+		if(mReplyTo!=null){
+			comment.setReplyTo(mReplyTo.getNickname());
+			LogUtils.i(TAG,mReplyTo.getNickname());
+		}else{
+			comment.setReplyTo(null);
+		}
 		comment.setCommentContent(content);
 		comment.setQiang(mQiangItem);
 		comment.save(this, new SaveListener() {
@@ -102,6 +106,7 @@ public class EditCommentActivity extends BaseUIActivity implements
 				// TODO Auto-generated method stub
 				showToast("评论成功。");
 				LogUtils.i(TAG, "更新评论成功。");
+				setResult(RESULT_OK);
 				finish();
 				cancelProgressDialog();
 			}

@@ -3,6 +3,15 @@
 		
 		<dimen name="user_icon_width">50dp</dimen>
 		<dimen name="user_icon_width2">40dp</dimen>
+		<dimen name="user_icon_width_p">60dp</dimen>
+		
+		<dimen name="topbar_height">45dp</dimen>
+		
+		<dimen name="tips_image_width">20dp</dimen>
+		<dimen name="group_bottom_top">5dp</dimen>
+		
+		<dimen name="app_icon_width">80dp</dimen>
+		
 		
 		
     <dimen name="indicator_right_padding">10dp</dimen>

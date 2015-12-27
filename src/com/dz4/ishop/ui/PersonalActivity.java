@@ -113,6 +113,14 @@ public class PersonalActivity extends BaseUIActivity implements TopBar.onTopBarb
 		if (isCurrentUser(mUser)) {
 			personalTitle.setText("我发表过的");
 			goSettings.setVisibility(View.VISIBLE);
+			goSettings.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent =new Intent(PersonalActivity.this,UserInfoActivity.class);
+					startActivity(intent);
+				}
+			});
 			User user = BmobUser.getCurrentUser(mContext, User.class);
 			updatePersonalInfo(user);
 		} else {
@@ -130,12 +138,12 @@ public class PersonalActivity extends BaseUIActivity implements TopBar.onTopBarb
 	            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 	            	 
 	            	//这样是得不到  ScrollY 的 得到 1.1.1.1.1.1
-	            	Log.i("getScrollY",mPullToRefreshListView.getScrollY()+"..."); 
+	        	LogUtils.i("getScrollY",mPullToRefreshListView.getScrollY()+"..."); 
 	            	//自己定义得到 ScrollY
-	            	Log.i("getScrollY",MygetScrollY()+"..."+mPersonInfoView.getHeight()); 
+	            	LogUtils.i("getScrollY",MygetScrollY()+"..."+mPersonInfoView.getHeight()); 
 	              
-	            	if(MygetScrollY()>=810){
-	            		mTopBar.setTitleText(mUser.getUsername());
+	            	if(MygetScrollY()>=mPersonInfoView.getHeight()*2){
+	            		mTopBar.setTitleText(mUser.getNickname());
 	            		mTopBar.setTitleSize(20);
 	            	}else{
 	            		mTopBar.setTitleText("");

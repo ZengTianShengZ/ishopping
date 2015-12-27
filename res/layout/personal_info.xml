@@ -14,8 +14,8 @@
         >
          <com.dz4.ishop.view.CircleImageView
             android:id="@+id/personal_icon"
-             android:layout_width="60dp"
-        		android:layout_height="60dp"
+             android:layout_width="@dimen/user_icon_width_p"
+        		android:layout_height="@dimen/user_icon_width_p"
         		android:src="@drawable/user_icon_default_main"
             app:border_width="2dp"
             android:layout_marginRight="4dp"
@@ -50,6 +50,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignTop="@id/personl_name"
             android:scaleType="centerInside"
+            android:clickable="true"
             android:src="@drawable/bg_go_settings"
             />
     </RelativeLayout>

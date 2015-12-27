@@ -2,8 +2,8 @@ package com.dz4.ishop.adapter;
 
 import java.util.List;
 
-import com.dz4.ImageUpload_9_zss.utils.CommonAdapter;
-import com.dz4.ImageUpload_9_zss.utils.ViewHolder;
+import com.dz4.imageupload9.utils.CommonAdapter;
+import com.dz4.imageupload9.utils.ViewHolder;
 import com.dz4.ishop.domain.PushNews;
 import com.dz4.ishop.domain.QiangItem;
 import com.dz4.ishop.utils.ImageUtils;
@@ -28,8 +28,6 @@ public class FragmentChatListAdapter extends CommonAdapter<PushNews>{
 		this.context = context;
 	}
 
-
-	 
 
 	@Override
 	public void convert(ViewHolder helper, PushNews item) {

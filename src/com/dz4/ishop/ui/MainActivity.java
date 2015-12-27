@@ -42,22 +42,21 @@ import com.umeng.update.UpdateStatus;
 public class MainActivity extends FragmentBaseActivity implements TitlechangeListener,TopBar.onTopBarbtnclickListener{
 	private final String TAG = "MainActivity";
 	
-	private BottomTagView homeBottomTag;
-	private BottomTagView chatBottomTag;
-	private BottomTagView meBottomTag;
+	private BottomTagView mHomeBottomTag;
+	private BottomTagView mChatBottomTag;
+	private BottomTagView mMeBottomTag;
 	
-	private HomeFragment homeFragment;
-	private NewsFragment chatFragment;
-	private MeFragment meFragment;
+	private HomeFragment mHomeFragment;
+	private NewsFragment mNewsFragment;
+	private MeFragment mMeFragment;
 	
 	private FragmentManager  mFragmentManager ;
 	private FragmentTransaction mTransaction;
 	
 	private TopBar mTopBar;
 	
-	private User user;
+	private User mUser;
 	
-	private boolean meflag=false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -65,7 +64,7 @@ public class MainActivity extends FragmentBaseActivity implements TitlechangeLis
 		setContentView(R.layout.activity_main);
 		initView();
 		setSelected(0);
-		homeBottomTag.setIconAlpha(1);
+		mHomeBottomTag.setIconAlpha(1);
 		UmengUpdateAgent.update(this);
 		initEvent();
 	}
@@ -76,9 +75,9 @@ public class MainActivity extends FragmentBaseActivity implements TitlechangeLis
 	}
 
 	public void initView() {
-		homeBottomTag= (BottomTagView) findViewById(R.id.BottomTag_home);
-		chatBottomTag= (BottomTagView) findViewById(R.id.BottomTag_chat);
-		meBottomTag= (BottomTagView) findViewById(R.id.BottomTag_me);
+		mHomeBottomTag= (BottomTagView) findViewById(R.id.BottomTag_home);
+		mChatBottomTag= (BottomTagView) findViewById(R.id.BottomTag_chat);
+		mMeBottomTag= (BottomTagView) findViewById(R.id.BottomTag_me);
 		mTopBar = (TopBar) this.findViewById(R.id.topbar);
 		mTopBar.setTopBarbtnclickListener(this);
 		mTopBar.setRightButtonImage(getResources().getDrawable(R.drawable.ic_action_edit));
@@ -92,46 +91,29 @@ public class MainActivity extends FragmentBaseActivity implements TitlechangeLis
 			    public void onClick(int status) {
 			        switch (status) {
 			        case UpdateStatus.Update:
-			        	LogUtils.i(TAG,"User choose Update");
+			        	LogUtils.i(TAG,"user choose update");
 			            break;
 			        case UpdateStatus.Ignore:
-			        	LogUtils.i(TAG,"User choose Ignore");
+			        	LogUtils.i(TAG,"user choose ignore");
 			            break;
 			        case UpdateStatus.NotNow:
-			        	LogUtils.i(TAG,"User choose NotNow");
+			        	LogUtils.i(TAG,"user choose NotNow");
 			            break;
 			        }
 			    }
 			});
-			
-		/* UmengUpdateAgent.setUpdateListener(new UmengUpdateListener() {
-
-			@Override
-			public void onUpdateReturned(int updateStatus,
-					UpdateResponse updateInfo) {
-				// TODO 自动生成的方法存根d
-				  switch (updateStatus) {
-			                // 有更新
-			                case UpdateStatus.Yes:
-			                	//UmengUpdateAgent.showUpdateDialog(getApplicationContext(), updateInfo);
-			                	showToast("sad");
-			                	break;
-				  }
-			}});*/
 	}
 	@Override
 	protected void onResume() {
 		super.onResume();
-		user=((IshopApplication)getApplication()).getCurrentUser();
-		//showToast("resume");
-		islogin(user);
+		mUser=((IshopApplication)getApplication()).getCurrentUser();
+		islogin(mUser);
 	}
 	private void islogin(User user) {
 		if(user!=null){
 			if(user.getAvatar()!=null){
 				ImageLoader.getInstance().displayImage(user.getAvatar().getFileUrl(getApplicationContext()), mTopBar.getLeftButton(),ImageUtils.getOptions(R.drawable.user_icon_default),new SimpleImageLoadingListener(){
 					public void onLoadingComplete(String imageUri, View view, android.graphics.Bitmap loadedImage) {
-						//mTopBar.setLeftButtonImage();
 					};
 				} );
 			}
@@ -143,18 +125,17 @@ public class MainActivity extends FragmentBaseActivity implements TitlechangeLis
 
 	public void onTagClick(View v) {
 		resetTag();
-		// TODO 自动生成的方法存根
 		switch (v.getId()) {
 		case R.id.BottomTag_home:
-			homeBottomTag.setIconAlpha(1);
+			mHomeBottomTag.setIconAlpha(1);
 			setSelected(0);
 			break;
 		case R.id.BottomTag_chat:
-			chatBottomTag.setIconAlpha(1);
+			mChatBottomTag.setIconAlpha(1);
 			setSelected(1);
 			break;
 		case R.id.BottomTag_me:
-			meBottomTag.setIconAlpha(1);
+			mMeBottomTag.setIconAlpha(1);
 			setSelected(2);	
 				break;
 		default:
@@ -167,14 +148,14 @@ public class MainActivity extends FragmentBaseActivity implements TitlechangeLis
 		hideFragment(mTransaction);
 		switch(index){
 		case 0:
-			if(homeFragment==null){
-				homeFragment =new HomeFragment(this);
-				mTransaction.add(R.id.fragment_zone, homeFragment);
+			if(mHomeFragment==null){
+				mHomeFragment =new HomeFragment(this);
+				mTransaction.add(R.id.fragment_zone, mHomeFragment);
 			}else{
-				mTransaction.show(homeFragment);
+				mTransaction.show(mHomeFragment);
 			}
-			changePage(homeFragment.getCurrentPage());
-			switch(homeFragment.getCurrentPage()){
+			changePage(mHomeFragment.getCurrentPage());
+			switch(mHomeFragment.getCurrentPage()){
 				case 0:
 					changeTitle(R.string.title_qiang_all);
 					break;
@@ -189,33 +170,29 @@ public class MainActivity extends FragmentBaseActivity implements TitlechangeLis
 			mTopBar.setLeftButtonVisible(View.VISIBLE);
 			mTopBar.setRightButtonVisible(View.VISIBLE);
 			mTopBar.setRightButtonImage(getResources().getDrawable(R.drawable.ic_action_edit));
-			meflag=false;
 			break;
 		case 1:
-			if(chatFragment==null){
-				chatFragment =new NewsFragment();
-				mTransaction.add(R.id.fragment_zone, chatFragment);
+			if(mNewsFragment==null){
+				mNewsFragment =new NewsFragment();
+				mTransaction.add(R.id.fragment_zone, mNewsFragment);
 			}else{
-				mTransaction.show(chatFragment);
+				mTransaction.show(mNewsFragment);
 			}
 			changeTitle(R.string.title_hot);
 			mTopBar.setLeftButtonVisible(View.VISIBLE);
 			mTopBar.setRightButtonVisible(View.VISIBLE);
 			mTopBar.setRightButtonImage(getResources().getDrawable(R.drawable.ic_action_edit));
-			meflag=false;
 			break;
 		case 2:
-			if(meFragment==null){
-				meFragment =new MeFragment();
-				mTransaction.add(R.id.fragment_zone, meFragment);
+			if(mMeFragment==null){
+				mMeFragment =new MeFragment();
+				mTransaction.add(R.id.fragment_zone, mMeFragment);
 			}else{
-				mTransaction.show(meFragment);
+				mTransaction.show(mMeFragment);
 			}
 			changeTitle(R.string.title_me);
 			mTopBar.setLeftButtonVisible(View.GONE);
-			mTopBar.setRightButtonVisible(View.VISIBLE);
-			mTopBar.setRightButtonImage(getResources().getDrawable(R.drawable.ic_action_setting));
-			meflag=true;
+			mTopBar.setRightButtonVisible(View.GONE);
 			break;
 			
 		default:
@@ -226,22 +203,22 @@ public class MainActivity extends FragmentBaseActivity implements TitlechangeLis
 
 	private void hideFragment(FragmentTransaction mTransaction) {
 		changePage(100);
-		if(homeFragment!=null){
-			mTransaction.hide(homeFragment);
+		if(mHomeFragment!=null){
+			mTransaction.hide(mHomeFragment);
 		}
-		if(chatFragment!=null){
-			mTransaction.hide(chatFragment);
+		if(mNewsFragment!=null){
+			mTransaction.hide(mNewsFragment);
 		}
-		if(meFragment!=null){
-			mTransaction.hide(meFragment);
+		if(mMeFragment!=null){
+			mTransaction.hide(mMeFragment);
 		}
 		
 	}
 
 	protected void resetTag(){
-		homeBottomTag.setIconAlpha(0);
-		meBottomTag.setIconAlpha(0);
-		chatBottomTag.setIconAlpha(0);
+		mHomeBottomTag.setIconAlpha(0);
+		mMeBottomTag.setIconAlpha(0);
+		mChatBottomTag.setIconAlpha(0);
 	}
 
 	@Override
@@ -260,24 +237,18 @@ public class MainActivity extends FragmentBaseActivity implements TitlechangeLis
 
 	@Override
 	public void rightbtnclick(View v) {
-		// TODO 自动生成的方法存根
-		if(meflag!=true){
-			if(user!=null){
-				Intent intent = new Intent(this,EditQiangActivity.class);
-				startActivity(intent);
-			}
-			else{
-				Intent intent = new Intent(this,LoginActivity.class);
-				startActivity(intent);
-			}
-		}else{
-			showToast("setting");
+		if(mUser!=null){
+			Intent intent = new Intent(this,EditQiangActivity.class);
+			startActivity(intent);
+		}
+		else{
+			Intent intent = new Intent(this,LoginActivity.class);
+			startActivity(intent);
 		}
 	}
 
 	@Override
 	public void leftbtnclick(View v) {
-		// TODO 自动生成的方法存根
 		User user=((IshopApplication)getApplication()).getCurrentUser();
 		if(user==null){
 			Intent intent = new Intent(this,LoginActivity.class);

@@ -42,7 +42,6 @@ public class HomeFragment extends BaseFragment implements ViewPager.OnPageChange
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// TODO 自动生成的方法存根
 		rootview = getLayoutInflater(savedInstanceState).inflate(
 				R.layout.fragment_home, null);
 		super.onCreateView(inflater, container, savedInstanceState);
@@ -51,19 +50,15 @@ public class HomeFragment extends BaseFragment implements ViewPager.OnPageChange
 
 	@Override
 	public void processHandlerMessage(Message msg) {
-		// TODO 自动生成的方法存根
-
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
 	}
 
 	@Override
 	public void initView() {
-		// TODO 自动生成的方法存根
 		viewPager = (ViewPager) rootview.findViewById(R.id.viewpager);
 		pointView = rootview.findViewById(R.id.point_view);
 		fragments = new ArrayList<BaseFragment>();
@@ -85,26 +80,20 @@ public class HomeFragment extends BaseFragment implements ViewPager.OnPageChange
 
 	@Override
 	public void initData() {
-		
-		// TODO 自动生成的方法存根
 	}
 	public int getCurrentPage(){
 		return FragramPage;
 	}
 	@Override
 	public void initEvent() {
-		// TODO 自动生成的方法存根
-
 	}
 
 	@Override
 	public void onPageScrollStateChanged(int arg0) {
-		// TODO 自动生成的方法存根
 	}
 
 	@Override
 	public void onPageScrolled(int arg0, float arg1, int arg2) {
-		// TODO 自动生成的方法存根
 		LogUtils.i(TAG, arg0+":"+arg1+":"+arg2);
 		if(arg0<0.9999f)
 		pointView.setTranslationX(arg2/fragments.size());
@@ -112,7 +101,6 @@ public class HomeFragment extends BaseFragment implements ViewPager.OnPageChange
 
 	@Override
 	public void onPageSelected(int page) {
-		// TODO 自动生成的方法存根
 		mlistener.changePage(page);
 		switch (page) {
 		case 0:

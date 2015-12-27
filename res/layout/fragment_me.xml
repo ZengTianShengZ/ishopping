@@ -159,7 +159,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="@dimen/group_bottom_top"
             android:background="#ffffff"
             android:orientation="vertical" >
 
@@ -173,12 +173,12 @@
                 android:background="@drawable/item_btn_state"
                 android:clickable="true"
                 android:orientation="horizontal" >
-
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="@dimen/tips_image_width"
+                    android:layout_height="@dimen/tips_image_width"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
                     android:src="@drawable/ic_publish" />
 
                 <TextView
@@ -209,10 +209,11 @@
                 android:orientation="horizontal" >
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="@dimen/tips_image_width"
+                    android:layout_height="@dimen/tips_image_width"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
                     android:src="@drawable/ic_comment" />
 
                 <TextView
@@ -228,7 +229,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="@dimen/group_bottom_top"
             android:background="#ffffff"
             android:orientation="vertical" >
 
@@ -243,17 +244,18 @@
                 android:orientation="horizontal" >
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="@dimen/tips_image_width"
+                    android:layout_height="@dimen/tips_image_width"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="15dp"
-                    android:src="@drawable/ic_action_fav_choose" />
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/ic_support" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="功能1"
+                    android:text="支持我们"
                     android:textColor="#000000" />
             </LinearLayout>
             <!-- 分割线 -->
@@ -268,6 +270,7 @@
             <!-- 第二条 -->
 
             <LinearLayout
+                android:id="@+id/about_us"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -276,21 +279,49 @@
                 android:orientation="horizontal" >
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="@dimen/tips_image_width"
+                    android:layout_height="@dimen/tips_image_width"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="15dp"
-                    android:src="@drawable/ic_action_fav_choose" />
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/ic_about" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="功能2"
+                    android:text="关于爱商品"
                     android:textColor="#000000" />
             </LinearLayout>
         </LinearLayout>
-        
+       <!-- 第三组 -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/group_bottom_top"
+            android:background="#ffffff"
+            android:orientation="vertical" >
+
+            <!-- 第一条 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_btn_state"
+                android:clickable="true"
+                android:padding="10dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="更多功能敬请期待！"
+                    android:textColor="#000000" />
+            </LinearLayout>
+           
+    </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

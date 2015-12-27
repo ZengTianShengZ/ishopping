@@ -33,7 +33,7 @@ import com.dz4.ishop.view.TopBar;
 import com.dz4.ishopping.R;
 import com.dz4.support.activity.BaseUIActivity;
 
-public class RegisterActivity_For_telephone extends BaseUIActivity implements TopBar.onTopBarbtnclickListener,
+public class RegisterActivity4Telephone extends BaseUIActivity implements TopBar.onTopBarbtnclickListener,
 OnClickListener,UserProxy.onQueryListener{
 
 	private TopBar mTopBar;

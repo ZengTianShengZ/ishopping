@@ -423,12 +423,10 @@ TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener,OnFocusC
 				}
 				@Override
 				public void onProgress(Integer value) {
-					// TODO 自动生成的方法存根
 					super.onProgress(value);
 				}
 				@Override
 				public void onFailure(int arg0, String arg1) {
-					// TODO 自动生成的方法存根
 					LogUtils.i(TAG, arg1);
 					showToast(arg1);
 				}
@@ -438,7 +436,6 @@ TopBar.onTopBarbtnclickListener,OnClickListener,OnCheckedChangeListener,OnFocusC
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent data) {
-		// TODO 自动生成的方法存根
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == this.RESULT_OK) {
 			switch (requestCode) {

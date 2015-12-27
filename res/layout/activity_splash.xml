@@ -27,7 +27,7 @@
         android:textColor="#ffffff"
         android:textSize="24sp"
         android:textStyle="italic"
-        android:text="代购，上爱商品！"
+        android:text="@string/app_watchword"
         />
     <TextView 
         android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
         android:textColor="#ffffff"
         android:textSize="16sp"
         android:textStyle="italic"
-        android:text="design:czmc zss"
+        android:text="四班联盟"
         />
 	</LinearLayout>
 

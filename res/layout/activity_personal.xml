@@ -8,10 +8,7 @@
     <include
         android:id="@+id/topbarlayout"
         layout="@layout/topbar" />
- 
-    
-         
-	 
+
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/pull_refresh_list_personal"
         android:layout_width="fill_parent"

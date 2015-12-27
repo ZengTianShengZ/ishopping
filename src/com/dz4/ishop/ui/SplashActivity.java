@@ -16,13 +16,12 @@ import com.dz4.support.activity.BaseActivity;
  *
  */
 public class SplashActivity extends  BaseActivity{
-	private static final int MSG_LOADING_TIMEOUT = 0x00;
-	private static final int LOADING_DELAYED = 2000;
+	private final int MSG_LOADING_TIMEOUT = 0x00;
+	private final int LOADING_DELAYED = 2000;
 	private Handler mHandler=new Handler(){
 
 		@Override
 		public void handleMessage(Message msg) {
-			// TODO 自动生成的方法存根
 			super.handleMessage(msg);
 			switch(msg.what){
 				case MSG_LOADING_TIMEOUT:
@@ -33,7 +32,6 @@ public class SplashActivity extends  BaseActivity{
 	};
 
 	private void launch() {
-		// TODO 自动生成的方法存根
 		Intent intent =new Intent(SplashActivity.this,MainActivity.class);
 		startActivity(intent);
 		finish();

@@ -77,6 +77,8 @@ public class PersonalCommentActivity extends BaseUIActivity implements TopBar.on
 	private RefreshType mRefreshType = RefreshType.LOAD_MORE;
 	private int pageNum;
 	final int NUMBERS_PER_PAGE = 15;
+
+	private int personalViewHeight;
 	@Override
 	public void initView() {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -98,7 +100,6 @@ public class PersonalCommentActivity extends BaseUIActivity implements TopBar.on
 		goSettings = (ImageView) mPersonInfoView.findViewById(R.id.go_settings);
 		personalTitle = (TextView) mPersonInfoView.findViewById(R.id.personl_title);
 	}
- 
 	@Override
 	public void initData() {
 		mUser = (User)getIntent().getSerializableExtra(Constant.BUNDLE_KEY_AUTHOR);
@@ -115,7 +116,16 @@ public class PersonalCommentActivity extends BaseUIActivity implements TopBar.on
 		if (isCurrentUser(mUser)) {
 			personalTitle.setText("我评论过的");
 			goSettings.setVisibility(View.VISIBLE);
+			goSettings.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent =new Intent(PersonalCommentActivity.this,UserInfoActivity.class);
+					startActivity(intent);
+				}
+			});
 			User user = BmobUser.getCurrentUser(mContext, User.class);
+			
 			updatePersonalInfo(user);
 		} else {
 			goSettings.setVisibility(View.GONE);
@@ -136,8 +146,8 @@ public class PersonalCommentActivity extends BaseUIActivity implements TopBar.on
 	            	//自己定义得到 ScrollY
 	            	Log.i("getScrollY",MygetScrollY()+"..."+mPersonInfoView.getHeight()); 
 	              
-	            	if(MygetScrollY()>=810){
-	            		mTopBar.setTitleText(mUser.getUsername());
+	            	if(MygetScrollY()>= mPersonInfoView.getHeight()*2){
+	            		mTopBar.setTitleText(mUser.getNickname());
 	            		mTopBar.setTitleSize(20);
 	            	}else{
 	            		mTopBar.setTitleText("");

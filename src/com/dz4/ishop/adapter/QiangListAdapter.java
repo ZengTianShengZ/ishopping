@@ -142,6 +142,7 @@ public class QiangListAdapter extends BaseAdapter{
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(mContext,PersonalActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				intent.putExtra(Constant.BUNDLE_KEY_AUTHOR, mQiangItem.getAuthor());
 				mContext.startActivity(intent);
 			}

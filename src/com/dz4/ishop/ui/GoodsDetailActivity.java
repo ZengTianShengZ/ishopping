@@ -51,6 +51,7 @@ public class GoodsDetailActivity extends BaseUIActivity implements
 		OnClickListener {
 
 	protected static final String TAG = "GoodsDetailActivity";
+	
 	private ViewPager imagePager;
 	private QiangItem mQiangItem;
 	private Context mContext;
@@ -533,10 +534,13 @@ public class GoodsDetailActivity extends BaseUIActivity implements
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent data) {
 		// TODO Auto-generated method stub
-		if (resultCode == RESULT_CANCELED) {
-			// 登录完成
+		if (resultCode == RESULT_OK) {
+			// 登录完成	
+			pageNum = 0;
+			datalist.clear();
+			loadData();
+			loadCommentData();
 			mAdapter.notifyDataSetChanged();
-			refreshview.requestLayout();
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 
@@ -545,6 +549,10 @@ public class GoodsDetailActivity extends BaseUIActivity implements
 	@Override
 	protected void onResume() {
 		// TODO 自动生成的方法存根
+		pageNum = 0;
+		datalist.clear();
+		loadData();
+		loadCommentData();
 		LogUtils.i(TAG, "onResume");
 		super.onResume();
 	}

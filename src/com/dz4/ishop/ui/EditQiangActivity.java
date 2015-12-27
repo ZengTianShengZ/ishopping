@@ -16,6 +16,7 @@ import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -36,7 +37,7 @@ import cn.bmob.v3.listener.UploadFileListener;
 
 import com.bmob.BmobProFile;
 import com.bmob.btp.callback.UploadBatchListener;
-import com.dz4.ImageUpload_9_zss.utils.ZssMyAdapter;
+import com.dz4.imageupload9.utils.ZssMyAdapter;
 import com.dz4.ishop.domain.Goods;
 import com.dz4.ishop.domain.QiangItem;
 import com.dz4.ishop.domain.User;
@@ -195,7 +196,7 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 			Date date1 = new Date(System.currentTimeMillis());
 			dateTime = date1.getTime() + "";
 			File f = new File(CacheUtils.getCacheDirectory(getApplicationContext(), true,
-					"pic") + dateTime);
+					"pic") + dateTime+".jpg");
 			if (f.exists()) {
 				f.delete();
 			}
@@ -347,16 +348,38 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 				break;
 			case REQUEST_CODE_CAMERA:
 				String filename = CacheUtils.getCacheDirectory(mContext, true,
-						"pic") + dateTime;
-				File file = new File(filename);
-				if (file.exists()) {
-					Bitmap bitmap = compressImageFromFile(filename);
-					targeturl = saveToSdCard(bitmap);
-					takePic.setBackgroundDrawable(new BitmapDrawable(bitmap));
-					openLayout.setVisibility(View.GONE);
-				} else {
-
-				}
+						"pic") + dateTime+".jpg";
+					ShowImageActivity.imgDirPath.add(filename.substring(0,filename.lastIndexOf("/")+1));
+					ShowImageActivity.imgItem.add(filename.substring(filename.lastIndexOf("/")+1));
+					Intent intent = new Intent();
+					   Bundle bundle = new Bundle();
+					     bundle.putStringArrayList("imgItem", ShowImageActivity.imgItem);
+					     bundle.putStringArrayList("imgDirPath", ShowImageActivity.imgDirPath);
+					     bundle.putString("IntentData","ShowImageActivity");
+						 intent.putExtras(bundle);
+					onActivityResult(RESULT_OK,REQUEST_CODE_ALBUM,intent);
+					/*
+					LogUtils.i("TAG", "path:"+filename.substring(0,filename.lastIndexOf("/")+1));
+					LogUtils.i("TAG", "filename:"+filename.substring(filename.lastIndexOf("/")+1));
+					
+					gridView.setVisibility(View.VISIBLE);
+					if(sourcepathlist==null)
+						sourcepathlist =new ArrayList<String>();
+			 		for(int i=0;i<imgItem.size();i++){
+			 			sourcepathlist.add(imgDirPath.get(i)+"/"+imgItem.get(i));
+			 		}
+					if(sourcepathlist != null){ 
+						gridView.setVisibility(View.VISIBLE);
+						if(zssMyAadapter==null){
+							zssMyAadapter = new ZssMyAdapter(getApplicationContext(),sourcepathlist,
+								R.layout.zss_show_image);
+							gridView.setAdapter(zssMyAadapter); 
+						}else{
+							zssMyAadapter.notifyDataSetChanged();
+						}
+					}else{
+						gridView.setVisibility(View.GONE);
+					}*/
 				break;
 			default:
 				break;

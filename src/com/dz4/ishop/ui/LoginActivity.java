@@ -91,7 +91,7 @@ public class LoginActivity extends BaseUIActivity implements TopBar.onTopBarbtnc
 					public void onClick(View v) {
 						 
 						//Intent intent = new Intent(getApplicationContext(),RegisterActivity.class);
-						Intent intent = new Intent(getApplicationContext(),RegisterActivity_For_telephone.class);
+						Intent intent = new Intent(getApplicationContext(),RegisterActivity4Telephone.class);
 						startActivity(intent);
 					}
 				}, new OnClickListener() {

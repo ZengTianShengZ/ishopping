@@ -81,7 +81,7 @@ public class PersonalCommentAdapter extends BaseAdapter{
 			}
 			viewHolder.commentContent.setText(comment.getCommentContent());
 			viewHolder.time.setText(comment.getCreatedAt());
-			viewHolder.commentFor.setText("评论至"+" ~"+comment.getQiang().getAuthor().getNickname());
+			viewHolder.commentFor.setText("评论至"+" ~"+getContentInfo(comment.getQiang().getContent(),5));
 			viewHolder.commentFor.setOnClickListener(new OnClickListener() {
 				
 				@Override
@@ -96,6 +96,16 @@ public class PersonalCommentAdapter extends BaseAdapter{
 			
 		}
 		return convertView;
+	}
+	public String getContentInfo(String content,int max){
+		if(content==null)
+			return null;
+		int length = content.length();
+		if(length>0 && length<max)
+			return content;
+		else{
+			return content.substring(0, max-1)+"...";
+		}
 	}
 	public class ViewHolder{
 		public TextView time;
