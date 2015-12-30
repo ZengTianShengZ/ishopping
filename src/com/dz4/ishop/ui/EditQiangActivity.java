@@ -54,10 +54,10 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 	private TopBar mTopBar;
 	private TextView qiang_content;
 	private LinearLayout openLayout;
-	private LinearLayout takeLayout;
+ 
 	private String dateTime;
 	private ImageView albumPic;
-	private ImageView takePic;
+ 
 	private Context mContext;
 	private	EditText goods_name_edit;
 	private	EditText goods_category_edit;
@@ -87,10 +87,10 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 		mTopBar.setRightButtonVisible(View.VISIBLE);
 		
 		openLayout = (LinearLayout) findViewById(R.id.open_layout);
-		takeLayout = (LinearLayout) findViewById(R.id.take_layout);
+ 
 		qiang_content =(TextView) findViewById(R.id.edit_content);
 		albumPic = (ImageView) findViewById(R.id.open_pic);
-		takePic = (ImageView) findViewById(R.id.take_pic);
+ 
 		
 		goods_name_edit=(EditText)findViewById(R.id.goods_name_edit);
 		goods_category_edit=(EditText)findViewById(R.id.goods_category_edit);
@@ -113,7 +113,7 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 		// TODO 自动生成的方法存根
 		mTopBar.setTopBarbtnclickListener(this);
 		openLayout.setOnClickListener(this);
-		takeLayout.setOnClickListener(this);
+ 
 		
 	}
 
@@ -194,25 +194,7 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 			Intent intent  = new Intent(getApplicationContext(),ShowImageActivity.class);
 			startActivityForResult(intent, REQUEST_CODE_ALBUM);
 			break;
-		case R.id.take_layout:
-			Date date1 = new Date(System.currentTimeMillis());
-			dateTime = date1.getTime() + "";
-			File f = new File(CacheUtils.getCacheDirectory(getApplicationContext(), true,
-					"pic") + dateTime+".jpg");
-			if (f.exists()) {
-				f.delete();
-			}
-			try {
-				f.createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			Uri uri = Uri.fromFile(f);
-
-			Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-			camera.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-			startActivityForResult(camera, REQUEST_CODE_CAMERA);
-			break;
+		 
 		default:
 			break;
 		}

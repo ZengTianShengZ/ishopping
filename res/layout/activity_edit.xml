@@ -5,135 +5,105 @@
     android:layout_height="match_parent"    
     android:scrollbars="vertical"    
     android:fadingEdge="vertical"> 
-<RelativeLayout 
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#FFFFFF" 
-    android:scrollbars="vertical"
-    >
-	
-    <include
-        android:id="@+id/topbarlayout"
-        layout="@layout/topbar" />
-    
-    <include layout="@layout/part_goodsedit" 
-        android:id="@+id/layout_goods_info"
-        android:layout_width="wrap_content" 
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:layout_below="@id/topbarlayout" />
 
-    <EditText
-        android:id="@+id/edit_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/layout_goods_info"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/selector_edittext"
-        android:gravity="left|top"
-        android:hint="说说商品的信息吧"
-        android:inputType="textMultiLine"
-        android:minLines="4"
-        android:paddingLeft="4dip"
-        android:paddingRight="4dip" >
-
-    </EditText>
-    <com.dz4.ishop.view.innerGridView
-        android:layout_margin="15dp"
-        android:id="@+id/edit_activity_gridView"
-        android:layout_below="@id/edit_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:cacheColorHint="@android:color/transparent"
-        android:clipChildren="true"
-        android:gravity="center"
-        android:horizontalSpacing="3dip"
-        android:listSelector="@android:color/transparent"
-        android:numColumns="3"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="3dip"
-        android:visibility="gone"
-         >
-    </com.dz4.ishop.view.innerGridView>
-    
-    
     <RelativeLayout
-        android:id="@+id/pic_content"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_below="@id/edit_activity_gridView"
-        android:background="#00000000"
-        android:paddingTop="8dp" >
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:scrollbars="vertical" >
 
-        <View
-            android:id="@+id/view_helper"
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="8dp"
-            android:background="#00000000" />
+        <include
+            android:id="@+id/topbarlayout"
+            layout="@layout/topbar" />
+
+        <TextView
+            android:id="@+id/open_pic_tips"
+            style="@style/TextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/topbarlayout"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="商品图片" />
+
+        <com.dz4.ishop.view.innerGridView
+            android:id="@+id/edit_activity_gridView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/open_pic_tips"
+            android:layout_margin="15dp"
+            android:cacheColorHint="@android:color/transparent"
+            android:clipChildren="true"
+            android:gravity="center"
+            android:horizontalSpacing="3dip"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="3"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="3dip"
+            android:visibility="gone" >
+        </com.dz4.ishop.view.innerGridView>
 
         <LinearLayout
             android:id="@+id/open_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_toLeftOf="@id/view_helper"
-            android:background="@drawable/selector_edit_pic"
-            android:gravity="center"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp" >
+            android:layout_below="@id/edit_activity_gridView" >
 
             <ImageView
                 android:id="@+id/open_pic"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="@drawable/open_picture"
-                android:scaleType="centerInside" />
-
-            <TextView
-                android:id="@+id/open_pic_tips"
-                style="@style/TextTheme.tipstheme_second"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_marginLeft="8dip"
-                android:gravity="center"
-                android:text="添加图片" />
+                android:background="@drawable/add_image"
+                android:scaleType="centerInside" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/take_layout"
+        <TextView
+            android:id="@+id/shagpingdetel"
+            style="@style/TextTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_toRightOf="@id/view_helper"
-            android:background="@drawable/selector_edit_pic"
+            android:layout_below="@id/open_layout"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="10dp"
             android:gravity="center"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp" >
+            android:text="商品描述" />
 
-            <ImageView
-                android:id="@+id/take_pic"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="@drawable/take_picture"
-                android:scaleType="centerInside" />
+        <EditText
+            android:id="@+id/edit_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/shagpingdetel"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/selector_edittext"
+            android:gravity="left|top"
+            android:hint="\n 请输入商品描述"
+            android:inputType="textMultiLine"
+            android:minLines="4"
+            android:paddingLeft="4dip"
+            android:paddingRight="4dip" 
+            android:focusable="true"  
+			android:focusableInTouchMode="true">
+        </EditText>
 
-            <TextView
-                android:id="@+id/take_pic_tips"
-                style="@style/TextTheme.tipstheme_second"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dip"
-                android:gravity="center"
-                android:text="拍照添加" />
-        </LinearLayout>
+        <include
+            android:id="@+id/layout_goods_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_content"
+            android:layout_margin="8dp"
+            android:layout_marginBottom="30dp"
+            layout="@layout/part_goodsedit" />
+        
+        <View 
+            android:layout_below="@id/layout_goods_info"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="#FFFFFF"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
     </RelativeLayout>
-</RelativeLayout>
 </ScrollView>

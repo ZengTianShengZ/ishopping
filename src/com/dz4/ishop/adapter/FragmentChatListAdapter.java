@@ -35,8 +35,8 @@ public class FragmentChatListAdapter extends CommonAdapter<PushNews>{
 		helper.setText(R.id.fragment_char_list_tvTime, item.getCreatedAt());
 		
 		String Imageurl = null;
-		if(item.getNewsImage() != null){
-			Imageurl = item.getNewsImage().getFileUrl(context);
+		if(item.getNewsImageUrl()!= null){
+			Imageurl = item.getNewsImageUrl();
 		}
 		imageView = helper.getView(R.id.fragment_char_list_image);
 		imageView.setScaleType(ScaleType.CENTER_CROP);

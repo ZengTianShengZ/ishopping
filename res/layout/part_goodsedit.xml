@@ -12,36 +12,9 @@
         android:background="@drawable/selector_edittext"
         >
 
+         
         <RelativeLayout
-            android:id="@+id/goods_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp" >
-
-            <TextView
-                android:id="@+id/goods_name_tip"
-                style="@style/TextTheme"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_centerVertical="true"
-                android:text="商品名: " />
-
-            <EditText
-                android:padding="2dp"
-                android:id="@+id/goods_name_edit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/goods_name_tip"
-                android:background="@drawable/selector_edittext"
-                android:inputType="text"
-                android:hint=" 例：meizu mx5"
-                android:lines="1" >
-                <requestFocus />
-            </EditText>
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_below="@id/goods_name"
+             
             android:id="@+id/goods_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,12 +35,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/goods_category_tip"
-                android:background="@drawable/selector_edittext"
+                android:background="@null"
                 android:inputType="text"
                 android:lines="1" 
                 android:hint=" 例：手机"
                 />
         </RelativeLayout>
+         
+        <View 
+            android:layout_below="@id/goods_category"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#A1A1A1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
+        
         <RelativeLayout
              android:layout_below="@id/goods_category"
             android:id="@+id/goods_price"
@@ -90,12 +72,52 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/goods_price_tip"
-                android:background="@drawable/selector_edittext"
+                android:background="@null"
                 android:inputType="number"
                 android:lines="1"
                 android:hint="例：1799"
                  />
         </RelativeLayout>
+        
+        <View 
+            android:layout_below="@id/goods_price"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#A1A1A1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
+        
+        <RelativeLayout
+            android:layout_below="@id/goods_price"
+            android:id="@+id/goods_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+ 
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/goods_name_tip"
+                style="@style/TextTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:text="商品名: " />
+            
+            <EditText 
+                android:id="@+id/goods_name_edit"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_toRightOf="@id/goods_name_tip"
+               android:background="@null"
+               android:inputType="text"
+               android:padding="2dp"
+               android:hint=" 例：meizu mx5"  
+               android:lines="1" 
+               />
+  
+        </RelativeLayout>
+        
     </RelativeLayout>
       <RelativeLayout
           android:layout_marginTop="15dp"
@@ -103,7 +125,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/goods_info"
-        android:padding="10dp" 
+ 
          android:background="@drawable/selector_edittext"
         >
 
@@ -111,6 +133,7 @@
             android:id="@+id/sailer_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+             
             android:padding="10dp" >
 
             <TextView
@@ -128,7 +151,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/sailer_phone_tip"
-                android:background="@drawable/selector_edittext"
+                android:background="@null"
                 android:inputType="number"
                 android:hint="手机号码"
                 android:lines="1" >

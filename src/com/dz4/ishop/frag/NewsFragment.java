@@ -385,11 +385,11 @@ public class NewsFragment extends BaseFragment {
 		String Imageurl = null;
 		 
  	// 初始化图片资源
-	    if(mPushNewsTitle.get(0).getNewsImage() != null){
+	    if(mPushNewsTitle.get(0).getNewsImageUrl() != null){
 				
 				for (int i = 0; i < mPushNewsTitle.size(); i++) {
 					
-					Imageurl = mPushNewsTitle.get(i).getNewsImage().getFileUrl(context);
+					Imageurl = mPushNewsTitle.get(i).getNewsImageUrl();
 					ImageView imageView = new ImageView(context);
 
 					ImageLoader.getInstance().displayImage(Imageurl,

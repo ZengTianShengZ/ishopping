@@ -32,6 +32,7 @@ import com.dz4.ishop.domain.User;
 import com.dz4.ishop.listener.OnUserInfoChangeListener;
 import com.dz4.ishop.ui.AboutActivity;
 import com.dz4.ishop.ui.LoginActivity;
+import com.dz4.ishop.ui.NewsActivity;
 import com.dz4.ishop.ui.PersonalActivity;
 import com.dz4.ishop.ui.PersonalCommentActivity;
 import com.dz4.ishop.ui.UserInfoActivity;
@@ -72,6 +73,8 @@ public class MeFragment extends  BaseFragment implements OnClickListener,OnUserI
 	private View commentView;
 	private View focusView;
 	private View aboutUsView;
+	private View fouctUs;
+	private String weiboUrl = "http://weibo.com/u/5815804076/home?wvr=5&uut=fin&from=reg";
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -101,7 +104,7 @@ public class MeFragment extends  BaseFragment implements OnClickListener,OnUserI
 		commentView=(View)rootView.findViewById(R.id.comment);
 		focusView=(View)rootView.findViewById(R.id.focus);
 		aboutUsView=(View)rootView.findViewById(R.id.about_us);
-		
+		fouctUs = rootView.findViewById(R.id.fouct_us);
 		
 	}
 
@@ -195,6 +198,7 @@ public class MeFragment extends  BaseFragment implements OnClickListener,OnUserI
 		commentView.setOnClickListener(this);
 		focusView.setOnClickListener(this);
 		aboutUsView.setOnClickListener(this);
+		fouctUs.setOnClickListener(this);
 		
 	}
 	@Override
@@ -248,6 +252,14 @@ public class MeFragment extends  BaseFragment implements OnClickListener,OnUserI
 		case R.id.about_us:
 			Intent intent2 = new  Intent(getContext(),AboutActivity.class);
 			startActivity(intent2);
+			break;
+		case R.id.fouct_us:
+			Intent intent3 = new Intent(getContext(),NewsActivity.class);
+			Bundle bundle = new Bundle();
+			bundle.putString("NewsUrl",weiboUrl);
+			 
+			intent3.putExtras(bundle);
+			startActivity(intent3); 
 			break;
 		}
 	}

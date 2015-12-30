@@ -236,6 +236,7 @@
             <!-- 第一条 -->
 
             <LinearLayout
+                android:id="@+id/fouct_us"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/item_btn_state"
@@ -244,18 +245,18 @@
                 android:orientation="horizontal" >
 
                 <ImageView
-                    android:layout_width="@dimen/tips_image_width"
-                    android:layout_height="@dimen/tips_image_width"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:src="@drawable/ic_support" />
+                    android:layout_marginLeft="12dp"
+                    android:src="@drawable/weibo_img" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="支持我们"
+                    android:text="关注我们"
                     android:textColor="#000000" />
             </LinearLayout>
             <!-- 分割线 -->

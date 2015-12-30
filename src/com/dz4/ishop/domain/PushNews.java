@@ -6,7 +6,7 @@ import cn.bmob.v3.datatype.BmobFile;
 public class PushNews extends BmobObject{
 	
 	private String newsTitle;
-	private BmobFile newsImage;
+	private String newsImageUrl;
 	private String newsContent;
 	private String newsUrl;
 	public String getNewsUrl() {
@@ -21,11 +21,11 @@ public class PushNews extends BmobObject{
 	public void setNewsTitle(String newsTitle) {
 		this.newsTitle = newsTitle;
 	}
-	public BmobFile getNewsImage() {
-		return newsImage;
+	public String getNewsImageUrl() {
+		return newsImageUrl;
 	}
-	public void setNewsImage(BmobFile newsImage) {
-		this.newsImage = newsImage;
+	public void setNewsImageUrl(String newsImageUrl) {
+		this.newsImageUrl = newsImageUrl;
 	}
 	public String getNewsContent() {
 		return newsContent;
@@ -37,7 +37,7 @@ public class PushNews extends BmobObject{
 	@Override
 	public String toString() {
 		return "PushNews [newsTitle=" + this.newsTitle + ", newsImage="
-				+ this.newsImage + ", newsContent="
+				+ this.newsImageUrl + ", newsContent="
 				+ this.newsContent + "]";
 	}
 

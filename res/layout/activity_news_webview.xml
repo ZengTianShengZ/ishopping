@@ -7,6 +7,12 @@
     <include
         android:id="@+id/news_webView_topbarlayout"
         layout="@layout/topbar" />
+    <ProgressBar      
+        android:id="@+id/webViewProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="10px"
+        style="?android:attr/progressBarStyleHorizontal"
+        />
     <WebView 
         android:id="@+id/news_webView"
         android:layout_width="match_parent"

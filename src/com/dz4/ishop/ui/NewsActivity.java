@@ -1,13 +1,16 @@
 package com.dz4.ishop.ui;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.dz4.ishop.utils.LogUtils;
 import com.dz4.ishop.view.TopBar;
@@ -19,6 +22,7 @@ public class NewsActivity  extends BaseUIActivity implements TopBar.onTopBarbtnc
 	protected Context mContext;
 	private TopBar mTopBar;
 	private WebView mWebView;
+	private ProgressBar pb;
 	
 	@Override
 	public void rightbtnclick(View v) {
@@ -26,7 +30,12 @@ public class NewsActivity  extends BaseUIActivity implements TopBar.onTopBarbtnc
 
 	@Override
 	public void leftbtnclick(View v) {
-		finish();
+		if(mWebView.canGoBack()){
+			mWebView.goBack();
+		}else{
+			finish();
+		}
+		 
 	}
 
 	@Override
@@ -37,6 +46,9 @@ public class NewsActivity  extends BaseUIActivity implements TopBar.onTopBarbtnc
 		mTopBar = (TopBar) this.findViewById(R.id.topbar);
 		mTopBar.setLeftButtonImage(getResources().getDrawable(R.drawable.back));
 		mTopBar.setLeftButtonVisible(View.VISIBLE);
+		mTopBar.setBackgroundColor(Color.WHITE);
+		
+		pb = (ProgressBar) findViewById(R.id.webViewProgressBar);
 		mWebView = (WebView) findViewById(R.id.news_webView);
 	}
 
@@ -66,11 +78,36 @@ public class NewsActivity  extends BaseUIActivity implements TopBar.onTopBarbtnc
                 return true;
             }
         });
+        
+        mWebView.setWebChromeClient(new WebChromeClient(){
+        	
+        	 @Override
+             public void onProgressChanged(WebView view, int newProgress) {
+                 if (newProgress == 100) {
+                     pb.setVisibility(View.INVISIBLE);
+                 } else {
+                     if (View.INVISIBLE == pb.getVisibility()) {
+                         pb.setVisibility(View.VISIBLE);
+                     }
+                     pb.setProgress(newProgress);
+                 }
+                 super.onProgressChanged(view, newProgress);
+             }
+        });
 	}
 
 	@Override
 	public void initEvent() {
 		mTopBar.setTopBarbtnclickListener(this);
+		       
+/*		public boolean onKeyDown(int keyCode, KeyEvent event) {
+			if ((keyCode == KEYCODE_BACK) && mWebView.canGoBack()) { 
+				mWebView.goBack();
+				return true;
+			}
+			return super.onKeyDown(keyCode, event);
+		}*/
 	}
+	 
 
 }
