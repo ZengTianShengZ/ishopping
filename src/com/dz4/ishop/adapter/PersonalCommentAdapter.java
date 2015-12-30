@@ -38,25 +38,21 @@ public class PersonalCommentAdapter extends BaseAdapter{
 
 	@Override
 	public int getCount() {
-		// TODO 自动生成的方法存根
 		return datalist.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		// TODO 自动生成的方法存根
 		return datalist.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO 自动生成的方法存根
 		return position;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO 自动生成的方法存根
 		ViewHolder viewHolder;
 		if(convertView == null){
 			viewHolder = new ViewHolder();

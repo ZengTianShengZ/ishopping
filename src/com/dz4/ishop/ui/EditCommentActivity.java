@@ -107,6 +107,7 @@ public class EditCommentActivity extends BaseUIActivity implements
 				showToast("评论成功。");
 				LogUtils.i(TAG, "更新评论成功。");
 				setResult(RESULT_OK);
+				setRequestedOrientation(Constant.CHANGER_COMMENT);
 				finish();
 				cancelProgressDialog();
 			}
@@ -118,21 +119,5 @@ public class EditCommentActivity extends BaseUIActivity implements
 				cancelProgressDialog();
 			}
 		});
-	}
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == RESULT_OK) {
-			switch (requestCode) {
-			case Constant.PUBLISH_COMMENT:
-				// 登录完成
-				btn_commit.performClick();
-				break;
-			default:
-				break;
-			}
-		}
-
 	}
 }

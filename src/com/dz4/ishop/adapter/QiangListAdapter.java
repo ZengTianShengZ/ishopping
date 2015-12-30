@@ -287,7 +287,7 @@ public class QiangListAdapter extends BaseAdapter{
 		if (qy.getContentfigureurl() != null) {
 			img = qy.getContentfigureurl().getFileUrl(mContext);
 		} else {
-			img = "http://www.codenow.cn/appwebsite/website/yyquan/uploads/53af6851d5d72.png";
+			img = "http://sdisa.bmob.cn/uploads/567d91eaa8876.png";
 		}
 		String summary = qy.getContent();
 

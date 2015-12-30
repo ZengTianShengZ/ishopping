@@ -3,6 +3,8 @@ package com.dz4.ishop.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobRelation;
@@ -10,21 +12,28 @@ import cn.bmob.v3.listener.DeleteListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 
+import com.bmob.BmobPro;
 import com.dz4.ishop.app.IshopApplication;
 import com.dz4.ishop.db.DatabaseUtil;
+import com.dz4.ishop.domain.Comment;
 import com.dz4.ishop.domain.QiangItem;
 import com.dz4.ishop.domain.User;
+import com.dz4.ishop.sns.TencentShare;
+import com.dz4.ishop.sns.TencentShareEntity;
 import com.dz4.ishop.ui.EditQiangActivity;
 import com.dz4.ishop.ui.GoodsDetailActivity;
 import com.dz4.ishop.ui.LoginActivity;
 import com.dz4.ishop.ui.PersonalActivity;
+import com.dz4.ishop.ui.ShowImageActivity;
 import com.dz4.ishop.utils.Constant;
 import com.dz4.ishop.utils.ImageUtils;
 import com.dz4.ishop.view.innerGridView;
 import com.dz4.ishopping.R;
+import com.dz4.support.proxy.ActivityProxy;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -58,10 +67,12 @@ public class PersonalQiangListAdapter extends BaseAdapter {
 	private ScaleAnimation scaleAnimation_b,scaleAnimation_s;
 	private User user;
 	private User cUser;
+	private Activity activity;
 	
-	public PersonalQiangListAdapter(Context mContext,ArrayList datalist,User user){
+	public PersonalQiangListAdapter(Activity activity,ArrayList datalist,User user){
 		this.datalist=datalist;
-		this.mContext=mContext;
+		this.activity = activity;
+		this.mContext=activity.getApplicationContext();
 		this.user = user;
 		
 		initAnimation();
@@ -79,30 +90,26 @@ public class PersonalQiangListAdapter extends BaseAdapter {
 	}
 	@Override
 	public int getCount() {
-		// TODO 自动生成的方法存根
 		return datalist.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		// TODO 自动生成的方法存根
 		return datalist.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO 自动生成的方法存根
 		return position;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO 自动生成的方法存根
 		final ViewHolder viewHolder;
 		
 		if(convertView==null){
 			viewHolder = new ViewHolder();
-			convertView = LayoutInflater.from(mContext).inflate(R.layout.item_qiang, null);
+			convertView = LayoutInflater.from(mContext).inflate(R.layout.item_personal_qiang, null);
 			viewHolder.nickName = (TextView) convertView
 					.findViewById(R.id.user_name);
 			viewHolder.userLogo = (ImageView) convertView
@@ -111,6 +118,8 @@ public class PersonalQiangListAdapter extends BaseAdapter {
 					.findViewById(R.id.qiang_time);
 			viewHolder.contentText = (TextView) convertView
 					.findViewById(R.id.content_text);
+			viewHolder.deleteBtn = (TextView) convertView
+					.findViewById(R.id.delete);
 			viewHolder.contentImage = (innerGridView) convertView
 					.findViewById(R.id.content_image_gridView);
 			viewHolder.lin_love =  (LinearLayout) convertView
@@ -135,6 +144,7 @@ public class PersonalQiangListAdapter extends BaseAdapter {
 		viewHolder.nickName.setText(mQiangItem.getAuthor().getNickname());
 		viewHolder.qiangtime.setText(mQiangItem.getCreatedAt());
 		
+		
 		//当点击头像
 		viewHolder.userLogo.setOnClickListener(new OnClickListener(){
 			@Override
@@ -142,16 +152,14 @@ public class PersonalQiangListAdapter extends BaseAdapter {
 				if( mQiangItem.getAuthor()==null) return;
 				if( user==null) {
 					Intent intent = new Intent(mContext,PersonalActivity.class);
-					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					intent.putExtra(Constant.BUNDLE_KEY_AUTHOR, mQiangItem.getAuthor());
-					mContext.startActivity(intent);
+					activity.startActivity(intent);
 				}else{
 					if(user.getObjectId().equalsIgnoreCase(mQiangItem.getAuthor().getObjectId()))
 						return;
 					Intent intent = new Intent(mContext,PersonalActivity.class);
-					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					intent.putExtra(Constant.BUNDLE_KEY_AUTHOR, mQiangItem.getAuthor());
-					mContext.startActivity(intent);
+					activity.startActivity(intent);
 				}
 			}
 			
@@ -161,7 +169,9 @@ public class PersonalQiangListAdapter extends BaseAdapter {
 
 		cUser = BmobUser.getCurrentUser(mContext, User.class);
 		viewHolder.love.setText(mQiangItem.getLove()+"");
- 
+		if(!cUser.getObjectId().equals(user.getObjectId())){
+			viewHolder.deleteBtn.setVisibility(View.GONE);
+		}
 
 		if(null != cUser){
 			if(mQiangItem.isMyLove()){
@@ -219,8 +229,87 @@ public class PersonalQiangListAdapter extends BaseAdapter {
 				});
 			}
 		});
-		
-		
+		viewHolder.deleteBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+			final ActivityProxy mActivityProxy = new ActivityProxy(activity);
+			mActivityProxy.showMsgDialog("删除","是否删除?", "确定", "取消", new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						mActivityProxy.showProgressDialog();
+ 						mQiangItem.delete(mContext, new DeleteListener() {
+							@Override
+							public void onSuccess() {
+								//删除相关评论
+								BmobQuery<Comment> query = new BmobQuery<Comment>();
+								query.addWhereEqualTo("qiang", mQiangItem);
+								query.findObjects(mContext, new FindListener<Comment>() {
+									
+									@Override
+									public void onSuccess(List<Comment> arg0) {
+										List<BmobObject> objects =  new ArrayList<BmobObject>();
+										for(Comment c:arg0){
+											objects.add(c);
+										}
+										new BmobObject().deleteBatch(mContext,objects, new DeleteListener() {
+											
+											@Override
+											public void onSuccess() {
+												mActivityProxy.showToast("删除成功");
+												((IshopApplication)activity.getApplication()).notifyDataChange();
+												datalist.remove(mQiangItem);
+												notifyDataSetChanged();
+												mActivityProxy.cancelProgressDialog();
+											}
+											
+											@Override
+											public void onFailure(int arg0, String arg1) {
+												mActivityProxy.showToast("删除失败");
+												mActivityProxy.cancelProgressDialog();
+											}
+										});
+									}
+									
+									@Override
+									public void onError(int arg0, String arg1) {
+										// TODO 自动生成的方法存根
+										
+									}
+								});
+								
+							}
+							
+							@Override
+							public void onFailure(int arg0, String arg1) {
+								// TODO 自动生成的方法存根
+								mActivityProxy.showToast("删除失败！");
+								mActivityProxy.cancelProgressDialog();
+							}
+						});
+					}
+				}, new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						mActivityProxy.cancelMsgDialog();
+					}
+				});
+			}
+		});
+		viewHolder.share.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO 自动生成的方法存根
+				Toast.makeText(mContext, "分享给好友看哦~", Toast.LENGTH_SHORT).show();
+				final TencentShare tencentShare = new TencentShare(
+						activity,
+						getQQShareEntity(mQiangItem));
+				tencentShare.shareToQQ();
+			}
+		});
 		viewHolder.contentImage.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -285,11 +374,28 @@ public class PersonalQiangListAdapter extends BaseAdapter {
 	 
 		return convertView;
 	}
+	private TencentShareEntity getQQShareEntity(QiangItem qy) {
+		String title = "我在爱商品上看到了好东西！";
+		String comment = "来看看";
+		String img = null;
+		if (qy.getContentfigureurl() != null) {
+			img = qy.getContentfigureurl().getFileUrl(mContext);
+		} else {
+			img = "http://sdisa.bmob.cn/uploads/567d91eaa8876.png";
+		}
+		String summary = qy.getContent();
+
+		String targetUrl = "http://sdisa.bmob.cn";
+		TencentShareEntity entity = new TencentShareEntity(title, img,
+				targetUrl, summary, comment);
+		return entity;
+	}
 	public  class ViewHolder {
 		public ImageView userLogo;
 		public TextView nickName;
 		public TextView qiangtime;
 		public TextView contentText;
+		public TextView deleteBtn;
 		public innerGridView contentImage;
 
 		public LinearLayout lin_love;

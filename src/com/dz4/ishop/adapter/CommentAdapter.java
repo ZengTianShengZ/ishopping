@@ -12,6 +12,7 @@ import com.dz4.ishop.utils.LogUtils;
 import com.dz4.ishopping.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -29,9 +30,11 @@ public class CommentAdapter extends BaseAdapter{
 	private Context mContext;
 	private ArrayList<Comment> datalist;
 	private QiangItem mQiangItem;
-	public CommentAdapter(Context mContext, ArrayList<Comment> datalist,QiangItem mQiangItem) {
+	private Activity activity;
+	public CommentAdapter(Activity activity, ArrayList<Comment> datalist,QiangItem mQiangItem) {
 		// TODO Auto-generated constructor stub
-		this.mContext=mContext;
+		this.activity = activity;
+		this.mContext=activity.getApplicationContext();
 		this.datalist=datalist;
 		this.mQiangItem  =mQiangItem;
 	}
@@ -88,10 +91,10 @@ public class CommentAdapter extends BaseAdapter{
 				@Override
 				public void onClick(View v) {
 					Intent intent =new Intent(mContext,EditCommentActivity.class);
-					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					intent.putExtra(Constant.BUNDLE_KEY_QIANGITEM,mQiangItem);
 					intent.putExtra(Constant.BUNDLE_KEY_REPLYTO, comment.getUser());
-					mContext.startActivity(intent);
+					activity.startActivityForResult(intent,
+							Constant.CHANGER_COMMENT);
 				}
 			});
 		}else{

@@ -185,7 +185,7 @@ public class PersonalActivity extends BaseUIActivity implements TopBar.onTopBarb
 		//mListView = mPullToRefreshListView.getRefreshableView();
 		mListView.addHeaderView(mPersonInfoView);
 		mQiangItems = new ArrayList<QiangItem>();
-		personalQiangListAdapter = new PersonalQiangListAdapter(mContext,mQiangItems,mUser);
+		personalQiangListAdapter = new PersonalQiangListAdapter(this,mQiangItems,mUser);
 		mListView.setAdapter(personalQiangListAdapter);
 	}
 	private void updatePersonalInfo(User mUser2) {

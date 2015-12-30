@@ -38,6 +38,7 @@ import cn.bmob.v3.listener.UploadFileListener;
 import com.bmob.BmobProFile;
 import com.bmob.btp.callback.UploadBatchListener;
 import com.dz4.imageupload9.utils.ZssMyAdapter;
+import com.dz4.ishop.app.IshopApplication;
 import com.dz4.ishop.domain.Goods;
 import com.dz4.ishop.domain.QiangItem;
 import com.dz4.ishop.domain.User;
@@ -119,6 +120,7 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 	@Override
 	public void rightbtnclick(View v) {
 		// TODO 自动生成的方法存根
+		v.setClickable(false);
 		String commitContent = qiang_content.getText().toString().trim();
 		String goods_name = goods_name_edit.getText().toString().trim();
 		String goods_category = goods_category_edit.getText().toString().trim();
@@ -229,7 +231,7 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 		 			targeturls[i] =saveToSdCard(bitmap);
 		 			i++;
 				}
-
+				
 	 		BmobProFile.getInstance(mContext).uploadBatch(targeturls, new UploadBatchListener() {
 
 	          
@@ -299,13 +301,16 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 					public void onSuccess() {
 						// TODO Auto-generated method stub
 						showToast("发表成功");
+						mTopBar.getRightButton().setClickable(true);
 						setResult(RESULT_OK);
 						finish();
+						((IshopApplication)getApplication()).notifyDataChange();
 					}
 					@Override
 					public void onFailure(int arg0, String arg1) {
 						// TODO Auto-generated method stub
 						showToast("发表失败");
+						mTopBar.getRightButton().setClickable(true);
 					}
 				});
 			}
@@ -313,7 +318,7 @@ public class EditQiangActivity extends BaseUIActivity implements TopBar.onTopBar
 			@Override
 			public void onFailure(int arg0, String arg1) {
 				// TODO 自动生成的方法存根
-				
+				mTopBar.getRightButton().setClickable(true);
 			}
 		});
 		

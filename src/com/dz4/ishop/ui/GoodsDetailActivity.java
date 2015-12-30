@@ -171,7 +171,7 @@ public class GoodsDetailActivity extends BaseUIActivity implements
 		 * **/
 		loadCommentData();
 		datalist = new ArrayList<Comment>();
-		mAdapter = new CommentAdapter(mContext, datalist,mQiangItem);
+		mAdapter = new CommentAdapter(this, datalist,mQiangItem);
 		mCommentView.setAdapter(mAdapter);
 
 	}
@@ -535,12 +535,18 @@ public class GoodsDetailActivity extends BaseUIActivity implements
 			Intent data) {
 		// TODO Auto-generated method stub
 		if (resultCode == RESULT_OK) {
-			// 登录完成	
-			pageNum = 0;
-			datalist.clear();
-			loadData();
-			loadCommentData();
-			mAdapter.notifyDataSetChanged();
+			switch(requestCode){
+				case Constant.CHANGER_COMMENT:
+					// 登录完成	
+					pageNum = 0;
+					datalist.clear();
+					loadData();
+					loadCommentData();
+					mAdapter.notifyDataSetChanged();
+					((IshopApplication)getApplication()).notifyDataChange();
+				break;
+			}
+		
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 
@@ -549,11 +555,6 @@ public class GoodsDetailActivity extends BaseUIActivity implements
 	@Override
 	protected void onResume() {
 		// TODO 自动生成的方法存根
-		pageNum = 0;
-		datalist.clear();
-		loadData();
-		loadCommentData();
-		LogUtils.i(TAG, "onResume");
 		super.onResume();
 	}
 
