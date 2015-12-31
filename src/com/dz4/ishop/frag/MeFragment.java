@@ -74,7 +74,8 @@ public class MeFragment extends  BaseFragment implements OnClickListener,OnUserI
 	private View focusView;
 	private View aboutUsView;
 	private View fouctUs;
-	private String weiboUrl = "http://weibo.com/u/5815804076/home?wvr=5&uut=fin&from=reg";
+	private String weiboUrl = "http://weibo.com/u/5815348152?topnav=1&wvr=6&topsug=1&is_all=1";
+							 //http://weibo.com/u/5815804076/home?wvr=5&uut=fin&from=reg
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
