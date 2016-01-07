@@ -13,7 +13,8 @@
 ```
 ##【软件介绍】
 ```
-《爱商品》为您打造了一个便捷的商品交易平台，不管您卖的是二手商品还是面膜，不管您是做微商还是代购，您都可以在《爱商品》上面及拍及卖。同时您也是一个消费者，见到自己满意的商品直接跟卖家取得联系，无中间商赚差价，方便又信赖！
+《爱商品》为您打造了一个便捷的商品交易平台，不管您卖的是二手商品还是面膜，不管您是做微商还是代购，您都可以在《爱商品》上面及拍及卖。
+同时您也是一个消费者，见到自己满意的商品直接跟卖家取得联系，无中间商赚差价，方便又信赖！
 ```
 ##【主要功能】
 * 可发布自己的微商品或二手商品。
@@ -21,14 +22,14 @@
 * 可关注你感兴趣的卖家。
 * 可对感兴趣的商品进行评论
 * 可浏览最新的新闻资讯。
-##【图片展示】
-![](https://github.com/ZengTianShengZ/ishopping/raw/master/image/1.jpg) 
-![](https://github.com/ZengTianShengZ/ishopping/raw/master/image/2.jpg) 
-![](https://github.com/ZengTianShengZ/ishopping/raw/master/image/3.jpg) 
-![](https://github.com/ZengTianShengZ/ishopping/raw/master/image/4.jpg) 
-![](https://github.com/ZengTianShengZ/ishopping/raw/master/image/5.jpg) 
-![](https://github.com/ZengTianShengZ/ishopping/raw/master/image/6.jpg) 
 
+##【图片展示】
+![alt text](https://github.com/ZengTianShengZ/ishopping/raw/master/image/q1.jpg) 
+![alt text](https://github.com/ZengTianShengZ/ishopping/raw/master/image/q2.jpg) 
+![1](https://github.com/ZengTianShengZ/ishopping/raw/master/image/q3.jpg) 
+![2](https://github.com/ZengTianShengZ/ishopping/raw/master/image/q4.jpg) 
+![2](https://github.com/ZengTianShengZ/ishopping/raw/master/image/q5.jpg) 
+![2](https://github.com/ZengTianShengZ/ishopping/raw/master/image/q6.jpg) 
 ##【个人介绍】
 ```
 本人是一名大学生，就读于厦门，来到大学发现意外的对Android开发感兴趣，但没付出行动。直到大三下学期才开始真正的
