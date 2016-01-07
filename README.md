@@ -25,11 +25,11 @@
 
 ##【图片展示】
 ![alt text](https://github.com/ZengTianShengZ/ishopping/raw/master/image/q1.jpg) 
-![alt text](https://github.com/ZengTianShengZ/ishopping/raw/master/image/q2.jpg) 
-![1](https://github.com/ZengTianShengZ/ishopping/raw/master/image/q3.jpg) 
-![2](https://github.com/ZengTianShengZ/ishopping/raw/master/image/q4.jpg) 
-![2](https://github.com/ZengTianShengZ/ishopping/raw/master/image/q5.jpg) 
-![2](https://github.com/ZengTianShengZ/ishopping/raw/master/image/q6.jpg) 
+![alt text](https://github.com/ZengTianShengZ/ishopping/raw/master/image/q2x.jpg) 
+![1](https://github.com/ZengTianShengZ/ishopping/raw/master/image/q3x.jpg) 
+![2](https://github.com/ZengTianShengZ/ishopping/raw/master/image/q4x.jpg) 
+![2](https://github.com/ZengTianShengZ/ishopping/raw/master/image/q5x.jpg) 
+![2](https://github.com/ZengTianShengZ/ishopping/raw/master/image/q6x.jpg) 
 ##【个人介绍】
 ```
 本人是一名大学生，就读于厦门，来到大学发现意外的对Android开发感兴趣，但没付出行动。直到大三下学期才开始真正的
