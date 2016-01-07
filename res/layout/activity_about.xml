@@ -20,6 +20,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="18dp"
         android:src="@drawable/ic_launcher" />
+    <com.dz4.ishop.view.CircleImageView 
+        android:layout_width="@dimen/app_icon_width"
+        android:layout_height="@dimen/app_icon_width"
+        android:src="@drawable/ic_launcher"/>
 
     <TextView
         android:id="@+id/version_name"
